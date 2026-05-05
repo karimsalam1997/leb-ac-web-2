@@ -263,20 +263,7 @@ export default function Home() {
           <span>Letters from Beirut</span>
         </div>
         <p>Dispatches from a city that refuses to be a footnote.</p>
-        <form className="subscribe-input" action="/submit">
-          <label className="visually-hidden" htmlFor="home-email">
-            Email address
-          </label>
-          <input
-            id="home-email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            autoComplete="email"
-            suppressHydrationWarning
-          />
-          <button type="submit">Subscribe</button>
-        </form>
+        <p>Letters arrive on Sundays.</p>
         <Link href="/submit" className="read-link">
           Submit a letter <span className="link-arrow">→</span>
         </Link>
@@ -299,7 +286,6 @@ export default function Home() {
         <div
           className="edition-register-grid"
           data-count={editionEssays.length}
-          data-layout={editionEssays.length > 6 ? "wide" : "compact"}
         >
           {editionEssays.map((essay, index) => {
             const editionAsset = homeAssets.edition[index % homeAssets.edition.length];

@@ -106,11 +106,9 @@ export function SiteShell({
             </div>
           </div>
           <nav className="footer-links" aria-label="Footer navigation">
-            <Link href="/essays">Manifesto</Link>
-            <Link href="/essays">Editorial Principles</Link>
-            <Link href="/submit">Submissions</Link>
-            <Link href="/submit">Guidelines</Link>
-            <Link href="/submit">Contact</Link>
+            <Link href="/essays">Essays</Link>
+            <Link href="/submit">Submit</Link>
+            <Link href="/letters">Letters</Link>
           </nav>
           <div className="footer-social">
             <AtSign size={19} strokeWidth={1.5} />

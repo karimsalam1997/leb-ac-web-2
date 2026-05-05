@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Bookmark, Printer, Share2 } from "lucide-react";
 import { notFound, permanentRedirect } from "next/navigation";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
@@ -12,7 +11,7 @@ import {
   getEssay,
   getRelatedEssays,
 } from "@/lib/content";
-import { arabicCopy, getArticleImage } from "@/lib/visual-assets";
+import { getArticleImage } from "@/lib/visual-assets";
 
 export function generateStaticParams() {
   return essays.map((essay) => ({ slug: essay.slug }));
@@ -61,6 +60,7 @@ export default async function EssayPage({
   const leadParagraphs = paragraphs.slice(0, 3);
   const bodySections = getBodySections(essay.sections, leadParagraphs.length);
   const articleImage = getArticleImage(essay.slug, 0);
+  const pullQuote = essay.pullQuote.trim();
 
   return (
     <SiteShell activePath="/essays">
@@ -91,18 +91,6 @@ export default async function EssayPage({
                 />
               </div>
               <div className="text-xl">{essay.byline}</div>
-            </div>
-
-            <div className="article-toolbar mt-3">
-              <button type="button">
-                <Share2 size={17} strokeWidth={1.4} /> Share
-              </button>
-              <button type="button">
-                <Bookmark size={17} strokeWidth={1.4} /> Save
-              </button>
-              <button type="button">
-                <Printer size={17} strokeWidth={1.4} /> Print
-              </button>
             </div>
 
             <div className="body-copy mt-7">
@@ -167,15 +155,13 @@ export default async function EssayPage({
                   ))}
                 </div>
               </div>
-              <aside className="self-start pt-10 text-right text-[var(--accent)]">
-                <p className="arabic text-[1.8rem] leading-[1.25]">{arabicCopy.articleRight}</p>
-                <div className="ml-auto my-4 h-px w-24 bg-[var(--accent)]" />
-                <p className="text-[1.35rem] italic leading-[1.35]">
-                  We are not living a crisis.
-                  <br />
-                  We are living a consequence.
-                </p>
-              </aside>
+              {pullQuote ? (
+                <aside className="self-start pt-10 text-right text-[var(--accent)]">
+                  <p className="text-[1.35rem] italic leading-[1.35]">
+                    {pullQuote}
+                  </p>
+                </aside>
+              ) : null}
             </section>
           </div>
 
