@@ -64,7 +64,10 @@ export default async function EssayPage({
 
   return (
     <SiteShell activePath="/essays">
-      <article className="paper-frame pt-5">
+      <div className="reading-progress" aria-hidden="true">
+        <span />
+      </div>
+      <article className="paper-frame article-page pt-5">
         <div className="article-reference-grid editorial-rule">
           <div className="min-w-0">
             <div className="dense-meta mb-4">
