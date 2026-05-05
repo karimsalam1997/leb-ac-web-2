@@ -21,6 +21,9 @@ export function SiteShell({
 }) {
   return (
     <div className="page-shell">
+      <a className="skip-link" href="#site-content">
+        Skip to content
+      </a>
       <div className="left-rail">
         <div className="rail-label">Lebanese Academic / الأكاديمي اللبناني</div>
       </div>
@@ -68,21 +71,25 @@ export function SiteShell({
 
         <div className="nav-bar">
           <nav className="site-nav" aria-label="Primary navigation">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="top-nav-link"
-                data-active={
-                  item.href === "/"
-                    ? activePath === "/"
-                    : activePath.startsWith(item.href)
-                }
-              >
-                <span>{item.label}</span>
-                <span className="arabic">{item.arabic}</span>
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? activePath === "/"
+                  : activePath.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="top-nav-link"
+                  data-active={isActive}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <span>{item.label}</span>
+                  <span className="arabic">{item.arabic}</span>
+                </Link>
+              );
+            })}
           </nav>
           <div className="beirut-stamp">
             Beirut
@@ -90,7 +97,7 @@ export function SiteShell({
           </div>
         </div>
       </header>
-      <main>{children}</main>
+      <main id="site-content">{children}</main>
       <footer className="site-footer mt-4">
         <div className="paper-frame site-footer-inner">
           <div className="footer-brand">

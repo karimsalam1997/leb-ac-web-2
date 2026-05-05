@@ -37,7 +37,7 @@ export default function SubmitPage() {
       <section className="paper-frame pt-5">
         <div className="submit-layout editorial-rule">
           <aside className="submit-guidance">
-            <div>
+            <div className="submit-intro">
               <h1 className="display-title text-[4.25rem] leading-none text-[var(--accent)]">
                 Submit a Letter
               </h1>
@@ -49,7 +49,7 @@ export default function SubmitPage() {
               </p>
             </div>
 
-            <div className="mt-8 border-t border-[color:var(--line)] pt-7">
+            <div className="submit-guidelines-block mt-8 border-t border-[color:var(--line)] pt-7">
               <div className="editorial-kicker mb-6">Before You Write</div>
               <div className="space-y-5">
                 {guidelines.map((item) => (
@@ -74,7 +74,7 @@ export default function SubmitPage() {
             </blockquote>
           </aside>
 
-          <div>
+          <div className="submit-form-column">
             <SubmitForm />
             <div className="submit-reassurance">
               <div className="text-[2rem] text-[var(--accent)]">♡</div>
