@@ -4,15 +4,27 @@ import { Mail } from "lucide-react";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import { essays, letters, notebookEntries } from "@/lib/content";
-import { getArticleImage, visualAssets } from "@/lib/visual-assets";
+import { getArticleImage, getLetterImage, getNotebookImage, visualAssets } from "@/lib/visual-assets";
 
 const heroEssay = essays[0];
 const essayDeck =
   "Long-form writing on Lebanon, memory, power, and identity — against the idea that collapse is natural.";
+const heroTitleWords = heroEssay.title.split(" ");
+const heroTitleBreak = Math.ceil(heroTitleWords.length / 2);
+const heroTitleLines = [
+  heroTitleWords.slice(0, heroTitleBreak).join(" "),
+  heroTitleWords.slice(heroTitleBreak).join(" "),
+].filter(Boolean);
 
 export default function Home() {
   const leadEssays = essays.slice(1, 5);
   const ledgerEssays = essays;
+  const archiveFeatures = ledgerEssays.slice(0, 4);
+  const archiveColumns = [
+    ledgerEssays.slice(4, 9),
+    ledgerEssays.slice(9, 14),
+    ledgerEssays.slice(14),
+  ].filter((group) => group.length > 0);
   const recentLetters = letters.slice(0, 4);
   const recentNotebook = notebookEntries.slice(0, 3);
 
@@ -24,8 +36,8 @@ export default function Home() {
             <div className="editorial-kicker">Featured Essay</div>
             <h1 className="display-title front-lead-title">
               <Link href={`/essays/${heroEssay.slug}`}>
-                {heroEssay.title.split(" ").map((word, index) => (
-                  <span key={`${word}-${index}`}>{word}</span>
+                {heroTitleLines.map((line) => (
+                  <span key={line}>{line}</span>
                 ))}
               </Link>
             </h1>
@@ -98,7 +110,7 @@ export default function Home() {
                   className="mini-row"
                 >
                   <EditorialImage
-                    src={index % 2 === 0 ? visualAssets.letterpress : visualAssets.manuscript}
+                    src={getLetterImage(letter.slug, index)}
                     alt={letter.title}
                     className="mini-row-image"
                     sizes="92px"
@@ -123,7 +135,7 @@ export default function Home() {
             </div>
             <Link href={`/notebook#${recentNotebook[0]?.slug ?? ""}`}>
               <EditorialImage
-                src={visualAssets.notebookSpread}
+                src={getNotebookImage(recentNotebook[0]?.slug ?? "", 0)}
                 alt={recentNotebook[0]?.title ?? "Notebook"}
                 className="notebook-front-image"
                 sizes="(min-width: 1024px) 24vw, 100vw"
@@ -151,37 +163,76 @@ export default function Home() {
       </section>
 
       <section id="archive" className="paper-frame">
-        <div className="ledger-header">
-          <div>
-            <div className="editorial-kicker">Complete Essay Ledger</div>
-            <h2 className="editorial-title">All essays</h2>
+        <div className="archive-edition">
+          <div className="archive-edition-head">
+            <div>
+              <div className="editorial-kicker">Complete Essay Ledger</div>
+              <h2 className="editorial-title">All Essays</h2>
+            </div>
+            <p>
+              Every essay in the current edition, organized as an archive board rather
+              than a feed.
+            </p>
+            <Link href="/essays" className="read-link !text-[1rem]">
+              Full index <span className="link-arrow">→</span>
+            </Link>
           </div>
-          <Link href="/essays" className="read-link !text-[1rem]">
-            Full index <span className="link-arrow">→</span>
-          </Link>
-        </div>
 
-        <div className="essay-ledger-grid">
-          {ledgerEssays.map((essay, index) => (
-            <article key={essay.slug} className="ledger-card">
-              <Link href={`/essays/${essay.slug}`} className="ledger-image-link">
-                <EditorialImage
-                  src={getArticleImage(essay.slug, index + 5)}
-                  alt={essay.title}
-                  className="ledger-image"
-                  sizes="(min-width: 1024px) 16vw, 50vw"
-                />
-              </Link>
-              <div>
-                <div className="dense-meta">{String(index + 1).padStart(2, "0")} · {essay.category}</div>
-                <h3>
-                  <Link href={`/essays/${essay.slug}`}>{essay.title}</Link>
-                </h3>
-                <p>{essay.excerpt}</p>
-                <div className="dense-meta">{essay.date} · {essay.readTime}</div>
-              </div>
-            </article>
-          ))}
+          <div className="archive-feature-grid">
+            {archiveFeatures.map((essay, index) => (
+              <ArchiveFeatureCard
+                key={essay.slug}
+                essay={essay}
+                index={index}
+                large={index === 0}
+              />
+            ))}
+          </div>
+
+          <div className="archive-register">
+            {archiveColumns.map((group, groupIndex) => (
+              <section key={`archive-column-${groupIndex}`} className="archive-register-column">
+                <div className="archive-register-label">
+                  <span>{String(groupIndex + 1).padStart(2, "0")}</span>
+                  <strong>
+                    {groupIndex === 0
+                      ? "State / Power"
+                      : groupIndex === 1
+                        ? "Memory / Ruin"
+                        : "Letters / City"}
+                  </strong>
+                </div>
+                {group.map((essay, index) => {
+                  const essayNumber = archiveFeatures.length +
+                    archiveColumns.slice(0, groupIndex).reduce((total, column) => total + column.length, 0) +
+                    index +
+                    1;
+
+                  return (
+                    <Link
+                      key={essay.slug}
+                      href={`/essays/${essay.slug}`}
+                      className="archive-register-row"
+                    >
+                      <span className="archive-register-number">
+                        {String(essayNumber).padStart(2, "0")}
+                      </span>
+                      <EditorialImage
+                        src={getArticleImage(essay.slug, essayNumber)}
+                        alt={essay.title}
+                        className="archive-register-image"
+                        sizes="78px"
+                      />
+                      <span className="archive-register-copy">
+                        <strong>{essay.title}</strong>
+                        <small>{essay.date} · {essay.readTime}</small>
+                      </span>
+                    </Link>
+                  );
+                })}
+              </section>
+            ))}
+          </div>
         </div>
 
         <div className="subscribe-strip">
@@ -200,6 +251,41 @@ export default function Home() {
         </div>
       </section>
     </SiteShell>
+  );
+}
+
+function ArchiveFeatureCard({
+  essay,
+  index,
+  large,
+}: {
+  essay: (typeof essays)[number];
+  index: number;
+  large?: boolean;
+}) {
+  return (
+    <article className="archive-feature-card" data-large={large ? "true" : undefined}>
+      <Link href={`/essays/${essay.slug}`} className="archive-feature-image-link">
+        <EditorialImage
+          src={getArticleImage(essay.slug, index)}
+          alt={essay.title}
+          className="archive-feature-image"
+          sizes={large ? "(min-width: 1024px) 34vw, 100vw" : "(min-width: 1024px) 18vw, 100vw"}
+        />
+      </Link>
+      <div className="archive-feature-body">
+        <div className="dense-meta">
+          {String(index + 1).padStart(2, "0")} · {essay.category}
+        </div>
+        <h3>
+          <Link href={`/essays/${essay.slug}`}>{essay.title}</Link>
+        </h3>
+        <p>{essay.excerpt}</p>
+        <Link href={`/essays/${essay.slug}`} className="read-link !text-[1rem]">
+          Read essay <span className="link-arrow">→</span>
+        </Link>
+      </div>
+    </article>
   );
 }
 

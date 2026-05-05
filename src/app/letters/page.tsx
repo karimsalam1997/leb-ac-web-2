@@ -3,15 +3,9 @@ import { Mail, PenLine } from "lucide-react";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import { letters } from "@/lib/content";
-import { visualAssets } from "@/lib/visual-assets";
+import { getLetterImage } from "@/lib/visual-assets";
 
 const [featured, ...rest] = letters;
-const letterImages = [
-  visualAssets.letterpress,
-  visualAssets.manuscript,
-  visualAssets.skyline,
-  visualAssets.documentStack,
-];
 
 export default function LettersPage() {
   return (
@@ -58,7 +52,7 @@ export default function LettersPage() {
               </div>
               <Link href={`/letters#${featured.slug}`}>
                 <EditorialImage
-                  src={visualAssets.coastWide}
+                  src={getLetterImage(featured.slug, 0)}
                   alt={featured.title}
                   className="min-h-[250px]"
                   sizes="(min-width: 1024px) 42vw, 100vw"
@@ -71,7 +65,7 @@ export default function LettersPage() {
                 <article key={letter.slug} id={letter.slug} className="letter-list-row">
                   <Link href={`/letters#${letter.slug}`}>
                     <EditorialImage
-                      src={letterImages[index % letterImages.length]}
+                      src={getLetterImage(letter.slug, index + 1)}
                       alt={letter.title}
                       className="aspect-[1.55/1] border border-[color:var(--paper-border)]"
                       sizes="160px"

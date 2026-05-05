@@ -5,7 +5,7 @@ import { Bookmark, Printer, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
-import { essays, getEssay, getRelatedEssays } from "@/lib/content";
+import { type EssaySection, essays, getEssay, getRelatedEssays } from "@/lib/content";
 import { arabicCopy, getArticleImage } from "@/lib/visual-assets";
 
 export function generateStaticParams() {
@@ -46,7 +46,8 @@ export default async function EssayPage({
   const related = getRelatedEssays(essay);
   const paragraphs = essay.sections.flatMap((section) => section.paragraphs);
   const leadParagraphs = paragraphs.slice(0, 3);
-  const remainingParagraphs = paragraphs.slice(3);
+  const bodySections = getBodySections(essay.sections, leadParagraphs.length);
+  const articleImage = getArticleImage(essay.slug, 0);
 
   return (
     <SiteShell activePath="/essays">
@@ -98,16 +99,18 @@ export default async function EssayPage({
             </div>
 
             <figure className="my-6">
-              <EditorialImage
-                src={getArticleImage(essay.slug, 0)}
-                alt={`${essay.title} lead image`}
-                className="aspect-[1.72/0.55] border border-[color:var(--paper-border)]"
-                priority
-                sizes="(min-width: 1024px) 56vw, 100vw"
-              />
+              <Link href={articleImage} className="block" aria-label={`Open image for ${essay.title}`}>
+                <EditorialImage
+                  src={articleImage}
+                  alt={`${essay.title} lead image`}
+                  className="aspect-[1.72/0.55] border border-[color:var(--paper-border)]"
+                  priority
+                  sizes="(min-width: 1024px) 56vw, 100vw"
+                />
+              </Link>
               <figcaption className="caption mt-2">
-                The Beirut coast, where private profit meets public loss. Photograph
-                treatment: Lebanese Academic archive.
+                Generated editorial image for {essay.title.toLowerCase()}:{" "}
+                {essay.dek}
               </figcaption>
             </figure>
 
@@ -124,15 +127,27 @@ export default async function EssayPage({
 
             <section className="grid gap-8 md:grid-cols-[1fr_0.42fr]">
               <div>
-                <h2 className="editorial-title mb-4 text-[2rem]">I. Scarcity as a System</h2>
-                <div className="body-copy">
-                  {remainingParagraphs.slice(0, 8).map((paragraph, index) => (
-                    <p key={`${essay.slug}-body-${index}`}>
-                      {paragraph}
-                      {index === 5 && essay.notes.at(-1) ? (
-                        <sup>{essay.notes.at(-1)?.id}</sup>
+                <div className="article-continuation">
+                  {bodySections.map((section, sectionIndex) => (
+                    <section key={`${essay.slug}-section-${sectionIndex}`} className="article-body-section">
+                      {section.heading ? (
+                        <h2 className="editorial-title mb-4 text-[2rem]">
+                          {section.heading}
+                        </h2>
                       ) : null}
-                    </p>
+                      <div className="body-copy body-copy-continuation">
+                        {section.paragraphs.map((paragraph, paragraphIndex) => (
+                          <p key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}>
+                            {paragraph}
+                            {sectionIndex === bodySections.length - 1 &&
+                            paragraphIndex === section.paragraphs.length - 1 &&
+                            essay.notes.at(-1) ? (
+                              <sup>{essay.notes.at(-1)?.id}</sup>
+                            ) : null}
+                          </p>
+                        ))}
+                      </div>
+                    </section>
                   ))}
                 </div>
               </div>
@@ -206,4 +221,27 @@ export default async function EssayPage({
       </section>
     </SiteShell>
   );
+}
+
+function getBodySections(sections: EssaySection[], paragraphsToSkip: number) {
+  let remainingToSkip = paragraphsToSkip;
+
+  return sections.reduce<EssaySection[]>((visibleSections, section) => {
+    if (remainingToSkip >= section.paragraphs.length) {
+      remainingToSkip -= section.paragraphs.length;
+      return visibleSections;
+    }
+
+    const paragraphs = section.paragraphs.slice(remainingToSkip);
+    remainingToSkip = 0;
+
+    if (paragraphs.length) {
+      visibleSections.push({
+        heading: section.heading,
+        paragraphs,
+      });
+    }
+
+    return visibleSections;
+  }, []);
 }

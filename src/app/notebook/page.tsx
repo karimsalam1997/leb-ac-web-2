@@ -2,16 +2,7 @@ import Link from "next/link";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import { notebookEntries } from "@/lib/content";
-import { visualAssets } from "@/lib/visual-assets";
-
-const notebookImages = [
-  visualAssets.manuscript,
-  visualAssets.coastWide,
-  visualAssets.letterpress,
-  visualAssets.archSketch,
-  visualAssets.documentStack,
-  visualAssets.map,
-];
+import { getNotebookImage } from "@/lib/visual-assets";
 
 export default function NotebookPage() {
   return (
@@ -49,7 +40,7 @@ export default function NotebookPage() {
             >
               <Link href={`/notebook#${entry.slug}`}>
                 <EditorialImage
-                  src={notebookImages[index % notebookImages.length]}
+                  src={getNotebookImage(entry.slug, index)}
                   alt={entry.title}
                   className="notebook-note-image"
                   sizes="(min-width: 1024px) 26vw, 100vw"
