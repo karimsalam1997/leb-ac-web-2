@@ -74,7 +74,12 @@ export default function SubmitPage() {
             </blockquote>
           </aside>
 
-          <div className="submit-form-column">
+          <div>
+            <div className="submit-form-heading">
+              <div className="editorial-kicker">Submissions</div>
+              <h2 className="editorial-title">Submit a Letter</h2>
+              <p>Start here. Guidelines and reassurance follow below on mobile.</p>
+            </div>
             <SubmitForm />
             <div className="submit-reassurance">
               <div className="text-[2rem] text-[var(--accent)]">♡</div>

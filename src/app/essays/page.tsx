@@ -37,9 +37,14 @@ export default function EssaysPage() {
           <div className="editorial-kicker text-[var(--foreground)]">Explore Topics</div>
           <div className="topic-list">
             {topics.map((topic) => (
-              <span key={topic} data-active={topic === "All"}>
+              <button
+                key={topic}
+                type="button"
+                data-active={topic === "All"}
+                aria-pressed={topic === "All"}
+              >
                 {topic}
-              </span>
+              </button>
             ))}
           </div>
           <span className="dense-meta">Sort by</span>

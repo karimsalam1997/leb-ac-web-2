@@ -59,12 +59,16 @@ export function SubmitForm() {
   }
 
   return (
-    <form className="submit-form" onSubmit={handleSubmit}>
+    <form className="submit-form" onSubmit={handleSubmit} aria-describedby="submit-form-note">
+      <p id="submit-form-note" className="dense-meta">
+        Required fields are marked with *. We review every letter with care before publication.
+      </p>
       <div className="grid gap-5 md:grid-cols-2">
         <label className="space-y-2">
           <span>Name or pseudonym <b>*</b></span>
           <input
             required
+            autoComplete="name"
             value={values.name}
             onChange={(event) =>
               setValues((current) => ({ ...current, name: event.target.value }))
@@ -76,6 +80,7 @@ export function SubmitForm() {
           <span>Location <b>*</b></span>
           <input
             required
+            autoComplete="address-level2"
             value={values.location}
             onChange={(event) =>
               setValues((current) => ({ ...current, location: event.target.value }))
@@ -89,6 +94,7 @@ export function SubmitForm() {
         <input
           required
           type="email"
+          autoComplete="email"
           value={values.email}
           onChange={(event) =>
             setValues((current) => ({ ...current, email: event.target.value }))
@@ -111,6 +117,7 @@ export function SubmitForm() {
         <span>Your letter <b>*</b></span>
         <textarea
           required
+          aria-describedby="letter-counter"
           value={values.letter}
           onChange={(event) =>
             setValues((current) => ({ ...current, letter: event.target.value }))
@@ -119,9 +126,9 @@ export function SubmitForm() {
           placeholder="Write your letter here..."
         />
       </label>
-      <div className="-mt-4 flex justify-between dense-meta">
+      <div id="letter-counter" className="-mt-4 flex justify-between dense-meta">
         <span>{values.letter.length} / 5000 characters</span>
-        <span>5000 max</span>
+        <span>Short letters are welcome</span>
       </div>
 
       <div className="submit-form-lower">
@@ -171,9 +178,9 @@ export function SubmitForm() {
       </button>
       {message ? (
         <p
-          className={`text-lg ${
-            status === "error" ? "text-[var(--accent)]" : "text-[var(--ink-soft)]"
-          }`}
+          className="submit-form-status"
+          data-status={status}
+          role={status === "error" ? "alert" : "status"}
         >
           {message}
         </p>
