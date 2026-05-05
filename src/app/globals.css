@@ -3873,6 +3873,276 @@ button {
 }
 
 /* ============================================================
-   APPEND ZONE — agents in Wave 3 add their sections below this
+   APPEND ZONE - agents in Wave 3 add their sections below this
    line. NEVER edit rules above this line in parallel work.
    ============================================================ */
+
+/* === LETTERS_NOTEBOOK === */
+.letters-filter-row {
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0.85rem 0;
+}
+
+.letters-filter-label {
+  margin-right: 0.15rem;
+}
+
+.letters-filter-row button {
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.letters-filter-row button:hover,
+.letters-filter-row button:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.letters-filter-row button:focus-visible,
+.letters-subscribe-form input:focus-visible,
+.letters-subscribe-form button:focus-visible {
+  outline: 2px solid rgba(193, 74, 46, 0.42);
+  outline-offset: 3px;
+}
+
+.letters-layout {
+  align-items: start;
+}
+
+.letters-main {
+  min-width: 0;
+}
+
+.letters-featured-card > div:first-child,
+.letters-featured-copy {
+  padding: 5rem;
+}
+
+.letters-featured-image {
+  min-height: 400px;
+}
+
+.letters-empty-state {
+  border: 1px solid var(--line);
+  background: rgba(247, 231, 201, 0.5);
+  padding: 2rem;
+}
+
+.letters-sidebar {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 1rem;
+  align-self: start;
+}
+
+.letters-submit-card {
+  margin-top: 0;
+  background:
+    linear-gradient(180deg, rgba(247, 231, 201, 0.9), rgba(232, 207, 165, 0.74)),
+    var(--paper-noise);
+}
+
+.letters-subscribe-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  margin-top: 1.15rem;
+}
+
+.letters-subscribe-form input,
+.letters-subscribe-form button {
+  min-height: 46px;
+  border: 1px solid rgba(83, 57, 38, 0.28);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.letters-subscribe-form input {
+  min-width: 0;
+  background: rgba(255, 248, 229, 0.68);
+  padding: 0.75rem 0.85rem;
+  color: var(--foreground);
+}
+
+.letters-subscribe-form input::placeholder {
+  color: rgba(84, 72, 64, 0.72);
+}
+
+.letters-subscribe-form button {
+  background: var(--accent);
+  padding: 0 0.95rem;
+  color: #fff8e5;
+}
+
+.letters-testimonial {
+  border: 1px solid rgba(193, 74, 46, 0.48);
+  background: rgba(193, 74, 46, 0.07);
+  padding: 1.25rem;
+  color: var(--accent);
+}
+
+.letters-testimonial p {
+  font-size: 1.2rem;
+  line-height: 1.48;
+}
+
+.notebook-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-flow: dense;
+  grid-auto-rows: auto;
+  gap: 16px;
+  align-items: start;
+  padding-top: 1.7rem;
+}
+
+.notebook-board > .notebook-note,
+.notebook-board > .notebook-crosslink {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+.notebook-note {
+  display: flex;
+  min-width: 0;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.notebook-note-image {
+  height: clamp(145px, 16vw, 210px);
+}
+
+.notebook-note .p-5 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.notebook-note .read-link {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.notebook-note.note-tall {
+  aspect-ratio: 1 / 1.4;
+}
+
+.notebook-note.note-tall .notebook-note-image {
+  height: clamp(180px, 22vw, 260px);
+}
+
+.notebook-note.note-wide .notebook-note-image {
+  height: clamp(165px, 18vw, 245px);
+}
+
+.notebook-crosslink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  background: rgba(247, 231, 201, 0.46);
+}
+
+@media (min-width: 760px) {
+  .notebook-note.note-wide,
+  .notebook-crosslink {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 1023px) {
+  .letters-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .letters-sidebar {
+    order: -1;
+    position: sticky;
+    top: 0.5rem;
+    width: 100%;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0 0 1rem;
+    background:
+      linear-gradient(180deg, rgba(246, 241, 230, 0.97), rgba(246, 241, 230, 0.9)),
+      var(--paper-noise);
+    z-index: 3;
+  }
+
+  .letters-featured-card > div:first-child,
+  .letters-featured-copy {
+    padding: 1.15rem;
+  }
+
+  .letters-featured-image {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 759px) {
+  .notebook-board {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    grid-auto-flow: row;
+  }
+
+  .notebook-note.note-wide,
+  .notebook-crosslink {
+    grid-column: auto;
+  }
+
+  .notebook-note.note-tall {
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .letters-filter-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .letters-filter-row button,
+  .letters-filter-row .dense-meta {
+    flex: 0 0 auto;
+  }
+
+  .letters-filter-row .ml-auto {
+    margin-left: 0 !important;
+  }
+
+  .letters-submit-card,
+  .letters-testimonial,
+  .letters-empty-state {
+    padding: 1rem;
+  }
+
+  .letters-subscribe-form {
+    grid-template-columns: 1fr;
+  }
+
+  .letters-featured-card > div:first-child,
+  .letters-featured-copy {
+    padding: 1rem;
+  }
+
+  .letters-featured-image {
+    min-height: 240px;
+  }
+
+  .notebook-note-image {
+    height: 145px;
+  }
+}
