@@ -54,6 +54,13 @@ export default function NotebookPage() {
                 <p className="mt-3 text-[1.08rem] leading-6 text-[var(--ink-soft)]">
                   {entry.excerpt}
                 </p>
+                <div className="notebook-entry-body">
+                  {entry.body.map((paragraph, paragraphIndex) => (
+                    <p key={`${entry.slug}-body-${paragraphIndex}`}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
                 <Link href={`/notebook#${entry.slug}`} className="read-link mt-4 !text-[1rem]">
                   Open page <span className="link-arrow">-&gt;</span>
                 </Link>

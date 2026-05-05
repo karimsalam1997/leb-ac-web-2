@@ -51,7 +51,10 @@ export default async function EssayPage({
 
   return (
     <SiteShell activePath="/essays">
-      <article className="paper-frame pt-5">
+      <div className="reading-progress" aria-hidden="true">
+        <span />
+      </div>
+      <article className="paper-frame article-page pt-5">
         <div className="article-reference-grid editorial-rule">
           <div className="min-w-0">
             <div className="dense-meta mb-4">
@@ -183,6 +186,18 @@ export default async function EssayPage({
           </aside>
         </div>
       </article>
+
+      <section id="notes" className="paper-frame mobile-notes">
+        <div className="editorial-kicker text-[var(--foreground)]">Notes</div>
+        <ol className="notes-list mt-4">
+          {essay.notes.map((note) => (
+            <li key={note.id}>
+              <div className="dense-meta mb-2 text-[var(--accent)]">{note.id}</div>
+              <p>{note.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <section className="paper-frame pt-7">
         <div className="related-reference-row">
