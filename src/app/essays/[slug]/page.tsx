@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Bookmark, Printer, Share2 } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
-import { type EssaySection, essays, getEssay, getRelatedEssays } from "@/lib/content";
+import {
+  type EssaySection,
+  essays,
+  getCanonicalEssaySlug,
+  getEssay,
+  getRelatedEssays,
+} from "@/lib/content";
 import { arabicCopy, getArticleImage } from "@/lib/visual-assets";
 
 export function generateStaticParams() {
@@ -18,7 +24,8 @@ export function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   return params.then(({ slug }) => {
-    const essay = getEssay(slug);
+    const canonicalSlug = getCanonicalEssaySlug(slug);
+    const essay = canonicalSlug ? getEssay(canonicalSlug) : undefined;
 
     if (!essay) {
       return { title: "Essay Not Found / Lebanese Academic" };
@@ -37,7 +44,13 @@ export default async function EssayPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const essay = getEssay(slug);
+  const canonicalSlug = getCanonicalEssaySlug(slug);
+
+  if (canonicalSlug && canonicalSlug !== slug) {
+    permanentRedirect(`/essays/${canonicalSlug}`);
+  }
+
+  const essay = canonicalSlug ? getEssay(canonicalSlug) : undefined;
 
   if (!essay) {
     notFound();
@@ -171,7 +184,7 @@ export default async function EssayPage({
                   <li key={note.id}>
                     <div className="dense-meta mb-2 text-[var(--accent)]">{note.id}</div>
                     <p className="text-[0.94rem] leading-6 text-[var(--ink-soft)]">
-                      {note.text}
+                      {renderNoteText(note.text)}
                     </p>
                   </li>
                 ))}
@@ -183,6 +196,26 @@ export default async function EssayPage({
           </aside>
         </div>
       </article>
+
+      {essay.notes.length ? (
+        <section id="notes" className="paper-frame pt-7">
+          <div className="editorial-rule grid gap-6 md:grid-cols-[0.28fr_1fr]">
+            <div>
+              <div className="editorial-kicker text-[var(--foreground)]">Full Notes</div>
+            </div>
+            <ol className="notes-list grid gap-4 md:grid-cols-2">
+              {essay.notes.map((note) => (
+                <li key={note.id}>
+                  <div className="dense-meta mb-2 text-[var(--accent)]">{note.id}</div>
+                  <p className="text-[0.94rem] leading-6 text-[var(--ink-soft)]">
+                    {renderNoteText(note.text)}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : null}
 
       <section className="paper-frame pt-7">
         <div className="related-reference-row">
@@ -244,4 +277,18 @@ function getBodySections(sections: EssaySection[], paragraphsToSkip: number) {
 
     return visibleSections;
   }, []);
+}
+
+function renderNoteText(text: string) {
+  return text.split(/(https?:\/\/\S+)/g).map((part, index) => {
+    if (!part.startsWith("http")) {
+      return part;
+    }
+
+    return (
+      <a key={`${part}-${index}`} href={part} className="underline underline-offset-4">
+        {part}
+      </a>
+    );
+  });
 }
