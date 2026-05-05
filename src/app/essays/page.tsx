@@ -4,8 +4,6 @@ import { SiteShell } from "@/components/site-shell";
 import { essays } from "@/lib/content";
 import { arabicCopy, getArticleImage } from "@/lib/visual-assets";
 
-const topics = ["All", "Memory", "War", "City", "Identity", "Economy", "Power", "Diaspora", "Culture"];
-
 export default function EssaysPage() {
   const [featured, ...rest] = essays;
 
@@ -29,26 +27,6 @@ export default function EssaysPage() {
               {arabicCopy.essaysSubtitle}
             </p>
           </div>
-        </div>
-      </section>
-
-      <section className="paper-frame">
-        <div className="topics-bar">
-          <div className="editorial-kicker text-[var(--foreground)]">Explore Topics</div>
-          <div className="topic-list">
-            {topics.map((topic) => (
-              <button
-                key={topic}
-                type="button"
-                data-active={topic === "All"}
-                aria-pressed={topic === "All"}
-              >
-                {topic}
-              </button>
-            ))}
-          </div>
-          <span className="dense-meta">Sort by</span>
-          <span className="dense-meta text-[var(--foreground)]">Newest</span>
         </div>
       </section>
 
