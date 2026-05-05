@@ -60,12 +60,12 @@ export function SiteShell({
           </div>
 
           <div className="site-actions">
-            <button className="icon-button" aria-label="Search">
+            <button className="icon-button" type="button" aria-label="Search coming soon" disabled>
               <Search size={23} strokeWidth={1.5} />
             </button>
-            <Link href="/letters" className="language-pill arabic">
+            <span className="language-pill arabic" aria-label="Arabic edition coming soon">
               عربي
-            </Link>
+            </span>
           </div>
         </div>
 
