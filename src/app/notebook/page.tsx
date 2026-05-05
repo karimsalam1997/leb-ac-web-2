@@ -1,0 +1,90 @@
+import Link from "next/link";
+import { EditorialImage } from "@/components/editorial-image";
+import { SiteShell } from "@/components/site-shell";
+import { notebookEntries } from "@/lib/content";
+import { visualAssets } from "@/lib/visual-assets";
+
+const notebookImages = [
+  visualAssets.manuscript,
+  visualAssets.coastWide,
+  visualAssets.letterpress,
+  visualAssets.archSketch,
+  visualAssets.documentStack,
+  visualAssets.map,
+];
+
+export default function NotebookPage() {
+  return (
+    <SiteShell activePath="/notebook">
+      <section className="paper-frame pt-5">
+        <div className="notebook-hero editorial-rule">
+          <div>
+            <h1 className="display-title text-[3.9rem] leading-none text-[var(--accent)]">
+              Notebook
+            </h1>
+            <p className="mt-3 max-w-md text-[1.25rem] leading-7">
+              Pages, fragments, observations, images, readings, and whatever belongs
+              in the notebook.
+            </p>
+          </div>
+          <div className="h-24 border-l border-[color:var(--line-strong)]" />
+          <div className="text-right">
+            <h2 className="arabic text-[3.6rem] leading-none text-[var(--accent)]">
+              دفتر الملاحظات
+            </h2>
+            <p className="arabic mt-3 text-[1.25rem] leading-7">
+              صفحات، شذرات، ملاحظات، صور، قراءات، وأي شيء يجد مكانه في الدفتر.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="paper-frame pb-10">
+        <div className="notebook-board">
+          {notebookEntries.map((entry, index) => (
+            <article
+              key={entry.slug}
+              id={entry.slug}
+              className={`notebook-note note-${index + 1}`}
+            >
+              <Link href={`/notebook#${entry.slug}`}>
+                <EditorialImage
+                  src={notebookImages[index % notebookImages.length]}
+                  alt={entry.title}
+                  className="notebook-note-image"
+                  sizes="(min-width: 1024px) 26vw, 100vw"
+                />
+              </Link>
+              <div className="p-5">
+                <div className="dense-meta">{entry.date}</div>
+                <h2 className="editorial-title mt-2 text-[1.72rem] leading-tight">
+                  {entry.title}
+                </h2>
+                <p className="mt-3 text-[1.08rem] leading-6 text-[var(--ink-soft)]">
+                  {entry.excerpt}
+                </p>
+                <Link href={`/notebook#${entry.slug}`} className="read-link mt-4 !text-[1rem]">
+                  Open page <span className="link-arrow">-&gt;</span>
+                </Link>
+              </div>
+            </article>
+          ))}
+          <aside className="notebook-crosslink">
+            <div className="editorial-title text-[1.3rem]">Explore more in Essays and Letters.</div>
+            <p className="mt-2 text-[0.98rem] leading-5 text-[var(--ink-soft)]">
+              Ideas take many forms — some argue, some confess, some correspond.
+            </p>
+            <div className="mt-4 flex gap-8">
+              <Link href="/essays" className="read-link !text-[1rem]">
+                Browse Essays <span className="link-arrow">-&gt;</span>
+              </Link>
+              <Link href="/letters" className="read-link !text-[1rem]">
+                Read Letters <span className="link-arrow">-&gt;</span>
+              </Link>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </SiteShell>
+  );
+}
