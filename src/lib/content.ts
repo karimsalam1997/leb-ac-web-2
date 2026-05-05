@@ -964,6 +964,44 @@ function extractBody(block: string) {
     .filter(Boolean);
 }
 
+function extractBodySections(block: string) {
+  const bodyMarker = "**Full body:**";
+  const start = block.indexOf(bodyMarker);
+
+  if (start === -1) {
+    return [];
+  }
+
+  const bodyBlocks = block
+    .slice(start + bodyMarker.length)
+    .trim()
+    .split(/\n\s*\n/g)
+    .map((paragraph) => paragraph.replace(/\n/g, " ").trim())
+    .filter(Boolean);
+
+  const sections: EssaySection[] = [];
+
+  bodyBlocks.forEach((bodyBlock) => {
+    const headingMatch = bodyBlock.match(/^###\s+(.+)/);
+
+    if (headingMatch) {
+      sections.push({
+        heading: headingMatch[1].trim(),
+        paragraphs: [],
+      });
+      return;
+    }
+
+    if (!sections.length) {
+      sections.push({ paragraphs: [] });
+    }
+
+    sections[sections.length - 1].paragraphs.push(bodyBlock);
+  });
+
+  return sections.filter((section) => section.paragraphs.length);
+}
+
 function extractNotes(block: string) {
   const notesMarker = "**Suggested footnotes/citations:**";
   const bodyMarker = "**Full body:**";
@@ -1017,9 +1055,13 @@ function parseLaunchContent() {
   }
 
   const content = readFileSync(launchPath, "utf8");
+  const longformEssaysPath = path.join(process.cwd(), "longform-essays.md");
+  const essayContent = existsSync(longformEssaysPath)
+    ? readFileSync(longformEssaysPath, "utf8")
+    : content;
 
-  const flagshipBlock = extractSectionBlock(content, "# Flagship Essay", "# Essays");
-  const essayBlock = extractSectionBlock(content, "# Essays", "# Letters");
+  const flagshipBlock = extractSectionBlock(essayContent, "# Flagship Essay", "# Essays");
+  const essayBlock = extractSectionBlock(essayContent, "# Essays", "# Letters");
   const letterBlock = extractSectionBlock(content, "# Letters", "# Notebook");
   const notebookBlock = extractSectionBlock(content, "# Notebook", "# Source Notes");
 
@@ -1031,7 +1073,8 @@ function parseLaunchContent() {
   const parsedEssays: Essay[] = [...flagshipEntries, ...essayEntries].map(
     ({ title, block }, index) => {
       const actualTitle = extractField(block, "Final title") || title;
-      const body = extractBody(block);
+      const sections = extractBodySections(block);
+      const body = sections.flatMap((section) => section.paragraphs);
       return {
         slug: slugify(actualTitle),
         title: actualTitle,
@@ -1052,11 +1095,7 @@ function parseLaunchContent() {
           .filter(Boolean),
         relatedSlugs: [],
         notes: extractNotes(block),
-        sections: [
-          {
-            paragraphs: body,
-          },
-        ],
+        sections,
         heroStyle: index === 0 ? "art" : "image",
       };
     },
@@ -1235,6 +1274,30 @@ export const editorialImageMap = {
 
 export function getEssay(slug: string) {
   return essays.find((essay) => essay.slug === slug);
+}
+
+const legacyEssaySlugRedirects: Record<string, string> = {
+  "cartel-in-the-costume-of-a-country": "the-cartel-in-the-costume-of-a-country",
+  "the-brilliant-nodes": "the-mehtail-republic",
+  "what-taif-actually-said": "the-census-that-cannot-be-taken",
+  "the-service-state": "the-mehtail-republic",
+  "the-franchisor-has-left-the-building": "the-cartel-in-the-costume-of-a-country",
+  "the-transaction": "sovereignty-theatre",
+  "the-cartel-board-meeting": "the-cartel-in-the-costume-of-a-country",
+  "the-dog-river-keeps-the-minutes": "the-land-that-mourns-in-one-language",
+  "the-fracture-was-the-blueprint": "the-seventeen-countries",
+  "stones-that-outlived-their-gods": "the-land-that-mourns-in-one-language",
+  "the-looted-coast": "the-land-that-mourns-in-one-language",
+  "cousins-across-a-river-that-shouldn-t-exist": "the-land-that-mourns-in-one-language",
+  "every-letter-on-this-screen": "the-land-that-mourns-in-one-language",
+};
+
+export function getCanonicalEssaySlug(slug: string) {
+  if (essays.some((essay) => essay.slug === slug)) {
+    return slug;
+  }
+
+  return legacyEssaySlugRedirects[slug];
 }
 
 export function getRelatedEssays(essay: Essay) {
