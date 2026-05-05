@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { AtSign, Mail, Search, Send } from "lucide-react";
+import { AtSign, Mail, Send } from "lucide-react";
 
 const navItems = [
   { href: "/essays", label: "Essays", arabic: "مقالات" },
@@ -39,14 +39,7 @@ export function SiteShell({
       <header className="paper-frame masthead-frame">
         <div className="masthead">
           <Link href="/" className="brand-lockup" aria-label="Lebanese Academic home">
-            <Image
-              src="/brand/la-primary-lockup.png"
-              alt="Lebanese Academic / الأكاديمي اللبناني"
-              width={455}
-              height={162}
-              priority
-              className="brand-lockup-image"
-            />
+            <HeaderBrand />
           </Link>
 
           <div className="masthead-divider" />
@@ -57,9 +50,9 @@ export function SiteShell({
           </div>
 
           <div className="site-actions">
-            <button className="icon-button" aria-label="Search">
-              <Search size={23} strokeWidth={1.5} />
-            </button>
+            <Link href="/submit" className="header-submit-action">
+              Submit
+            </Link>
             <Link href="/letters" className="language-pill arabic">
               عربي
             </Link>
@@ -124,6 +117,31 @@ export function SiteShell({
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function HeaderBrand() {
+  return (
+    <div className="header-brand" aria-hidden="true">
+      <Image
+        src="/brand/la-editors-mark.png"
+        alt=""
+        width={82}
+        height={82}
+        priority
+        className="header-brand-mark"
+      />
+      <div className="header-brand-wordmarks">
+        <div className="header-brand-english">
+          <span>Lebanese</span>
+          <span>Academic</span>
+        </div>
+        <div className="header-brand-arabic arabic">
+          <span>الأكاديمي</span>
+          <span>اللبناني</span>
+        </div>
+      </div>
     </div>
   );
 }

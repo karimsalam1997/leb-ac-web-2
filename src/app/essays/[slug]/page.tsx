@@ -121,7 +121,7 @@ export default async function EssayPage({
                 width={50}
                 height={54}
                 className="object-contain"
-                style={{ width: 50, height: "auto" }}
+                style={{ width: "50px", height: "54px" }}
               />
             </div>
 

@@ -242,8 +242,14 @@ export default function Home() {
           </div>
           <p>Dispatches from a city that refuses to be a footnote.</p>
           <form className="subscribe-input">
-            <input className="h-10 px-3 text-base" placeholder="Enter your email" />
-            <button className="h-10 bg-[var(--accent)] px-5 text-white">Subscribe</button>
+            <label className="sr-only" htmlFor="home-newsletter-email">Email address</label>
+            <input
+              id="home-newsletter-email"
+              className="h-10 px-3 text-base"
+              type="email"
+              placeholder="Enter your email"
+            />
+            <button className="h-10 bg-[var(--accent)] px-5 text-white">Join the mailing list</button>
           </form>
           <Link href="/submit" className="read-link !text-[1rem]">
             Submit a letter <span className="link-arrow">→</span>

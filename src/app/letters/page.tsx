@@ -29,10 +29,10 @@ export default function LettersPage() {
 
       <section className="paper-frame">
         <div className="letters-filter-row">
-          <span data-active="true">All</span>
-          <span>From Lebanon</span>
-          <span>From the diaspora</span>
-          <span>Anonymous</span>
+          <button type="button" data-active="true" aria-pressed="true">All</button>
+          <button type="button" aria-pressed="false">From Lebanon</button>
+          <button type="button" aria-pressed="false">From the diaspora</button>
+          <button type="button" aria-pressed="false">Anonymous</button>
           <span className="ml-auto">Newest first</span>
         </div>
       </section>
@@ -120,8 +120,14 @@ export default function LettersPage() {
                   </p>
                 </div>
               </div>
-              <input className="mt-5 h-10 w-full px-3 text-sm" placeholder="Your email address" />
-              <button className="mt-3 h-10 w-full bg-[var(--accent)] text-white">Subscribe</button>
+              <label className="sr-only" htmlFor="letters-newsletter-email">Email address</label>
+              <input
+                id="letters-newsletter-email"
+                className="mt-5 h-10 w-full px-3 text-sm"
+                type="email"
+                placeholder="Your email address"
+              />
+              <button className="mt-3 h-10 w-full bg-[var(--accent)] text-white">Join the mailing list</button>
             </div>
           </aside>
         </div>
