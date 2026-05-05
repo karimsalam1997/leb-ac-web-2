@@ -1,13 +1,49 @@
-import Link from "next/link";
-import { Mail, PenLine } from "lucide-react";
-import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import { letters } from "@/lib/content";
 import { getLetterImage } from "@/lib/visual-assets";
+import { LettersClient, type LetterOrigin } from "./letters-client";
 
-const [featured, ...rest] = letters;
+const lebanonLocationMatchers = [
+  /beirut/i,
+  /gemmayzeh/i,
+  /tripoli/i,
+  /saida/i,
+  /sidon/i,
+  /tyre/i,
+  /sour/i,
+  /mount lebanon/i,
+  /byblos/i,
+  /jbeil/i,
+  /nahr ibrahim/i,
+  /baabda/i,
+  /metn/i,
+  /keserwan/i,
+  /chouf/i,
+  /aley/i,
+  /batroun/i,
+  /akkar/i,
+  /bekaa/i,
+  /zahle/i,
+  /baalbek/i,
+  /nabatieh/i,
+  /jezzine/i,
+  /faqra/i,
+];
+
+function getLetterOrigin(location: string): LetterOrigin {
+  return lebanonLocationMatchers.some((matcher) => matcher.test(location))
+    ? "From Lebanon"
+    : "From the diaspora";
+}
 
 export default function LettersPage() {
+  const filterableLetters = letters.map((letter, index) => ({
+    ...letter,
+    imageSrc: getLetterImage(letter.slug, index),
+    origin: getLetterOrigin(letter.location),
+    originalIndex: index,
+  }));
+
   return (
     <SiteShell activePath="/letters">
       <section className="paper-frame pt-5">
@@ -28,113 +64,7 @@ export default function LettersPage() {
       </section>
 
       <section className="paper-frame pb-10">
-        <div className="letters-layout">
-          <div>
-            <article id={featured.slug} className="letters-featured-card">
-              <div className="p-7">
-                <div className="editorial-kicker">Featured</div>
-                <div className="dense-meta mt-5">{featured.date} / {featured.location}</div>
-                <h2 className="editorial-title mt-4 text-[2rem] leading-tight">
-                  {featured.title}
-                </h2>
-                <p className="mt-4 max-w-sm text-[1.15rem] leading-7">{featured.excerpt}</p>
-                <div className="letter-body">
-                  {featured.body.map((paragraph, index) => (
-                    <p key={`${featured.slug}-body-${index}`}>{paragraph}</p>
-                  ))}
-                </div>
-                <div className="dense-meta mt-7">{featured.readTime}</div>
-              </div>
-              <Link href={`/letters#${featured.slug}`}>
-                <EditorialImage
-                  src={getLetterImage(featured.slug, 0)}
-                  alt={featured.title}
-                  className="min-h-[250px]"
-                  sizes="(min-width: 1024px) 42vw, 100vw"
-                />
-              </Link>
-            </article>
-
-            <div className="mt-6">
-              {rest.map((letter, index) => (
-                <article key={letter.slug} id={letter.slug} className="letter-list-row">
-                  <Link href={`/letters#${letter.slug}`}>
-                    <EditorialImage
-                      src={getLetterImage(letter.slug, index + 1)}
-                      alt={letter.title}
-                      className="aspect-[1.55/1] border border-[color:var(--paper-border)]"
-                      sizes="160px"
-                    />
-                  </Link>
-                  <div>
-                    <div className="dense-meta">{letter.date} / {letter.location}</div>
-                    <h3 className="editorial-title mt-1 text-[1.55rem] leading-tight">
-                      {letter.title}
-                    </h3>
-                    <p className="mt-1 text-[1rem] leading-5 text-[var(--ink-soft)]">
-                      {letter.excerpt}
-                    </p>
-                    <div className="letter-body">
-                      {letter.body.map((paragraph, paragraphIndex) => (
-                        <p key={`${letter.slug}-body-${paragraphIndex}`}>
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="dense-meta text-right">{letter.readTime}</div>
-                  <Link
-                    href={`/letters#${letter.slug}`}
-                    className="read-link !text-[1rem]"
-                    aria-label={`Read ${letter.title}`}
-                  >
-                    Read <span className="link-arrow">-&gt;</span>
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <aside className="letters-sidebar">
-            <p className="text-[1.35rem] leading-8 text-[var(--accent)]">
-              Letters are small acts of witness. They travel across time and distance
-              to record what matters in the everyday.
-            </p>
-            <div className="my-8 h-px bg-[var(--line)]" />
-            <div className="border border-[color:var(--accent)] p-7">
-              <PenLine className="text-[var(--accent)]" size={28} strokeWidth={1.2} />
-              <h2 className="editorial-title mt-3 text-[1.75rem] text-[var(--accent)]">
-                Share a letter
-              </h2>
-              <p className="mt-3 text-[1.08rem] leading-6">
-                Have a moment, memory, or observation to send? We welcome short letters
-                from anywhere.
-              </p>
-              <Link href="/submit" className="read-link mt-5">
-                Submit a Letter <span className="link-arrow">-&gt;</span>
-              </Link>
-            </div>
-            <div className="airmail-box mt-7">
-              <div className="flex items-start gap-3">
-                <Mail size={25} strokeWidth={1.3} className="text-[var(--accent)]" />
-                <div>
-                  <h3 className="editorial-title text-[1.55rem] text-[var(--accent)]">
-                    Letters in your inbox
-                  </h3>
-                  <p className="mt-2 text-[1rem] leading-5">
-                    A weekly selection of letters. No noise. Just signal.
-                  </p>
-                </div>
-              </div>
-              <p className="mt-5 text-[1rem] leading-5">
-                Letters arrive on Sundays.
-              </p>
-              <Link href="/submit" className="read-link mt-4">
-                Submit a letter <span className="link-arrow">-&gt;</span>
-              </Link>
-            </div>
-          </aside>
-        </div>
+        <LettersClient letters={filterableLetters} />
       </section>
     </SiteShell>
   );

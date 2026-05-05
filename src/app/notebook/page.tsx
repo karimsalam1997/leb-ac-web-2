@@ -17,6 +17,9 @@ export default function NotebookPage() {
               Pages, fragments, observations, images, readings, and whatever belongs
               in the notebook.
             </p>
+            <div className="dense-meta mt-4">
+              {notebookEntries.length} ENTRIES / GROWING
+            </div>
           </div>
           <div className="h-24 border-l border-[color:var(--line-strong)]" />
           <div className="text-right">
@@ -32,45 +35,58 @@ export default function NotebookPage() {
 
       <section className="paper-frame pb-10">
         <div className="notebook-board">
-          {notebookEntries.map((entry, index) => (
-            <article
-              key={entry.slug}
-              id={entry.slug}
-              className={`notebook-note note-${index + 1}`}
-            >
-              <Link href={`/notebook#${entry.slug}`}>
-                <EditorialImage
-                  src={getNotebookImage(entry.slug, index)}
-                  alt={entry.title}
-                  className="notebook-note-image"
-                  sizes="(min-width: 1024px) 26vw, 100vw"
-                />
-              </Link>
-              <div className="p-5">
-                <div className="dense-meta">{entry.date}</div>
-                <h2 className="editorial-title mt-2 text-[1.72rem] leading-tight">
-                  {entry.title}
-                </h2>
-                <p className="mt-3 text-[1.08rem] leading-6 text-[var(--ink-soft)]">
-                  {entry.excerpt}
-                </p>
-                <div className="notebook-entry-body">
-                  {entry.body.map((paragraph, paragraphIndex) => (
-                    <p key={`${entry.slug}-body-${paragraphIndex}`}>
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-                <Link href={`/notebook#${entry.slug}`} className="read-link mt-4 !text-[1rem]">
-                  Open page <span className="link-arrow">-&gt;</span>
+          {notebookEntries.map((entry, index) => {
+            const noteNumber = index + 1;
+            const noteClasses = ["notebook-note"];
+
+            if (noteNumber % 5 === 0) {
+              noteClasses.push("note-tall");
+            }
+
+            if (noteNumber % 7 === 0) {
+              noteClasses.push("note-wide");
+            }
+
+            return (
+              <article
+                key={entry.slug}
+                id={entry.slug}
+                className={noteClasses.join(" ")}
+              >
+                <Link href={`/notebook#${entry.slug}`}>
+                  <EditorialImage
+                    src={getNotebookImage(entry.slug, index)}
+                    alt={entry.title}
+                    className="notebook-note-image"
+                    sizes="(min-width: 1024px) 26vw, 100vw"
+                  />
                 </Link>
-              </div>
-            </article>
-          ))}
+                <div className="p-5">
+                  <div className="dense-meta">{entry.date}</div>
+                  <h2 className="editorial-title mt-2 text-[1.72rem] leading-tight">
+                    {entry.title}
+                  </h2>
+                  <p className="mt-3 text-[1.08rem] leading-6 text-[var(--ink-soft)]">
+                    {entry.excerpt}
+                  </p>
+                  <div className="notebook-entry-body">
+                    {entry.body.map((paragraph, paragraphIndex) => (
+                      <p key={`${entry.slug}-body-${paragraphIndex}`}>
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                  <Link href={`/notebook#${entry.slug}`} className="read-link mt-4 !text-[1rem]">
+                    Open page <span className="link-arrow">-&gt;</span>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
           <aside className="notebook-crosslink">
             <div className="editorial-title text-[1.3rem]">Explore more in Essays and Letters.</div>
             <p className="mt-2 text-[0.98rem] leading-5 text-[var(--ink-soft)]">
-              Ideas take many forms — some argue, some confess, some correspond.
+              Ideas take many forms: some argue, some confess, some correspond.
             </p>
             <div className="mt-4 flex gap-8">
               <Link href="/essays" className="read-link !text-[1rem]">
