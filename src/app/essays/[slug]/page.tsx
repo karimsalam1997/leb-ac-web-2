@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
+import { Fragment } from "react";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import {
+  type Citation,
   type EssaySection,
   essays,
   getCanonicalEssaySlug,
@@ -94,12 +96,19 @@ export default async function EssayPage({
             </div>
 
             <div className="body-copy mt-7">
-              {leadParagraphs.map((paragraph, index) => (
-                <p key={`${essay.slug}-lead-${index}`}>
-                  {paragraph}
-                  {index === 1 && essay.notes[0] ? <sup>{essay.notes[0].id}</sup> : null}
-                </p>
-              ))}
+              {leadParagraphs.map((paragraph, index) => {
+                const note = index === 1 ? essay.notes[0] : undefined;
+
+                return (
+                  <Fragment key={`${essay.slug}-lead-${index}`}>
+                    <p>
+                      {paragraph}
+                      {note ? <sup>{note.id}</sup> : null}
+                    </p>
+                    <InlineFootnote note={note} />
+                  </Fragment>
+                );
+              })}
             </div>
 
             <figure className="my-6">
@@ -140,19 +149,38 @@ export default async function EssayPage({
                         </h2>
                       ) : null}
                       <div className="body-copy body-copy-continuation">
-                        {section.paragraphs.map((paragraph, paragraphIndex) => (
-                          <p key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}>
-                            {paragraph}
-                            {sectionIndex === bodySections.length - 1 &&
-                            paragraphIndex === section.paragraphs.length - 1 &&
-                            essay.notes.at(-1) ? (
-                              <sup>{essay.notes.at(-1)?.id}</sup>
-                            ) : null}
-                          </p>
-                        ))}
+                        {section.paragraphs.map((paragraph, paragraphIndex) => {
+                          const isLastBodyParagraph =
+                            sectionIndex === bodySections.length - 1 &&
+                            paragraphIndex === section.paragraphs.length - 1;
+                          const note = isLastBodyParagraph ? essay.notes.at(-1) : undefined;
+
+                          return (
+                            <Fragment
+                              key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}
+                            >
+                              <p>
+                                {paragraph}
+                                {note ? <sup>{note.id}</sup> : null}
+                              </p>
+                              <InlineFootnote note={note} />
+                            </Fragment>
+                          );
+                        })}
                       </div>
                     </section>
                   ))}
+                  <div className="article-section-mark article-section-mark-end">
+                    <Image
+                      src="/brand/la-witness-glyph.png"
+                      alt=""
+                      width={60}
+                      height={60}
+                      aria-hidden="true"
+                      className="object-contain"
+                      style={{ width: "60px", height: "60px" }}
+                    />
+                  </div>
                 </div>
               </div>
               {pullQuote ? (
@@ -165,7 +193,7 @@ export default async function EssayPage({
             </section>
           </div>
 
-          <aside className="hidden min-w-0 md:block">
+          <aside className="article-notes-aside min-w-0">
             <div className="article-notes">
               <div className="editorial-kicker mb-5 text-[var(--foreground)]">Notes</div>
               <ol className="notes-list">
@@ -187,7 +215,7 @@ export default async function EssayPage({
       </article>
 
       {essay.notes.length ? (
-        <section id="notes" className="paper-frame pt-7">
+        <section id="notes" className="paper-frame pt-7 article-full-notes">
           <div className="editorial-rule grid gap-6 md:grid-cols-[0.28fr_1fr]">
             <div>
               <div className="editorial-kicker text-[var(--foreground)]">Full Notes</div>
@@ -242,6 +270,19 @@ export default async function EssayPage({
         </div>
       </section>
     </SiteShell>
+  );
+}
+
+function InlineFootnote({ note }: { note?: Citation }) {
+  if (!note) {
+    return null;
+  }
+
+  return (
+    <details className="inline-footnote">
+      <summary>Note {note.id} ↓</summary>
+      <p>{renderNoteText(note.text)}</p>
+    </details>
   );
 }
 
