@@ -48,6 +48,11 @@ export default function LettersPage() {
                   {featured.title}
                 </h2>
                 <p className="mt-4 max-w-sm text-[1.15rem] leading-7">{featured.excerpt}</p>
+                <div className="letter-body">
+                  {featured.body.map((paragraph, index) => (
+                    <p key={`${featured.slug}-body-${index}`}>{paragraph}</p>
+                  ))}
+                </div>
                 <div className="dense-meta mt-7">{featured.readTime}</div>
               </div>
               <Link href={`/letters#${featured.slug}`}>
@@ -79,9 +84,20 @@ export default function LettersPage() {
                     <p className="mt-1 text-[1rem] leading-5 text-[var(--ink-soft)]">
                       {letter.excerpt}
                     </p>
+                    <div className="letter-body">
+                      {letter.body.map((paragraph, paragraphIndex) => (
+                        <p key={`${letter.slug}-body-${paragraphIndex}`}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                   <div className="dense-meta text-right">{letter.readTime}</div>
-                  <Link href={`/letters#${letter.slug}`} className="read-link !text-[1rem]">
+                  <Link
+                    href={`/letters#${letter.slug}`}
+                    className="read-link !text-[1rem]"
+                    aria-label={`Read ${letter.title}`}
+                  >
                     Read <span className="link-arrow">-&gt;</span>
                   </Link>
                 </article>
