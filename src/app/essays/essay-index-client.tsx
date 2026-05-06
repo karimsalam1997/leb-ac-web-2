@@ -21,8 +21,14 @@ export type EssayIndexItem = {
   sourceIndex: number;
 };
 
-export function EssaysIndexClient({ essays }: { essays: EssayIndexItem[] }) {
-  const [activeTopic, setActiveTopic] = useState<string | null>(null);
+export function EssaysIndexClient({
+  essays,
+  initialTopic = null,
+}: {
+  essays: EssayIndexItem[];
+  initialTopic?: string | null;
+}) {
+  const [activeTopic, setActiveTopic] = useState<string | null>(initialTopic);
   const [sortMode, setSortMode] = useState<SortMode>("newest");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 

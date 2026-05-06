@@ -1,14 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import {
+  Archive,
+  BookOpenText,
+  ChartNoAxesColumnIncreasing,
+  Landmark,
+  NotebookPen,
+  Plane,
+  Scale,
+  UsersRound,
+} from "lucide-react";
 import { EditorialImage } from "@/components/editorial-image";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import { SiteShell } from "@/components/site-shell";
-import { essays, letters, notebookEntries } from "@/lib/content";
-import { arabicCopy, getArticleImage, getLetterImage, homeAssets } from "@/lib/visual-assets";
+import { essays, letters, notebookEntries, type Essay } from "@/lib/content";
+import { arabicCopy, getArticleImage, homeAssets } from "@/lib/visual-assets";
 
 const heroEssay = essays[0];
+const latestEssays = essays.slice(1, 6);
+const moreEssays = essays.slice(6, 8);
+const recentLetters = letters.slice(0, 2);
+const leadNotebook = notebookEntries[0];
+
 const essayDeck =
-  "Long-form writing on Lebanon, memory, power, and identity — against the idea that collapse is natural.";
+  "Lebanese Academic is an independent platform for long-form writing on Lebanon, power, memory, and identity - against the idea that collapse is natural.";
 
 const displayTitleLinesBySlug: Record<string, string[]> = {
   "the-cartel-in-the-costume-of-a-country": [
@@ -27,28 +42,50 @@ const displayTitleLinesBySlug: Record<string, string[]> = {
   ],
 };
 
-const numberWords: Record<number, string> = {
-  1: "One",
-  2: "Two",
-  3: "Three",
-  4: "Four",
-  5: "Five",
-  6: "Six",
-  7: "Seven",
-  8: "Eight",
-  9: "Nine",
-  10: "Ten",
-  11: "Eleven",
-  12: "Twelve",
-  13: "Thirteen",
-  14: "Fourteen",
-  15: "Fifteen",
-  16: "Sixteen",
-  17: "Seventeen",
-  18: "Eighteen",
-  19: "Nineteen",
-  20: "Twenty",
-};
+const browseTopics = [
+  {
+    tag: "Power",
+    label: "Power",
+    arabic: "السلطة",
+    icon: Landmark,
+    accent: "red",
+  },
+  {
+    tag: "Political Economy",
+    label: "Political Economy",
+    arabic: "الاقتصاد السياسي",
+    icon: ChartNoAxesColumnIncreasing,
+    accent: "blue",
+  },
+  {
+    tag: "Society",
+    label: "Society",
+    arabic: "المجتمع",
+    icon: UsersRound,
+    accent: "teal",
+  },
+  {
+    tag: "Sovereignty",
+    label: "Sovereignty",
+    arabic: "السيادة",
+    icon: Scale,
+    accent: "red",
+  },
+  {
+    tag: "Diaspora",
+    label: "Diaspora",
+    arabic: "المغترب",
+    icon: Plane,
+    accent: "blue",
+  },
+  {
+    tag: "Memory",
+    label: "Memory",
+    arabic: "الذاكرة",
+    icon: BookOpenText,
+    accent: "teal",
+  },
+];
 
 function editorialTitleLines(title: string) {
   const words = title.split(" ");
@@ -61,60 +98,118 @@ function editorialTitleLines(title: string) {
   ].filter(Boolean);
 }
 
+function getTopicCount(tag: string) {
+  return essays.filter((essay) => essay.tags.includes(tag)).length;
+}
+
+function EssayCard({
+  essay,
+  index,
+  variant = "latest",
+}: {
+  essay: Essay;
+  index: number;
+  variant?: "latest" | "more";
+}) {
+  const imageAsset = homeAssets.edition[index % homeAssets.edition.length];
+
+  return (
+    <Link
+      href={`/essays/${essay.slug}`}
+      className="home-essay-card"
+      data-variant={variant}
+      aria-label={`Read ${essay.title}`}
+    >
+      <EditorialImage
+        src={getArticleImage(essay.slug, index)}
+        alt={essay.title}
+        className="home-essay-card-image"
+        imagePosition={imageAsset.position}
+        quality={90}
+        sizes={
+          variant === "more"
+            ? "(min-width: 1024px) 28vw, 100vw"
+            : "(min-width: 1180px) 18vw, (min-width: 768px) 30vw, 100vw"
+        }
+      />
+      <span className="home-essay-card-body">
+        <span className="home-essay-card-topic">{essay.tags[0] ?? essay.category}</span>
+        <strong>{essay.title}</strong>
+        <span>{essay.dek}</span>
+        <small>
+          {essay.byline} / {essay.date} / {essay.readTime}
+        </small>
+      </span>
+    </Link>
+  );
+}
+
+function SectionHeading({
+  title,
+  arabic,
+  href,
+  cta = "View all essays",
+}: {
+  title: string;
+  arabic: string;
+  href: string;
+  cta?: string;
+}) {
+  return (
+    <div className="home-section-heading">
+      <div>
+        <h2>{title}</h2>
+        <span className="arabic">{arabic}</span>
+      </div>
+      <Link href={href}>
+        {cta} <span className="link-arrow">-&gt;</span>
+      </Link>
+    </div>
+  );
+}
+
 export default function Home() {
   const heroTitleLines =
     displayTitleLinesBySlug[heroEssay.slug] ?? editorialTitleLines(heroEssay.title);
-  const primaryEssay = essays[1] ?? heroEssay;
-  const supportingEssays = essays
-    .filter((essay) => essay.slug !== heroEssay.slug && essay.slug !== primaryEssay.slug)
-    .slice(0, 2);
-  const recentLetters = letters.slice(0, 2);
-  const leadNotebook = notebookEntries[0];
-  const editionEssays = essays;
-  const editionEssayCount = editionEssays.length;
-  const editionTitle = `${numberWords[editionEssayCount] ?? editionEssayCount} ${
-    editionEssayCount === 1 ? "Essay" : "Essays"
-  }`;
 
   return (
     <SiteShell activePath="/">
-      <section className="paper-frame front-page">
-        <div className="front-grid">
-          <article className="front-lead">
+      <section className="paper-frame home-lead-section">
+        <div className="home-lead-grid">
+          <article className="home-lead-story">
             <div className="editorial-kicker">Featured Essay</div>
-            <h1 className="display-title front-lead-title">
+            <h1 className="display-title home-lead-title">
               <Link href={`/essays/${heroEssay.slug}`}>
                 {heroTitleLines.map((line) => (
                   <span key={line}>{line}</span>
                 ))}
               </Link>
             </h1>
-            <p className="front-lead-dek">{heroEssay.dek}</p>
-
-            <div className="front-byline">
+            <p className="home-lead-dek">{heroEssay.dek}</p>
+            <div className="home-lead-meta">
               <Image
                 src="/brand/la-editors-mark.png"
-                alt={heroEssay.byline}
-                width={44}
-                height={44}
+                alt=""
+                width={42}
+                height={42}
               />
-              <div>
-                <div>{heroEssay.byline}</div>
-                <div className="dense-meta">
-                  {heroEssay.date} · {heroEssay.readTime}
-                </div>
-              </div>
+              <span>
+                <strong>{heroEssay.byline}</strong>
+                <small>
+                  {heroEssay.date} / {heroEssay.readTime}
+                </small>
+              </span>
             </div>
             <Link href={`/essays/${heroEssay.slug}`} className="read-link">
-              Read essay <span className="link-arrow">→</span>
+              Read essay <span className="link-arrow">-&gt;</span>
             </Link>
           </article>
 
-          <Link href={`/essays/${heroEssay.slug}`} className="front-hero-image">
+          <Link href={`/essays/${heroEssay.slug}`} className="home-lead-image-link">
             <EditorialImage
               src={homeAssets.hero.src}
               alt={heroEssay.title}
-              className="front-hero-art"
+              className="home-lead-image"
               imagePosition={homeAssets.hero.position}
               priority
               quality={92}
@@ -124,7 +219,7 @@ export default function Home() {
 
           <Link
             href={`/essays/${heroEssay.slug}`}
-            className="front-poster"
+            className="home-lead-poster"
             aria-label={`${arabicCopy.homeQuote} ${arabicCopy.homeSubquote}`}
           >
             <Image
@@ -134,7 +229,7 @@ export default function Home() {
               priority
               quality={95}
               sizes="(min-width: 1024px) 23vw, 100vw"
-              className="front-poster-image"
+              className="home-lead-poster-image"
             />
             <span className="visually-hidden">
               {arabicCopy.homeQuote} {arabicCopy.homeSubquote}
@@ -142,198 +237,179 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="pattern-rule" aria-hidden="true" />
-        <div id="about" className="front-manifesto">{essayDeck}</div>
+        <div className="pattern-rule home-pattern-rule" aria-hidden="true" />
       </section>
 
-      <section className="paper-frame essay-priority-section">
-        <div className="essay-priority-grid">
-          <article className="essay-priority-feature">
-            <DepartmentHeading title="Essays" arabic="مقالات" href="/essays" />
-            <Link href={`/essays/${primaryEssay.slug}`}>
-              <EditorialImage
-                src={homeAssets.departments.essays.src}
-                alt={primaryEssay.title}
-                className="essay-priority-image"
-                imagePosition={homeAssets.departments.essays.position}
-                quality={92}
-                sizes="(min-width: 1024px) 40vw, 100vw"
-              />
-            </Link>
-            <h2>
-              <Link href={`/essays/${primaryEssay.slug}`}>{primaryEssay.title}</Link>
-            </h2>
-            <p>{primaryEssay.dek}</p>
-            <div className="dense-meta">
-              {primaryEssay.date} · {primaryEssay.readTime}
-            </div>
-            <Link href={`/essays/${primaryEssay.slug}`} className="read-link">
-              Read essay <span className="link-arrow">→</span>
-            </Link>
-          </article>
+      <section
+        id="about"
+        className="paper-frame home-mission-strip"
+        aria-label="Publication mission"
+      >
+        <span aria-hidden="true" />
+        <p>{essayDeck}</p>
+        <span aria-hidden="true" />
+      </section>
 
-          <div className="essay-priority-list">
-            {supportingEssays.map((essay, index) => {
-              const essayAsset = homeAssets.edition[(index + 2) % homeAssets.edition.length];
-
-              return (
-                <Link
-                  key={essay.slug}
-                  href={`/essays/${essay.slug}`}
-                  className="essay-priority-row"
-                >
-                  <EditorialImage
-                    src={getArticleImage(essay.slug, index + 2)}
-                    alt={essay.title}
-                    className="essay-priority-thumb"
-                    imagePosition={essayAsset.position}
-                    quality={90}
-                    sizes="(min-width: 1024px) 14vw, 92vw"
-                  />
-                  <span>
-                    <small>
-                      {String(index + 2).padStart(2, "0")} · Essay
-                    </small>
-                    <strong>{essay.title}</strong>
-                    <em>{essay.dek}</em>
-                  </span>
-                </Link>
-              );
-            })}
-            <Link href="/essays" className="essay-priority-index">
-              See the essay index <span className="link-arrow">→</span>
-            </Link>
-          </div>
-
-          <aside className="home-support-rail">
-            <section className="home-support-card letter-stack">
-              <DepartmentHeading title="Letters" arabic="رسائل" href="/letters" />
-              <div className="letter-stack-list">
-                {recentLetters.map((letter, index) => (
-                  <Link
-                    key={letter.slug}
-                    href={`/letters#${letter.slug}`}
-                    className="mini-row"
-                  >
-                    <EditorialImage
-                      src={getLetterImage(letter.slug, index)}
-                      alt={letter.title}
-                      className="mini-row-image"
-                      imagePosition="center 54%"
-                      quality={90}
-                      sizes="92px"
-                    />
-                    <span>
-                      <strong>{letter.title}</strong>
-                      <small>{letter.date} · {letter.readTime}</small>
-                    </span>
-                  </Link>
-                ))}
-              </div>
-              <Link href="/letters" className="read-link">
-                All letters <span className="link-arrow">→</span>
-              </Link>
-            </section>
-
-            <section className="home-support-card notebook-preview">
-              <DepartmentHeading title="Notebook" arabic="دفتر الملاحظات" href="/notebook" />
-              <Link href={`/notebook#${leadNotebook?.slug ?? ""}`}>
-                <EditorialImage
-                  src={homeAssets.departments.notebook.src}
-                  alt={leadNotebook?.title ?? "Notebook"}
-                  className="notebook-front-image"
-                  imagePosition={homeAssets.departments.notebook.position}
-                  quality={92}
-                  sizes="(min-width: 1024px) 20vw, 100vw"
-                />
-              </Link>
-              <h2>{leadNotebook?.title ?? "Notebook"}</h2>
-              <p>{leadNotebook?.excerpt ?? "Notes from the margins of memory, public life, and power."}</p>
-              <Link href="/notebook" className="read-link">
-                Open notebook <span className="link-arrow">→</span>
-              </Link>
-            </section>
-          </aside>
+      <section className="paper-frame home-latest-section">
+        <SectionHeading
+          title="Latest Essays"
+          arabic="أحدث المقالات"
+          href="/essays"
+        />
+        <div className="home-latest-grid">
+          {latestEssays.map((essay, index) => (
+            <EssayCard key={essay.slug} essay={essay} index={index + 1} />
+          ))}
         </div>
       </section>
 
-      <section className="paper-frame subscribe-strip">
-        <div className="letters-banner">
-          <Mail size={21} strokeWidth={1.5} />
-          <span>Letters from Beirut</span>
-        </div>
-        <p>Dispatches from a city that refuses to be a footnote.</p>
-        <p>Letters arrive on Sundays.</p>
-        <Link href="/submit" className="read-link">
-          Submit a letter <span className="link-arrow">→</span>
-        </Link>
-      </section>
-
-      <section id="archive" className="paper-frame edition-register">
-        <div className="edition-register-head">
-          <div>
-            <div className="editorial-kicker">Current Edition</div>
-            <h2 className="editorial-title">{editionTitle}</h2>
-          </div>
-          <p>
-            A tighter launch edition built for deeper reading, not feed behavior.
-          </p>
-          <Link href="/essays" className="read-link">
-            Full index <span className="link-arrow">→</span>
-          </Link>
-        </div>
-
-        <div
-          className="edition-register-grid"
-          data-count={editionEssays.length}
-        >
-          {editionEssays.map((essay, index) => {
-            const editionAsset = homeAssets.edition[index % homeAssets.edition.length];
+      <section className="paper-frame home-topic-section">
+        <SectionHeading
+          title="Browse by Topic"
+          arabic="تصفح حسب الموضوع"
+          href="/essays"
+          cta="Explore all topics"
+        />
+        <div className="home-topic-grid" aria-label="Browse essays by topic">
+          {browseTopics.map((topic) => {
+            const Icon = topic.icon;
+            const count = getTopicCount(topic.tag);
 
             return (
               <Link
-                key={essay.slug}
-                href={`/essays/${essay.slug}`}
-                className="edition-register-row"
+                key={topic.tag}
+                href={{ pathname: "/essays", query: { topic: topic.tag } }}
+                className="home-topic-tile"
+                data-accent={topic.accent}
               >
-                <span className="edition-register-number">
-                  {String(index + 1).padStart(2, "0")}
+                <Icon size={30} strokeWidth={1.7} aria-hidden="true" />
+                <span>
+                  <strong>{topic.label}</strong>
+                  <small className="arabic">{topic.arabic}</small>
                 </span>
-                <EditorialImage
-                  src={getArticleImage(essay.slug, index)}
-                  alt={essay.title}
-                  className="edition-register-image"
-                  imagePosition={editionAsset.position}
-                  quality={90}
-                  sizes="96px"
-                />
-                <span className="edition-register-copy">
-                  <strong>{essay.title}</strong>
-                  <small>{essay.date} · {essay.readTime}</small>
-                </span>
+                <em>{count}</em>
               </Link>
             );
           })}
         </div>
       </section>
-    </SiteShell>
-  );
-}
 
-function DepartmentHeading({
-  title,
-  arabic,
-  href,
-}: {
-  title: string;
-  arabic: string;
-  href: string;
-}) {
-  return (
-    <div className="department-heading">
-      <Link href={href}>{title}</Link>
-      <span className="arabic">{arabic}</span>
-      <Link href={href} aria-label={`Open ${title}`}>→</Link>
-    </div>
+      <section id="archive" className="paper-frame home-archive-section">
+        <div className="home-archive-grid">
+          <div className="home-archive-copy">
+            <div className="editorial-kicker">Archive / من الأرشيف</div>
+            <h2 className="editorial-title">A compact first register, built for return.</h2>
+            <p>
+              The archive is intentionally spare for now: eight launch essays, ordered
+              like a first issue rather than an endless feed.
+            </p>
+            <Link href="/essays" className="read-link">
+              Open the essay register <span className="link-arrow">-&gt;</span>
+            </Link>
+          </div>
+
+          <Link href="/essays" className="home-archive-image-link">
+            <EditorialImage
+              src={homeAssets.departments.archive.src}
+              alt="Lebanese Academic archive"
+              className="home-archive-image"
+              imagePosition={homeAssets.departments.archive.position}
+              quality={92}
+              sizes="(min-width: 1024px) 34vw, 100vw"
+            />
+          </Link>
+
+          <div className="home-archive-ledger">
+            <Archive size={28} strokeWidth={1.6} aria-hidden="true" />
+            <strong>Issue 01</strong>
+            <span>{essays.length} essays</span>
+            <span>{letters.length} letters</span>
+            <span>{notebookEntries.length} notebook notes</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="paper-frame home-more-section">
+        <SectionHeading
+          title="More Essays"
+          arabic="المزيد من المقالات"
+          href="/essays"
+        />
+        <div className="home-more-grid">
+          {moreEssays.map((essay, index) => (
+            <EssayCard
+              key={essay.slug}
+              essay={essay}
+              index={index + latestEssays.length + 1}
+              variant="more"
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="paper-frame home-newsletter-strip">
+        <div className="home-newsletter-copy">
+          <div className="home-newsletter-icon">
+            <Image
+              src="/brand/la-editors-mark.png"
+              alt=""
+              width={42}
+              height={42}
+            />
+          </div>
+          <div>
+            <h2>Dispatches from a city that refuses to be a footnote.</h2>
+            <p>New essays, letters, and notebook entries. Once a week.</p>
+          </div>
+        </div>
+        <NewsletterSignup />
+      </section>
+
+      <section className="paper-frame home-correspondence-section">
+        <Link href="/letters" className="home-correspondence-card">
+          <span>
+            <strong>Letters</strong>
+            <small className="arabic">رسائل</small>
+          </span>
+          <p>Short letters on what matters, from Beirut and beyond.</p>
+          <div className="home-correspondence-list">
+            {recentLetters.map((letter) => (
+              <span key={letter.slug}>
+                {letter.title}
+                <small>{letter.date}</small>
+              </span>
+            ))}
+          </div>
+          <Image
+            src={homeAssets.departments.letters.src}
+            alt=""
+            width={360}
+            height={170}
+            className="home-correspondence-art"
+          />
+          <em>
+            Read letters <span className="link-arrow">-&gt;</span>
+          </em>
+        </Link>
+
+        <Link href="/notebook" className="home-correspondence-card">
+          <span>
+            <strong>Notebook</strong>
+            <small className="arabic">دفتر الملاحظات</small>
+          </span>
+          <p>{leadNotebook?.excerpt ?? "Notes, fragments, and unfinished thoughts."}</p>
+          <div className="home-correspondence-list">
+            <span>
+              {leadNotebook?.title ?? "Notebook"}
+              <small>{leadNotebook?.date ?? "Ongoing"}</small>
+            </span>
+          </div>
+          <NotebookPen size={120} strokeWidth={0.85} aria-hidden="true" />
+          <em>
+            Open notebook <span className="link-arrow">-&gt;</span>
+          </em>
+        </Link>
+      </section>
+    </SiteShell>
   );
 }
