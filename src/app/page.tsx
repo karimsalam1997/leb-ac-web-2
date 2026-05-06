@@ -240,7 +240,11 @@ export default function Home() {
         <div className="pattern-rule home-pattern-rule" aria-hidden="true" />
       </section>
 
-      <section className="paper-frame home-mission-strip" aria-label="Publication mission">
+      <section
+        id="about"
+        className="paper-frame home-mission-strip"
+        aria-label="Publication mission"
+      >
         <span aria-hidden="true" />
         <p>{essayDeck}</p>
         <span aria-hidden="true" />

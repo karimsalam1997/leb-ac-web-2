@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { AtSign, Mail, Menu, Send, X } from "lucide-react";
+import { MobileHeader } from "@/components/mobile-header";
 
 const navItems = [
   { href: "/essays", label: "Essays", arabic: "مقالات" },
@@ -167,7 +168,7 @@ export function SiteShell({
       </div>
 
       <header
-        className="paper-frame masthead-frame"
+        className="paper-frame masthead-frame desktop-site-header"
         data-scrolled={isMastheadScrolled}
       >
         <div className="masthead">
@@ -302,6 +303,7 @@ export function SiteShell({
           />
         </div>
       </div>
+      <MobileHeader activePath={activePath} />
       <main id="site-content">{children}</main>
       <footer className="site-footer mt-4">
         <div className="paper-frame site-footer-inner">
