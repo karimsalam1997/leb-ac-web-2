@@ -143,7 +143,7 @@ export default function Home() {
         </div>
 
         <div className="pattern-rule" aria-hidden="true" />
-        <div className="front-manifesto">{essayDeck}</div>
+        <div id="about" className="front-manifesto">{essayDeck}</div>
       </section>
 
       <section className="paper-frame essay-priority-section">
