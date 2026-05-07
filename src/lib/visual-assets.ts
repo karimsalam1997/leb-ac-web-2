@@ -1,4 +1,5 @@
 const homeBase = "/home";
+const downtownRepairHero = "/editorial/downtown-repair-hero.jpg";
 
 export const homeAssets = {
   logoMark: `${homeBase}/logo-mark@3x.png`,
@@ -58,6 +59,7 @@ export const homeAssets = {
 export const generatedArticleImages = homeAssets.edition.map((asset) => asset.src);
 
 const generatedImageBySlug: Record<string, string> = {
+  "the-city-that-could-not-repair-itself": downtownRepairHero,
   "the-cartel-in-the-costume-of-a-country": homeAssets.hero.src,
   "cartel-in-the-costume-of-a-country": homeAssets.hero.src,
   "the-mehtail-republic": homeAssets.departments.essays.src,

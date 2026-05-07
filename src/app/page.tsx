@@ -171,6 +171,7 @@ function SectionHeading({
 export default function Home() {
   const heroTitleLines =
     displayTitleLinesBySlug[heroEssay.slug] ?? editorialTitleLines(heroEssay.title);
+  const heroImage = getArticleImage(heroEssay.slug, 0);
 
   return (
     <SiteShell activePath="/">
@@ -207,10 +208,10 @@ export default function Home() {
 
           <Link href={`/essays/${heroEssay.slug}`} className="home-lead-image-link">
             <EditorialImage
-              src={homeAssets.hero.src}
+              src={heroImage}
               alt={heroEssay.title}
               className="home-lead-image"
-              imagePosition={homeAssets.hero.position}
+              imagePosition="center 48%"
               priority
               quality={92}
               sizes="(min-width: 1280px) 43vw, (min-width: 1024px) 48vw, 100vw"

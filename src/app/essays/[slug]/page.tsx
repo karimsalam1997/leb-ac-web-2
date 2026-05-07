@@ -62,6 +62,7 @@ export default async function EssayPage({
   const leadParagraphs = paragraphs.slice(0, 3);
   const bodySections = getBodySections(essay.sections, leadParagraphs.length);
   const articleImage = getArticleImage(essay.slug, 0);
+  const isDowntownRepairEssay = essay.slug === "the-city-that-could-not-repair-itself";
   const pullQuote = essay.pullQuote.trim();
 
   return (
@@ -121,10 +122,11 @@ export default async function EssayPage({
                   sizes="(min-width: 1024px) 56vw, 100vw"
                 />
               </Link>
-              <figcaption className="caption mt-2">
-                Generated editorial image for {essay.title.toLowerCase()}:{" "}
-                {essay.dek}
-              </figcaption>
+              {isDowntownRepairEssay ? (
+                <figcaption className="caption mt-2">
+                  Downtown Beirut, photographed by Karim Salam.
+                </figcaption>
+              ) : null}
             </figure>
 
             <div className="article-section-mark">
@@ -197,7 +199,7 @@ export default async function EssayPage({
             <div className="article-notes">
               <div className="editorial-kicker mb-5 text-[var(--foreground)]">Notes</div>
               <ol className="notes-list">
-                {essay.notes.slice(0, 6).map((note) => (
+                {essay.notes.map((note) => (
                   <li key={note.id}>
                     <div className="dense-meta mb-2 text-[var(--accent)]">{note.id}</div>
                     <p className="text-[0.94rem] leading-6 text-[var(--ink-soft)]">

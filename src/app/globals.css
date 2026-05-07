@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f6f1e6;
-  --paper-light: #fbefd6;
-  --paper-dark: #e6d8bf;
+  --background: #fff1e0;
+  --paper-light: #fff9f5;
+  --paper-dark: #f2dfce;
   --foreground: #0c0c0c;
   --paper-shadow: rgba(71, 43, 20, 0.14);
   --paper-border: rgba(91, 60, 36, 0.24);
@@ -13,17 +13,11 @@
   --cobalt: #2f4f8f;
   --arabic-ink: #2f4f8f;
   --ink-soft: #544840;
-  --panel: rgba(247, 231, 201, 0.78);
+  --panel: rgba(255, 249, 245, 0.78);
   --line: rgba(83, 57, 38, 0.28);
   --line-strong: rgba(61, 39, 24, 0.44);
   --muted: #6b5f56;
-  --paper-noise:
-    radial-gradient(circle at 12% 18%, rgba(255, 247, 222, 0.32), transparent 30%),
-    radial-gradient(circle at 80% 16%, rgba(214, 176, 121, 0.2), transparent 27%),
-    radial-gradient(circle at 66% 74%, rgba(255, 239, 199, 0.2), transparent 24%),
-    radial-gradient(circle at 24% 68%, rgba(151, 104, 59, 0.12), transparent 20%),
-    repeating-radial-gradient(circle at 18% 28%, rgba(77, 48, 26, 0.075) 0 0.55px, transparent 0.75px 4px),
-    repeating-linear-gradient(97deg, rgba(93, 61, 34, 0.035) 0 1px, transparent 1px 9px);
+  --paper-noise: none;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-press: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 180ms;
@@ -46,21 +40,14 @@
 }
 
 html {
-  background:
-    linear-gradient(180deg, rgba(247, 231, 201, 0.48), rgba(232, 207, 165, 0.7)),
-    var(--paper-noise),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 48% 0%, rgba(255, 244, 213, 0.32), transparent 38rem),
-    linear-gradient(180deg, rgba(247, 231, 201, 0.38), rgba(232, 207, 165, 0.58)),
-    var(--paper-noise),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: 1.05rem;
@@ -88,7 +75,7 @@ img {
 }
 
 .page-shell::before {
-  content: "";
+  content: none;
   position: fixed;
   inset: 0;
   z-index: -2;
@@ -102,7 +89,7 @@ img {
 }
 
 .page-shell::after {
-  content: "";
+  content: none;
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -2179,9 +2166,9 @@ button {
 
 /* Home edition repair */
 :root {
-  --background: #f1d8ad;
-  --paper-light: #f7e5c3;
-  --paper-dark: #dec190;
+  --background: #fff1e0;
+  --paper-light: #fff9f5;
+  --paper-dark: #f2dfce;
   --accent: #bd4528;
   --accent-soft: #d36643;
   --teal: #1b6872;
