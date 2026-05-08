@@ -6,6 +6,8 @@ export function EditorialImage({
   className,
   imageClassName,
   imagePosition,
+  imageFit,
+  aspectRatio,
   priority,
   quality,
   sizes,
@@ -15,15 +17,23 @@ export function EditorialImage({
   className?: string;
   imageClassName?: string;
   imagePosition?: string;
+  imageFit?: "cover" | "contain";
+  aspectRatio?: string;
   priority?: boolean;
   quality?: number;
   sizes?: string;
 }) {
+  const imageStyle =
+    imagePosition || imageFit
+      ? { objectPosition: imagePosition, objectFit: imageFit }
+      : undefined;
+
   if (src) {
     return (
       <div
         className={`editorial-image-shell relative overflow-hidden ${className ?? ""}`}
         data-has-image="true"
+        style={aspectRatio ? { aspectRatio } : undefined}
       >
         <Image
           src={src}
@@ -34,7 +44,7 @@ export function EditorialImage({
           quality={quality}
           sizes={sizes ?? "(min-width: 1024px) 50vw, 100vw"}
           className={`object-cover ${imageClassName ?? ""}`}
-          style={imagePosition ? { objectPosition: imagePosition } : undefined}
+          style={imageStyle}
         />
       </div>
     );

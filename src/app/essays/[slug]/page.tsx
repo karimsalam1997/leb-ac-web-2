@@ -66,10 +66,9 @@ export default async function EssayPage({
   const leadParagraphs = paragraphs.slice(0, 3);
   const bodySections = getBodySections(essay.sections, leadParagraphs.length);
   const articleImages = getArticleImages(essay.slug);
-  const articleImage = articleImages[0]?.src ?? getArticleImage(essay.slug, 0);
+  const leadImageAsset = articleImages[0];
+  const articleImage = leadImageAsset?.src ?? getArticleImage(essay.slug, 0);
   const supportingImages = articleImages.slice(1);
-  const isDowntownRepairEssay = essay.slug === "the-city-that-could-not-repair-itself";
-  const pullQuote = essay.pullQuote.trim();
 
   return (
     <SiteShell activePath="/essays">
@@ -118,19 +117,23 @@ export default async function EssayPage({
               })}
             </div>
 
-            <figure className="my-6">
+            <figure className={`article-lead-figure ${getImageShapeClass(leadImageAsset)}`}>
               <Link href={articleImage} className="block" aria-label={`Open image for ${essay.title}`}>
                 <EditorialImage
                   src={articleImage}
-                  alt={`${essay.title} lead image`}
-                  className="aspect-[1.72/0.55] border border-[color:var(--paper-border)]"
+                  alt={leadImageAsset?.alt ?? `${essay.title} lead image`}
+                  className="article-lead-image border border-[color:var(--paper-border)]"
+                  imageClassName={leadImageAsset?.imageClassName}
+                  imagePosition={leadImageAsset?.position}
+                  imageFit={leadImageAsset?.fit ?? "contain"}
+                  aspectRatio={leadImageAsset?.aspectRatio ?? "16 / 9"}
                   priority
-                  sizes="(min-width: 1024px) 56vw, 100vw"
+                  sizes="(min-width: 1180px) 760px, 100vw"
                 />
               </Link>
-              {isDowntownRepairEssay ? (
+              {leadImageAsset?.caption ? (
                 <figcaption className="caption mt-2">
-                  Downtown Beirut, photographed by Karim Salam.
+                  {leadImageAsset.caption}
                 </figcaption>
               ) : null}
             </figure>
@@ -146,62 +149,53 @@ export default async function EssayPage({
               />
             </div>
 
-            <section className="grid gap-8 md:grid-cols-[1fr_0.42fr]">
-              <div>
-                <div className="article-continuation">
-                  {bodySections.map((section, sectionIndex) => (
-                    <section key={`${essay.slug}-section-${sectionIndex}`} className="article-body-section">
-                      {section.heading ? (
-                        <h2 className="editorial-title mb-4 text-[2rem]">
-                          {section.heading}
-                        </h2>
-                      ) : null}
-                      <div className="body-copy body-copy-continuation">
-                        {section.paragraphs.map((paragraph, paragraphIndex) => {
-                          const isLastBodyParagraph =
-                            sectionIndex === bodySections.length - 1 &&
-                            paragraphIndex === section.paragraphs.length - 1;
-                          const note = isLastBodyParagraph ? essay.notes.at(-1) : undefined;
+            <section className="article-continuation-section">
+              <div className="article-continuation">
+                {bodySections.map((section, sectionIndex) => (
+                  <section key={`${essay.slug}-section-${sectionIndex}`} className="article-body-section">
+                    {section.heading ? (
+                      <h2 className="editorial-title mb-4 text-[2rem]">
+                        {section.heading}
+                      </h2>
+                    ) : null}
+                    <div className="body-copy body-copy-continuation">
+                      {section.paragraphs.map((paragraph, paragraphIndex) => {
+                        const isLastBodyParagraph =
+                          sectionIndex === bodySections.length - 1 &&
+                          paragraphIndex === section.paragraphs.length - 1;
+                        const note = isLastBodyParagraph ? essay.notes.at(-1) : undefined;
 
-                          return (
-                            <Fragment
-                              key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}
-                            >
-                              <p>
-                                {paragraph}
-                                {note ? <sup>{note.id}</sup> : null}
-                              </p>
-                              <InlineFootnote note={note} />
-                            </Fragment>
-                          );
-                        })}
-                      </div>
-                      <ArticleInlineImage
-                        asset={supportingImages[sectionIndex]}
-                        essayTitle={essay.title}
-                      />
-                    </section>
-                  ))}
-                  <div className="article-section-mark article-section-mark-end">
-                    <Image
-                      src="/brand/la-witness-glyph.png"
-                      alt=""
-                      width={60}
-                      height={60}
-                      aria-hidden="true"
-                      className="object-contain"
-                      style={{ width: "60px", height: "60px" }}
+                        return (
+                          <Fragment
+                            key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}
+                          >
+                            <p>
+                              {paragraph}
+                              {note ? <sup>{note.id}</sup> : null}
+                            </p>
+                            <InlineFootnote note={note} />
+                          </Fragment>
+                        );
+                      })}
+                    </div>
+                    <ArticleInlineImage
+                      asset={supportingImages[sectionIndex]}
+                      essayTitle={essay.title}
                     />
-                  </div>
+                  </section>
+                ))}
+                <div className="article-section-mark article-section-mark-end">
+                  <Image
+                    src="/brand/la-witness-glyph.png"
+                    alt=""
+                    width={60}
+                    height={60}
+                    aria-hidden="true"
+                    className="object-contain"
+                    style={{ width: "60px", height: "60px" }}
+                  />
                 </div>
               </div>
-              {pullQuote ? (
-                <aside className="self-start pt-10 text-right text-[var(--accent)]">
-                  <p className="text-[1.35rem] italic leading-[1.35]">
-                    {pullQuote}
-                  </p>
-                </aside>
-              ) : null}
             </section>
           </div>
 
@@ -249,11 +243,11 @@ export default async function EssayPage({
       <section className="paper-frame pt-7">
         <div className="related-reference-row">
           <div className="editorial-kicker text-[var(--foreground)]">Related Essays</div>
-          {related.slice(0, 3).map((relatedEssay, index) => (
+          {related.slice(0, 3).map((relatedEssay) => (
               <article key={relatedEssay.slug} className="grid grid-cols-[92px_1fr] gap-4">
                 <Link href={`/essays/${relatedEssay.slug}`}>
                 <EditorialImage
-                  src={getArticleImage(relatedEssay.slug, index + 1)}
+                  src={getArticleImage(relatedEssay.slug, 0)}
                   alt={relatedEssay.title}
                   className="aspect-square border border-[color:var(--paper-border)]"
                   sizes="92px"
@@ -310,15 +304,18 @@ function ArticleInlineImage({
   }
 
   return (
-    <figure className="article-inline-figure">
+    <figure className={`article-inline-figure ${getImageShapeClass(asset)}`}>
       <Link href={asset.src} className="block" aria-label={`Open image for ${essayTitle}`}>
         <EditorialImage
           src={asset.src}
           alt={asset.alt}
           className="article-inline-image"
+          imageClassName={asset.imageClassName}
           imagePosition={asset.position}
+          imageFit={asset.fit ?? "contain"}
+          aspectRatio={asset.aspectRatio ?? "16 / 9"}
           quality={92}
-          sizes="(min-width: 1180px) 48vw, 100vw"
+          sizes="(min-width: 1180px) 760px, 100vw"
         />
       </Link>
       {asset.caption ? (
@@ -351,6 +348,40 @@ function getBodySections(sections: EssaySection[], paragraphsToSkip: number) {
 
     return visibleSections;
   }, []);
+}
+
+function getImageShapeClass(asset?: ArticleImageAsset) {
+  const ratio = getAspectRatioValue(asset?.aspectRatio);
+
+  if (!ratio) {
+    return "";
+  }
+
+  if (ratio < 0.95) {
+    return "article-figure--portrait";
+  }
+
+  if (ratio < 1.25) {
+    return "article-figure--squareish";
+  }
+
+  return "";
+}
+
+function getAspectRatioValue(aspectRatio?: string) {
+  if (!aspectRatio) {
+    return undefined;
+  }
+
+  const [width, height] = aspectRatio.split("/").map((part) => Number(part.trim()));
+
+  if (Number.isFinite(width) && Number.isFinite(height) && height > 0) {
+    return width / height;
+  }
+
+  const numericRatio = Number(aspectRatio);
+
+  return Number.isFinite(numericRatio) && numericRatio > 0 ? numericRatio : undefined;
 }
 
 function renderNoteText(text: string) {

@@ -21,7 +21,7 @@ export default async function EssaysPage({
     readTime: essay.readTime,
     excerpt: essay.excerpt,
     tags: essay.tags,
-    imageSrc: getArticleImage(essay.slug, index),
+    imageSrc: getArticleImage(essay.slug, 0),
     sourceIndex: index,
   }));
 

@@ -1,13 +1,17 @@
 const homeBase = "/home";
 const downtownRepairHero = "/editorial/downtown-repair-hero.jpg";
 const essayImageBase = "/essay-images";
+const sourcedImageBase = `${essayImageBase}/sourced`;
 const beirutParkBase = "/editorial/beirut-park";
 
 export type ArticleImageAsset = {
   src: string;
   alt: string;
   caption?: string;
+  imageClassName?: string;
   position?: string;
+  aspectRatio?: string;
+  fit?: "cover" | "contain";
 };
 
 export const homeAssets = {
@@ -68,128 +72,262 @@ export const homeAssets = {
 export const generatedArticleImages = homeAssets.edition.map((asset) => asset.src);
 
 const articleImageSets: Record<string, ArticleImageAsset[]> = {
+  "the-city-that-could-not-repair-itself": [
+    {
+      src: `${sourcedImageBase}/city-roman-baths-ruins.jpg`,
+      alt: "The Roman Baths in Downtown Beirut, visible below the rebuilt city",
+      caption:
+        "The Roman Baths make the essay's argument physical: under the polished postwar center is an older Beirut that was not invented by developers, politicians, or any one sect. The interesting thing is how calm the stones look while the modern city keeps trying to sprint past them.",
+      position: "center 55%",
+      aspectRatio: "3872 / 2592",
+    },
+    {
+      src: `${sourcedImageBase}/city-archaeology-khandaq.jpg`,
+      alt: "An archaeological site in Khandaq al-Ghamiq in Beirut",
+      caption:
+        "This is the city under the city before it becomes a slogan. Archaeology slows everything down: every wall asks what Beirut was before the latest master plan decided what Beirut should become.",
+      position: "center 54%",
+      aspectRatio: "960 / 720",
+    },
+    {
+      src: `${sourcedImageBase}/city-port-blast-aftermath.jpg`,
+      alt: "Damage at the Port of Beirut after the August 2020 explosion",
+      caption:
+        "The blast image belongs here because repair is not only about stone. A living city knows who is hurt, who owns what, who can fix it, and who is left waiting. Downtown's problem is that too much of that social wiring was removed.",
+      position: "center 48%",
+      aspectRatio: "1280 / 960",
+    },
+  ],
+  "the-cartel-in-the-costume-of-a-country": [
+    {
+      src: `${sourcedImageBase}/cartel-independence-day-2019.jpg`,
+      alt: "Crowds filling Beirut streets during the 2019 Independence Day protests",
+      caption:
+        "This crowd is the cartel's nightmare: citizens briefly speaking as citizens, not as clients of sects or patrons. That is why the 2019 uprising mattered; it named the whole machine instead of one villain.",
+      position: "center 45%",
+      aspectRatio: "6000 / 4000",
+    },
+    {
+      src: `${sourcedImageBase}/cartel-grand-serail.jpg`,
+      alt: "The Grand Serail, Lebanon's government palace in Beirut",
+      caption:
+        "The Grand Serail gives the state a body: flags, stone, ceremony, authority. The essay is interested in the gap between that official costume and the private deals that decide what the costume can actually do.",
+      position: "center 50%",
+      aspectRatio: "1920 / 1080",
+    },
+    {
+      src: `${sourcedImageBase}/sovereignty-parliament.jpg`,
+      alt: "The Lebanese Parliament building in Downtown Beirut",
+      caption:
+        "Parliament is where the republic is supposed to become public law. In Lebanon it often becomes the place where private bargains are translated into official language.",
+      position: "center 50%",
+      aspectRatio: "1280 / 960",
+    },
+  ],
   "the-mehtail-republic": [
     {
-      src: `${essayImageBase}/the-mehtail-republic-header-v2.png`,
-      alt: "A Lebanese professional working between diaspora office life and Beirut infrastructure collapse",
+      src: `${sourcedImageBase}/mehtail-shatila-infrastructure.jpg`,
+      alt: "A dense tangle of infrastructure wires in Shatila",
+      caption:
+        "This tangle says more than a clean institutional diagram could. When the official system cannot carry daily life, people build another system over it, cable by cable, favor by favor, workaround by workaround.",
       position: "center 48%",
+      aspectRatio: "1280 / 960",
     },
     {
-      src: `${essayImageBase}/the-mehtail-republic-diaspora-nodes-v2.png`,
-      alt: "Lebanese competence abroad contrasted with generator dependency at home",
-      position: "center 50%",
-    },
-    {
-      src: `${essayImageBase}/the-mehtail-republic-private-solidarity-v2.png`,
-      alt: "A family absorbing the burden of failed public systems through private care",
-      position: "center 52%",
+      src: `${sourcedImageBase}/mehtail-diaspora-map.png`,
+      alt: "A world map showing the Lebanese diaspora",
+      caption:
+        "The diaspora map is the hopeful half of the essay. The same Lebanese talent that gets wasted navigating broken systems at home often becomes astonishingly productive once it plugs into institutions that actually work.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "960 / 498",
+      fit: "contain",
     },
   ],
   "the-census-that-cannot-be-taken": [
     {
-      src: `${essayImageBase}/03-census-that-cannot-be-taken-header.png`,
-      alt: "A census ledger and map representing Lebanon's avoided demographic count",
-      position: "center 48%",
+      src: `${sourcedImageBase}/census-loc-religious-map.jpg`,
+      alt: "A Library of Congress map showing the distribution of Lebanon's main religious groups",
+      caption:
+        "A map like this looks technical, but in Lebanon it is political dynamite. The cool, unsettling thing is that the country has endless partial knowledge about itself, while the one public count that could reorganize power remains forbidden.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "3317 / 4326",
+      fit: "contain",
     },
     {
-      src: `${essayImageBase}/03-census-registration-card-map.png`,
-      alt: "Registration cards layered over a Lebanese map",
-      position: "center 50%",
+      src: `${sourcedImageBase}/census-french-mandate-map.png`,
+      alt: "A map of the French Mandate for Syria and Lebanon",
+      caption:
+        "The Mandate map is not just background. It shows how modern Lebanon began as a political design, not a natural fact, and why the first census became part of the architecture of power.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "1920 / 1587",
+      fit: "contain",
     },
     {
-      src: `${essayImageBase}/03-census-shadowed-voting-lines.png`,
-      alt: "Voters and census shadows suggesting representation without measurement",
-      position: "center 48%",
+      src: `${sourcedImageBase}/census-demographics.jpg`,
+      alt: "A map showing religious group distribution in Lebanon",
+      caption:
+        "This is why numbers become dangerous. Once communities appear as proportions, geography, and weight, every office and every guarantee starts to look negotiable.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "960 / 1239",
+      fit: "contain",
     },
   ],
   "sovereignty-theatre": [
     {
-      src: `${essayImageBase}/04-sovereignty-theatre-header.png`,
-      alt: "A theatrical diplomatic room representing performed sovereignty",
+      src: `${sourcedImageBase}/sovereignty-un-security-council.jpg`,
+      alt: "The United Nations Security Council chamber in New York",
+      caption:
+        "The empty Security Council chamber is almost too perfect: sovereignty as room, microphone, chair, ritual. Lebanon often has the seat and the signature before it has the authority to make the signature real.",
       position: "center 50%",
+      aspectRatio: "3780 / 3024",
     },
     {
-      src: `${essayImageBase}/04-sovereignty-empty-meeting-table.png`,
-      alt: "An empty meeting table staged for Lebanon's absent sovereignty",
-      position: "center 50%",
-    },
-    {
-      src: `${essayImageBase}/04-sovereignty-little-sovereignties-balconies.png`,
-      alt: "Balconies and small authorities standing in for fragmented sovereignty",
+      src: `${sourcedImageBase}/sovereignty-unifil-blue-barrels.jpg`,
+      alt: "UNIFIL blue barrels marking the Blue Line in southern Lebanon",
+      caption:
+        "The blue barrels are the theatre prop made concrete. They mark a line everyone can photograph, while the real question remains whether any state has enough power to make the line politically meaningful.",
       position: "center 48%",
+      aspectRatio: "1280 / 727",
+    },
+    {
+      src: `${sourcedImageBase}/sovereignty-parliament.jpg`,
+      alt: "The Lebanese Parliament building in Downtown Beirut",
+      caption:
+        "This building is supposed to turn argument into law. The essay's point is that Lebanon has many declarations of sovereignty and too few institutions able to force declarations downward into daily life.",
+      position: "center 50%",
+      aspectRatio: "1280 / 960",
     },
   ],
   "the-rubble-zone": [
     {
-      src: `${essayImageBase}/05-the-rubble-zone-header.png`,
-      alt: "A destroyed village landscape representing the politics of rubble",
-      position: "center 50%",
-    },
-    {
-      src: `${essayImageBase}/05-the-rubble-zone-buffer-map.png`,
-      alt: "A buffer-zone map drawn across a damaged Lebanese landscape",
-      position: "center 50%",
-    },
-    {
-      src: `${essayImageBase}/05-the-rubble-zone-classroom.png`,
-      alt: "A damaged classroom inside the rubble zone",
+      src: `${sourcedImageBase}/rubble-marwahin.jpg`,
+      alt: "Ruins in Marwahin in southern Lebanon",
+      caption:
+        "This is what 'buffer zone' means after the military language is stripped away: a village turned into evidence. Israel can call it depth, Hezbollah can call it proof, but for the people from there it was home.",
       position: "center 52%",
+      aspectRatio: "1280 / 960",
+    },
+    {
+      src: `${sourcedImageBase}/rubble-bintjbeil.jpg`,
+      alt: "Destruction in Bint Jbeil after the 2006 war",
+      caption:
+        "Bint Jbeil matters because the experiment already ran. Destruction can break buildings, but it can also harden the story an armed movement tells about why it is necessary.",
+      position: "center 52%",
+      aspectRatio: "800 / 533",
+    },
+    {
+      src: `${sourcedImageBase}/rubble-blue-line.jpg`,
+      alt: "A map of the Blue Line between Lebanon and Israel",
+      caption:
+        "The map is useful because it shows the seductive simplicity of lines. The essay is about everything the map cannot show: humiliation, inheritance, return, fear, and memory.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "1299 / 898",
+      fit: "contain",
     },
   ],
   "the-seventeen-countries": [
     {
-      src: `${essayImageBase}/06-the-seventeen-countries-header.png`,
-      alt: "Lebanon pictured as many small administrative worlds within one border",
-      position: "center 48%",
+      src: `${sourcedImageBase}/seventeen-municipalities.png`,
+      alt: "A map of Lebanon's municipalities",
+      caption:
+        "This map makes tiny Lebanon look administratively enormous. The strange thing is not the number of municipalities alone; it is how each little unit can become a checkpoint for identity, property, services, and local power.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "1364 / 1751",
+      fit: "contain",
     },
     {
-      src: `${essayImageBase}/06-the-seventeen-countries-counter-maze.png`,
-      alt: "A maze of public counters representing fragmented daily administration",
-      position: "center 50%",
+      src: `${sourcedImageBase}/seventeen-admin-divisions.png`,
+      alt: "A map of Lebanon's administrative divisions",
+      caption:
+        "The official divisions look orderly from above, but the essay is about the maps underneath them: sectarian courts, village registration, party zones, family networks, and municipal vetoes.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center",
+      aspectRatio: "1920 / 2210",
+      fit: "contain",
     },
     {
-      src: `${essayImageBase}/06-the-seventeen-countries-bus-stop.png`,
-      alt: "A bus stop scene showing everyday negotiation across Lebanese public life",
-      position: "center 50%",
+      src: `${sourcedImageBase}/seventeen-2015-protest.jpg`,
+      alt: "Protesters in Martyrs Square during the 2015 garbage crisis demonstrations",
+      caption:
+        "The garbage crisis made fragmentation smell. Waste should be boring statecraft; in Lebanon it became a lesson in how every shared problem gets pushed across someone else's boundary.",
+      position: "center 42%",
+      aspectRatio: "2978 / 4370",
     },
   ],
   "the-land-that-mourns-in-one-language": [
     {
-      src: `${essayImageBase}/07-land-that-mourns-header.png`,
-      alt: "A mourning Lebanese landscape shaped by shared grief",
+      src: `${sourcedImageBase}/mourning-nahr-ibrahim.jpg`,
+      alt: "The Nahr Ibrahim river in Lebanon",
+      caption:
+        "The Nahr Ibrahim is the right opening image because it lets science and myth stand together. The river can run red because of soil, and still carry the old Adonis story about wounded life returning through the landscape.",
       position: "center 48%",
+      aspectRatio: "960 / 1280",
     },
     {
-      src: `${essayImageBase}/07-land-that-mourns-divine-feminine-triptych.png`,
-      alt: "A triptych evoking Astarte, Mother Mary, and Fatima as figures of shared mourning",
-      position: "center 48%",
-    },
-    {
-      src: `${essayImageBase}/07-land-that-mourns-mourning-women.png`,
-      alt: "Women mourning across generations in a Lebanese landscape",
+      src: `${sourcedImageBase}/mourning-ahiram-detail.jpg`,
+      alt: "Mourning figures carved on the Sarcophagus of Ahiram",
+      caption:
+        "The mourning women on Ahiram's sarcophagus are extraordinary because grief is already stylized into a public language. Long before modern sects, the land had gestures for death, honor, and memory.",
       position: "center 50%",
+      aspectRatio: "2166 / 1008",
     },
     {
-      src: `${essayImageBase}/07-land-that-mourns-archive-table.png`,
-      alt: "An archive table holding traces of grief and memory",
-      position: "center 52%",
+      src: `${sourcedImageBase}/mourning-astarte-throne.jpg`,
+      alt: "A Phoenician goddess identified with Astarte seated on a throne",
+      caption:
+        "Astarte belongs here not as a nationalist trophy, but as a reminder that the sacred feminine in this landscape is older than today's religious borders. The figure is small, but the continuity she points to is huge.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center 50%",
+      aspectRatio: "1573 / 2178",
+      fit: "contain",
+    },
+    {
+      src: `${sourcedImageBase}/mourning-our-lady-harissa.jpg`,
+      alt: "The statue of Our Lady of Lebanon in Harissa",
+      caption:
+        "Our Lady of Lebanon is a modern Marian monument, but it also shows how older Levantine habits of high places, protective mothers, pilgrimage, and landscape keep finding new religious forms.",
+      position: "center 48%",
+      aspectRatio: "5184 / 3456",
+    },
+    {
+      src: `${sourcedImageBase}/mourning-khawla-shrine.jpg`,
+      alt: "The shrine of Sayyida Khawla in Baalbek",
+      caption:
+        "Sayyida Khawla's shrine in Baalbek keeps the same grammar in another translation: sacred memory, feminine presence, visitation, mourning, and a place where history is felt through devotion.",
+      position: "center 48%",
+      aspectRatio: "740 / 416",
     },
   ],
   "downtown-without-a-city": [
     {
-      src: `${essayImageBase}/08-downtown-without-a-city-header.png`,
-      alt: "Downtown Beirut shown as a restored district without civic life",
+      src: `${sourcedImageBase}/downtown-souk-ayass-1970.jpg`,
+      alt: "Souk Ayass in Beirut in 1970",
+      caption:
+        "Souk Ayass shows what the essay means by a city, not just architecture: counters, repetition, habits, people knowing where to go. A souk is a memory machine because it remembers through use.",
       position: "center 50%",
+      aspectRatio: "1023 / 669",
     },
     {
-      src: `${essayImageBase}/08-downtown-without-a-city-neighborhood-repair.png`,
-      alt: "A repaired neighborhood scene contrasting with empty downtown redevelopment",
-      position: "center 52%",
+      src: `${sourcedImageBase}/downtown-modern-souks.jpg`,
+      alt: "The rebuilt Beirut Souks in Downtown Beirut",
+      caption:
+        "The modern Beirut Souks are clean and legible, but that is the question. When a souk becomes too controlled, it can preserve the name while changing the verb: the old souk gathered; the new one filters.",
+      position: "center 50%",
+      aspectRatio: "1024 / 546",
     },
     {
-      src: `${essayImageBase}/08-downtown-without-a-city-old-souk-memory.png`,
-      alt: "Memory of Beirut's old souks layered into the present city",
+      src: `${sourcedImageBase}/city-martyrs-square.jpg`,
+      alt: "Martyrs Square in Downtown Beirut after postwar reconstruction",
+      caption:
+        "Martyrs' Square is the symbolic room of the capital, but symbolism is not enough. The essay asks whether a center can be visually restored and still fail to become a place citizens feel they own.",
       position: "center 50%",
+      aspectRatio: "1920 / 1280",
     },
   ],
   "the-park-that-remembers": [
@@ -198,57 +336,72 @@ const articleImageSets: Record<string, ArticleImageAsset[]> = {
       alt: "The Beirut Park sundial sightline through the redesigned landscape",
       caption: "The Gnomon Plaza sightline, aligning the sundial, gazebo, and Pigeon Tower.",
       position: "center 48%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/gate-pavilion-sunset.jpg`,
       alt: "The Beirut Park gateway and pavilion at sunset",
       caption: "The main gate and pavilion turn arrival into a real civic threshold.",
       position: "center 52%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/pathways.jpg`,
       alt: "Crushed limestone pathways winding through the Beirut Park planting",
       caption: "Crushed limestone paths slow the body down and return rain to the ground.",
       position: "center 52%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/gazebo-lake.jpg`,
       alt: "The Ottoman gazebo beside the lake in the Beirut Park redesign",
       caption: "The Ottoman Gazebo frames water, gathering, and the public right to linger.",
       position: "center 48%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/pigeon-tower-release.jpg`,
       alt: "The Pigeon Tower releasing birds at sunset",
       caption: "The Pigeon Tower makes a living Beirut rooftop tradition monumental.",
       position: "center 44%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/colonnaded-vines.jpg`,
       alt: "Roman columns reused as a vine-covered pergola",
       caption: "Dormant columns become shade, letting heritage work again.",
       position: "center 50%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/adonis-grove.jpg`,
       alt: "The Adonis Grove in bloom",
       caption: "The Adonis Grove turns mourning into a seasonal, shared landscape.",
       position: "center 48%",
+      aspectRatio: "1.5",
     },
     {
       src: `${beirutParkBase}/backgammon-pigeons.jpg`,
       alt: "Stone backgammon tables and pigeons in the Beirut Park redesign",
       caption: "Permanent tawleh tables make play part of the park's civic architecture.",
       position: "center 52%",
+      aspectRatio: "1.5",
     },
   ],
 };
+
+articleImageSets["why-lebanese-people-learn-to-work-around-the-state"] =
+  articleImageSets["the-mehtail-republic"];
+articleImageSets["how-a-generator-owner-showed-why-lebanon-has-no-state"] =
+  articleImageSets["the-mehtail-republic"];
 
 const generatedImageBySlug: Record<string, string> = {
   "the-city-that-could-not-repair-itself": downtownRepairHero,
   "the-cartel-in-the-costume-of-a-country": homeAssets.hero.src,
   "cartel-in-the-costume-of-a-country": homeAssets.hero.src,
   "the-mehtail-republic": homeAssets.departments.essays.src,
+  "how-a-generator-owner-showed-why-lebanon-has-no-state":
+    homeAssets.departments.essays.src,
   "the-census-that-cannot-be-taken": homeAssets.departments.letters.src,
   "sovereignty-theatre": homeAssets.departments.archive.src,
   "the-brilliant-nodes": homeAssets.departments.notebook.src,

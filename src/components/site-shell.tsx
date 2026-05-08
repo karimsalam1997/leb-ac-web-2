@@ -14,6 +14,9 @@ const navItems = [
   { href: "/submit", label: "Submit", arabic: "أرسل كتابة" },
 ];
 
+const mastheadShrinkOffset = 92;
+const mastheadExpandOffset = 12;
+
 const focusableSelector = [
   "a[href]",
   "button:not([disabled])",
@@ -44,16 +47,43 @@ export function SiteShell({
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuCloseButtonRef = useRef<HTMLButtonElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
+  const mastheadScrolledRef = useRef(isMastheadScrolled);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsMastheadScrolled(window.scrollY > 40);
+    let animationFrame = 0;
+
+    const updateMastheadState = () => {
+      animationFrame = 0;
+      const scrollTop = window.scrollY;
+
+      if (!mastheadScrolledRef.current && scrollTop > mastheadShrinkOffset) {
+        mastheadScrolledRef.current = true;
+        setIsMastheadScrolled(true);
+        return;
+      }
+
+      if (mastheadScrolledRef.current && scrollTop < mastheadExpandOffset) {
+        mastheadScrolledRef.current = false;
+        setIsMastheadScrolled(false);
+      }
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (animationFrame) {
+        return;
+      }
+
+      animationFrame = window.requestAnimationFrame(updateMastheadState);
+    };
+
+    updateMastheadState();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
