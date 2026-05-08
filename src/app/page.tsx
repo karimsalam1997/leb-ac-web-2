@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -14,7 +15,16 @@ import { EditorialImage } from "@/components/editorial-image";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { SiteShell } from "@/components/site-shell";
 import { essays, letters, notebookEntries, type Essay } from "@/lib/content";
+import { buildPageMetadata, siteDescription, siteName } from "@/lib/seo";
 import { getArticleImage, getArticleImages, homeAssets } from "@/lib/visual-assets";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: siteName,
+  description: siteDescription,
+  path: "/",
+  image: homeAssets.hero.src,
+  absoluteTitle: true,
+});
 
 const heroEssay = essays[0];
 const beirutParkEssay =

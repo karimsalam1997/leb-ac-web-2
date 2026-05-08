@@ -14,6 +14,11 @@ import {
   getRelatedEssays,
 } from "@/lib/content";
 import {
+  buildEssayJsonLd,
+  buildEssayMetadata,
+  serializeJsonLd,
+} from "@/lib/seo";
+import {
   type ArticleImageAsset,
   getArticleImage,
   getArticleImages,
@@ -36,10 +41,11 @@ export function generateMetadata({
       return { title: "Essay Not Found / Lebanese Academic" };
     }
 
-    return {
-      title: `${essay.title} / Lebanese Academic`,
-      description: essay.dek,
-    };
+    return buildEssayMetadata({
+      essay,
+      path: `/essays/${essay.slug}`,
+      image: getArticleImage(essay.slug, 0),
+    });
   });
 }
 
@@ -69,9 +75,20 @@ export default async function EssayPage({
   const leadImageAsset = articleImages[0];
   const articleImage = leadImageAsset?.src ?? getArticleImage(essay.slug, 0);
   const supportingImages = articleImages.slice(1);
+  const articleJsonLd = buildEssayJsonLd({
+    essay,
+    path: `/essays/${essay.slug}`,
+    images: articleImages.map((image) => image.src),
+  });
 
   return (
     <SiteShell activePath="/essays">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(articleJsonLd),
+        }}
+      />
       <div className="reading-progress" aria-hidden="true">
         <span />
       </div>

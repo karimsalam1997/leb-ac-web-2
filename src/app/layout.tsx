@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import {
+  absoluteUrl,
+  buildWebsiteJsonLd,
+  getSiteUrl,
+  serializeJsonLd,
+  siteAuthor,
+  siteDescription,
+  siteName,
+} from "@/lib/seo";
 import "./globals.css";
 
 const fraunces = localFont({
@@ -62,9 +71,38 @@ const notoNaskhArabic = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Lebanese Academic",
-  description:
-    "A literary-political publication on Lebanon, memory, power, and public life.",
+  metadataBase: getSiteUrl(),
+  applicationName: siteName,
+  title: {
+    default: siteName,
+    template: `%s / ${siteName}`,
+  },
+  description: siteDescription,
+  authors: [{ name: siteAuthor }],
+  creator: siteAuthor,
+  publisher: siteName,
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: siteName,
+    description: siteDescription,
+    url: getSiteUrl().origin,
+    siteName,
+    type: "website",
+    images: [
+      {
+        url: absoluteUrl("/brand/la-primary-lockup.png"),
+        alt: siteName,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteName,
+    description: siteDescription,
+    images: [absoluteUrl("/brand/la-primary-lockup.png")],
+  },
 };
 
 export default function RootLayout({
@@ -77,7 +115,15 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${notoNaskhArabic.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(buildWebsiteJsonLd()),
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

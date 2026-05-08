@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { letters } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
 import { getLetterImage } from "@/lib/visual-assets";
 import { LettersClient, type LetterOrigin } from "./letters-client";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Letters",
+  description:
+    "Dispatches from Beirut, Lebanon, and the diaspora, gathered by Lebanese Academic.",
+  path: "/letters",
+  image: getLetterImage(letters[0]?.slug ?? "", 0),
+});
 
 const lebanonLocationMatchers = [
   /beirut/i,

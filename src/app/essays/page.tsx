@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import { EssaysIndexClient, type EssayIndexItem } from "./essay-index-client";
 import { SiteShell } from "@/components/site-shell";
 import { essays } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
 import { getArticleImage } from "@/lib/visual-assets";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Essays",
+  description:
+    "Long-form essays from Lebanese Academic on Lebanon, political economy, memory, identity, and public life.",
+  path: "/essays",
+  image: getArticleImage(essays[0]?.slug ?? "", 0),
+});
 
 export default async function EssaysPage({
   searchParams,

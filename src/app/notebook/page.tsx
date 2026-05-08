@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import { notebookEntries } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
 import { getNotebookImage } from "@/lib/visual-assets";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Notebook",
+  description:
+    "Fragments, observations, images, readings, and notes from Lebanese Academic.",
+  path: "/notebook",
+  image: getNotebookImage(notebookEntries[0]?.slug ?? "", 0),
+});
 
 export default function NotebookPage() {
   return (

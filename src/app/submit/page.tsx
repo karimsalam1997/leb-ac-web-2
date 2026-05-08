@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { BookOpen, Camera, Clock, Feather, Shield } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { SubmitForm } from "@/components/submit-form";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Submit a Letter",
+  description:
+    "Submit a letter to Lebanese Academic from Lebanon, the diaspora, or wherever Lebanon has followed you.",
+  path: "/submit",
+  image: "/brand/la-primary-lockup.png",
+});
 
 const guidelines = [
   {

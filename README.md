@@ -34,3 +34,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## SEO setup
+
+Set `NEXT_PUBLIC_SITE_URL` to the public site address when you know the final URL.
+
+Examples:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-vercel-site.vercel.app
+NEXT_PUBLIC_SITE_URL=https://lebaneseacademic.org
+```
+
+After deployment, submit these URLs in Google Search Console and Bing Webmaster Tools:
+
+- `/sitemap.xml`
+- `/robots.txt`
+- `/`
+- `/essays`
+- a few important essay pages
