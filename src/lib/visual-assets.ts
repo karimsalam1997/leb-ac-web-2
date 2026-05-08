@@ -1,5 +1,14 @@
 const homeBase = "/home";
 const downtownRepairHero = "/editorial/downtown-repair-hero.jpg";
+const essayImageBase = "/essay-images";
+const beirutParkBase = "/editorial/beirut-park";
+
+export type ArticleImageAsset = {
+  src: string;
+  alt: string;
+  caption?: string;
+  position?: string;
+};
 
 export const homeAssets = {
   logoMark: `${homeBase}/logo-mark@3x.png`,
@@ -58,6 +67,183 @@ export const homeAssets = {
 
 export const generatedArticleImages = homeAssets.edition.map((asset) => asset.src);
 
+const articleImageSets: Record<string, ArticleImageAsset[]> = {
+  "the-mehtail-republic": [
+    {
+      src: `${essayImageBase}/the-mehtail-republic-header-v2.png`,
+      alt: "A Lebanese professional working between diaspora office life and Beirut infrastructure collapse",
+      position: "center 48%",
+    },
+    {
+      src: `${essayImageBase}/the-mehtail-republic-diaspora-nodes-v2.png`,
+      alt: "Lebanese competence abroad contrasted with generator dependency at home",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/the-mehtail-republic-private-solidarity-v2.png`,
+      alt: "A family absorbing the burden of failed public systems through private care",
+      position: "center 52%",
+    },
+  ],
+  "the-census-that-cannot-be-taken": [
+    {
+      src: `${essayImageBase}/03-census-that-cannot-be-taken-header.png`,
+      alt: "A census ledger and map representing Lebanon's avoided demographic count",
+      position: "center 48%",
+    },
+    {
+      src: `${essayImageBase}/03-census-registration-card-map.png`,
+      alt: "Registration cards layered over a Lebanese map",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/03-census-shadowed-voting-lines.png`,
+      alt: "Voters and census shadows suggesting representation without measurement",
+      position: "center 48%",
+    },
+  ],
+  "sovereignty-theatre": [
+    {
+      src: `${essayImageBase}/04-sovereignty-theatre-header.png`,
+      alt: "A theatrical diplomatic room representing performed sovereignty",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/04-sovereignty-empty-meeting-table.png`,
+      alt: "An empty meeting table staged for Lebanon's absent sovereignty",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/04-sovereignty-little-sovereignties-balconies.png`,
+      alt: "Balconies and small authorities standing in for fragmented sovereignty",
+      position: "center 48%",
+    },
+  ],
+  "the-rubble-zone": [
+    {
+      src: `${essayImageBase}/05-the-rubble-zone-header.png`,
+      alt: "A destroyed village landscape representing the politics of rubble",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/05-the-rubble-zone-buffer-map.png`,
+      alt: "A buffer-zone map drawn across a damaged Lebanese landscape",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/05-the-rubble-zone-classroom.png`,
+      alt: "A damaged classroom inside the rubble zone",
+      position: "center 52%",
+    },
+  ],
+  "the-seventeen-countries": [
+    {
+      src: `${essayImageBase}/06-the-seventeen-countries-header.png`,
+      alt: "Lebanon pictured as many small administrative worlds within one border",
+      position: "center 48%",
+    },
+    {
+      src: `${essayImageBase}/06-the-seventeen-countries-counter-maze.png`,
+      alt: "A maze of public counters representing fragmented daily administration",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/06-the-seventeen-countries-bus-stop.png`,
+      alt: "A bus stop scene showing everyday negotiation across Lebanese public life",
+      position: "center 50%",
+    },
+  ],
+  "the-land-that-mourns-in-one-language": [
+    {
+      src: `${essayImageBase}/07-land-that-mourns-header.png`,
+      alt: "A mourning Lebanese landscape shaped by shared grief",
+      position: "center 48%",
+    },
+    {
+      src: `${essayImageBase}/07-land-that-mourns-divine-feminine-triptych.png`,
+      alt: "A triptych evoking Astarte, Mother Mary, and Fatima as figures of shared mourning",
+      position: "center 48%",
+    },
+    {
+      src: `${essayImageBase}/07-land-that-mourns-mourning-women.png`,
+      alt: "Women mourning across generations in a Lebanese landscape",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/07-land-that-mourns-archive-table.png`,
+      alt: "An archive table holding traces of grief and memory",
+      position: "center 52%",
+    },
+  ],
+  "downtown-without-a-city": [
+    {
+      src: `${essayImageBase}/08-downtown-without-a-city-header.png`,
+      alt: "Downtown Beirut shown as a restored district without civic life",
+      position: "center 50%",
+    },
+    {
+      src: `${essayImageBase}/08-downtown-without-a-city-neighborhood-repair.png`,
+      alt: "A repaired neighborhood scene contrasting with empty downtown redevelopment",
+      position: "center 52%",
+    },
+    {
+      src: `${essayImageBase}/08-downtown-without-a-city-old-souk-memory.png`,
+      alt: "Memory of Beirut's old souks layered into the present city",
+      position: "center 50%",
+    },
+  ],
+  "the-park-that-remembers": [
+    {
+      src: `${beirutParkBase}/main-sightline.jpg`,
+      alt: "The Beirut Park sundial sightline through the redesigned landscape",
+      caption: "The Gnomon Plaza sightline, aligning the sundial, gazebo, and Pigeon Tower.",
+      position: "center 48%",
+    },
+    {
+      src: `${beirutParkBase}/gate-pavilion-sunset.jpg`,
+      alt: "The Beirut Park gateway and pavilion at sunset",
+      caption: "The main gate and pavilion turn arrival into a real civic threshold.",
+      position: "center 52%",
+    },
+    {
+      src: `${beirutParkBase}/pathways.jpg`,
+      alt: "Crushed limestone pathways winding through the Beirut Park planting",
+      caption: "Crushed limestone paths slow the body down and return rain to the ground.",
+      position: "center 52%",
+    },
+    {
+      src: `${beirutParkBase}/gazebo-lake.jpg`,
+      alt: "The Ottoman gazebo beside the lake in the Beirut Park redesign",
+      caption: "The Ottoman Gazebo frames water, gathering, and the public right to linger.",
+      position: "center 48%",
+    },
+    {
+      src: `${beirutParkBase}/pigeon-tower-release.jpg`,
+      alt: "The Pigeon Tower releasing birds at sunset",
+      caption: "The Pigeon Tower makes a living Beirut rooftop tradition monumental.",
+      position: "center 44%",
+    },
+    {
+      src: `${beirutParkBase}/colonnaded-vines.jpg`,
+      alt: "Roman columns reused as a vine-covered pergola",
+      caption: "Dormant columns become shade, letting heritage work again.",
+      position: "center 50%",
+    },
+    {
+      src: `${beirutParkBase}/adonis-grove.jpg`,
+      alt: "The Adonis Grove in bloom",
+      caption: "The Adonis Grove turns mourning into a seasonal, shared landscape.",
+      position: "center 48%",
+    },
+    {
+      src: `${beirutParkBase}/backgammon-pigeons.jpg`,
+      alt: "Stone backgammon tables and pigeons in the Beirut Park redesign",
+      caption: "Permanent tawleh tables make play part of the park's civic architecture.",
+      position: "center 52%",
+    },
+  ],
+};
+
 const generatedImageBySlug: Record<string, string> = {
   "the-city-that-could-not-repair-itself": downtownRepairHero,
   "the-cartel-in-the-costume-of-a-country": homeAssets.hero.src,
@@ -87,10 +273,26 @@ const generatedImageBySlug: Record<string, string> = {
   "every-letter-on-this-screen": homeAssets.departments.letters.src,
   "the-seventeen-countries-wearing-a-trenchcoat": homeAssets.departments.archive.src,
   "the-architecture-of-consolation": homeAssets.departments.essays.src,
+  "the-park-that-remembers": articleImageSets["the-park-that-remembers"][0].src,
 };
 
 export function getArticleImage(slug: string, index = 0) {
-  return generatedImageBySlug[slug] ?? generatedArticleImages[index % generatedArticleImages.length];
+  const imageSet = articleImageSets[slug];
+
+  return (
+    imageSet?.[index % imageSet.length]?.src ??
+    generatedImageBySlug[slug] ??
+    generatedArticleImages[index % generatedArticleImages.length]
+  );
+}
+
+export function getArticleImages(slug: string) {
+  return articleImageSets[slug] ?? [
+    {
+      src: getArticleImage(slug, 0),
+      alt: slug,
+    },
+  ];
 }
 
 const generatedLetterImages: Record<string, string> = {

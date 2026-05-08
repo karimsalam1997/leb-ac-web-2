@@ -14,9 +14,13 @@ import { EditorialImage } from "@/components/editorial-image";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { SiteShell } from "@/components/site-shell";
 import { essays, letters, notebookEntries, type Essay } from "@/lib/content";
-import { arabicCopy, getArticleImage, homeAssets } from "@/lib/visual-assets";
+import { getArticleImage, getArticleImages, homeAssets } from "@/lib/visual-assets";
 
 const heroEssay = essays[0];
+const beirutParkEssay =
+  essays.find((essay) => essay.slug === "the-park-that-remembers") ??
+  essays.at(-1) ??
+  heroEssay;
 const latestEssays = essays.slice(1, 6);
 const moreEssays = essays.slice(6, 8);
 const recentLetters = letters.slice(0, 2);
@@ -172,6 +176,10 @@ export default function Home() {
   const heroTitleLines =
     displayTitleLinesBySlug[heroEssay.slug] ?? editorialTitleLines(heroEssay.title);
   const heroImage = getArticleImage(heroEssay.slug, 0);
+  const beirutParkImages = getArticleImages(beirutParkEssay.slug);
+  const beirutParkFeatureImage =
+    beirutParkImages.find((image) => image.src.includes("pigeon-tower-release")) ??
+    beirutParkImages[0];
 
   return (
     <SiteShell activePath="/">
@@ -219,21 +227,26 @@ export default function Home() {
           </Link>
 
           <Link
-            href={`/essays/${heroEssay.slug}`}
-            className="home-lead-poster"
-            aria-label={`${arabicCopy.homeQuote} ${arabicCopy.homeSubquote}`}
+            href={`/essays/${beirutParkEssay.slug}`}
+            className="home-park-feature"
+            aria-label={`Read ${beirutParkEssay.title}`}
           >
-            <Image
-              src={homeAssets.poster}
-              alt=""
-              fill
+            <EditorialImage
+              src={beirutParkFeatureImage?.src}
+              alt={beirutParkFeatureImage?.alt ?? beirutParkEssay.title}
+              className="home-park-feature-image"
+              imagePosition={beirutParkFeatureImage?.position ?? "center 45%"}
               priority
-              quality={95}
-              sizes="(min-width: 1024px) 23vw, 100vw"
-              className="home-lead-poster-image"
+              quality={92}
+              sizes="(min-width: 1280px) 23vw, (min-width: 1024px) 27vw, 100vw"
             />
-            <span className="visually-hidden">
-              {arabicCopy.homeQuote} {arabicCopy.homeSubquote}
+            <span className="home-park-feature-copy">
+              <span className="editorial-kicker">Beirut Park</span>
+              <strong>{beirutParkEssay.title}</strong>
+              <span>{beirutParkEssay.dek}</span>
+              <em>
+                Read essay <span className="link-arrow">-&gt;</span>
+              </em>
             </span>
           </Link>
         </div>

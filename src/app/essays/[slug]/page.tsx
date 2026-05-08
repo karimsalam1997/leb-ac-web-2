@@ -13,7 +13,11 @@ import {
   getEssay,
   getRelatedEssays,
 } from "@/lib/content";
-import { getArticleImage } from "@/lib/visual-assets";
+import {
+  type ArticleImageAsset,
+  getArticleImage,
+  getArticleImages,
+} from "@/lib/visual-assets";
 
 export function generateStaticParams() {
   return essays.map((essay) => ({ slug: essay.slug }));
@@ -61,7 +65,9 @@ export default async function EssayPage({
   const paragraphs = essay.sections.flatMap((section) => section.paragraphs);
   const leadParagraphs = paragraphs.slice(0, 3);
   const bodySections = getBodySections(essay.sections, leadParagraphs.length);
-  const articleImage = getArticleImage(essay.slug, 0);
+  const articleImages = getArticleImages(essay.slug);
+  const articleImage = articleImages[0]?.src ?? getArticleImage(essay.slug, 0);
+  const supportingImages = articleImages.slice(1);
   const isDowntownRepairEssay = essay.slug === "the-city-that-could-not-repair-itself";
   const pullQuote = essay.pullQuote.trim();
 
@@ -170,6 +176,10 @@ export default async function EssayPage({
                           );
                         })}
                       </div>
+                      <ArticleInlineImage
+                        asset={supportingImages[sectionIndex]}
+                        essayTitle={essay.title}
+                      />
                     </section>
                   ))}
                   <div className="article-section-mark article-section-mark-end">
@@ -285,6 +295,38 @@ function InlineFootnote({ note }: { note?: Citation }) {
       <summary>Note {note.id} ↓</summary>
       <p>{renderNoteText(note.text)}</p>
     </details>
+  );
+}
+
+function ArticleInlineImage({
+  asset,
+  essayTitle,
+}: {
+  asset?: ArticleImageAsset;
+  essayTitle: string;
+}) {
+  if (!asset) {
+    return null;
+  }
+
+  return (
+    <figure className="article-inline-figure">
+      <Link href={asset.src} className="block" aria-label={`Open image for ${essayTitle}`}>
+        <EditorialImage
+          src={asset.src}
+          alt={asset.alt}
+          className="article-inline-image"
+          imagePosition={asset.position}
+          quality={92}
+          sizes="(min-width: 1180px) 48vw, 100vw"
+        />
+      </Link>
+      {asset.caption ? (
+        <figcaption className="caption article-inline-caption">
+          {asset.caption}
+        </figcaption>
+      ) : null}
+    </figure>
   );
 }
 

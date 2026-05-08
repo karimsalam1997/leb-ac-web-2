@@ -976,4 +976,146 @@ Nostalgia will not repair the city. Restitution might: legal, spatial, archival,
 
 Beirut was never only beautiful. It was usable. That is what must be recovered.
 
+## The Park That Remembers
+
+**Final title:** The Park That Remembers
+**Dek:** Why we redesigned Beirut's last great public site as a national monument, not a generic green space
+**Byline:** Karim Salam
+**Publication date:** May 8, 2026
+**Estimated reading time:** 14 min read
+**Topic tags:** Beirut, Urbanism, Public Space, Heritage, National Monument, Landscape, Identity Capital
+**Excerpt:** Beirut does not need another place to move through. Beirut needs a place to stay.
+**Pull quote:** "Not a theme park. Not a museum. Not an escape from Beirut. A place that could only be Beirut."
+
+**Suggested footnotes/citations:**
+
+1. Source replacement file provided by Karim Salam: `beirut_park_longform_essay_draft.md`.
+2. Beirut Park project research and image material in the local project folders.
+
+**Full body:**
+
+There is a strange thing that happens when you spend enough time looking at Beirut from above. The city starts to appear less like a capital and more like a record of interruptions. The coastline is interrupted. The old souks were interrupted. The memory of downtown was interrupted. Even the simple act of walking through public space feels interrupted by gates, guards, cars, private claims, and the unspoken feeling that you are allowed to pass through the city, but not always allowed to belong to it.
+
+That was the feeling I carried into the Beirut Park project.
+
+At first, it would have been easy to treat the site as a landscape problem. Beirut has too little green space. The site is large. A park should have trees, paths, shade, maybe a water feature, maybe a cafe. That is the normal way these projects are discussed. It is also exactly why so many public spaces fail. They are treated as amenities, when in reality they are arguments. A park tells a city what kind of people it thinks live there. It tells them whether they are visitors or citizens, consumers or dwellers, a crowd to be moved through space or a public worthy of being held by it.
+
+Beirut does not need another place to move through. Beirut needs a place to stay.
+
+The numbers make the urgency obvious. Beirut has around 0.8 square meters of green space per person. The commonly cited minimum standard is 9. The waterfront site is roughly 70,000 square meters, one of the last large unbuilt sites in the central district. In another city, this might be a major public amenity. In Beirut, it is something rarer. It is one of the last chances to decide what the public face of the reconstructed city should actually mean.
+
+That is why the question was never simply: what should the park look like?
+
+The real question was: what does Beirut need to remember in order to become livable again?
+
+The official language of contemporary park design tends to be frictionless. It likes continuous movement, soft curves, abstract forms, imported materials, open lawns, and water features that look beautiful in renderings. This aesthetic is internationally legible. It can signal polish, wealth, and professional competence. There is nothing inherently evil about it. In the right place, with the right maintenance culture, it can even work.
+
+But Beirut is not a blank site in a stable state. It is a city after civil war, after financial collapse, after the port explosion, after three decades of reconstruction that often felt like erasure. A generic park on this site would not be neutral. In Beirut, neutrality often means the removal of anything specific enough to be contested. It means no Phoenician layer, no Roman layer, no Ottoman layer, no French Mandate layer, no working-class practices, no rituals, no local materials, no difficult memory. It means a polished landscape that carefully avoids the question of who the city belongs to.
+
+That avoidance was exactly what we wanted to challenge.
+
+The version we developed is built around a different principle: if the city has been fragmented by history, the park must make history legible again. It must gather what the city has been told to keep separate. It must let people walk through continuity. Not a fake continuity, not a pure nationalist myth, and not a museum display. A living continuity. A place where old forms are given new work.
+
+This is where Eric Hobsbawm became useful.
+
+Hobsbawm argued that many traditions people experience as ancient are actually modern inventions. They are constructed during periods of rupture, when societies need symbols that make continuity feel possible again. The point is not that invented traditions are fake and therefore worthless. The point is that societies are always making themselves. Nations do not survive on facts alone. They survive through rituals, ceremonies, monuments, songs, public spaces, and shared habits that teach strangers to imagine themselves as part of the same story.
+
+Lebanon is full of invented traditions. Phoenicianism was one. Arab nationalism was another. The French Mandate architectural language of downtown Beirut was another, even if people do not usually describe it that way. Those buildings fused Beaux-Arts planning, Lebanese stone, Ottoman arches, Islamic motifs, mountain-house proportions, and local craftsmanship. They were not ancient. They were constructed. Yet over time, many Lebanese came to experience them as deeply Lebanese because they gave physical form to the country's real condition: not purity, but synthesis.
+
+That is the key. Lebanese identity has never been pure. It is layered. Canaanite, Phoenician, Greek, Roman, Byzantine, Arab, Islamic, Crusader, Mamluk, Ottoman, French, modern, diasporic. The mistake is trying to choose one layer and declare it the whole country. The opportunity is to design a space where the layers can coexist without needing to defeat each other.
+
+So yes, the park invents tradition. It does so openly.
+
+We did not pretend the Pigeon Tower had always existed on this site. We designed it. We did not pretend the Adonis Grove was an uninterrupted public ritual from antiquity to today. We composed it. We did not pretend that a Roman column naturally wanted to become a sundial. We gave it that job. The point was never to hide the scaffolding. The point was to ask whether an invented tradition can be more honest when it admits that it has been invented.
+
+I think it can.
+
+Because what matters is not whether every element existed in the exact same form before. What matters is whether the invention grows from the real grammar of the place. A fake tradition is one that uses the past as costume. A living tradition is one that takes an older logic and gives it new social work to do.
+
+That is how we approached every intervention.
+
+The Roman Sundial takes the memory of ancient Berytus and turns it into orientation. A column fragment, instead of sitting as a dead artifact, becomes a gnomon, the shadow-casting arm of a public clock. It tells time without electricity. It connects the visitor to the sun, to the seasons, to a scale of time larger than political crisis. In a country where time is often measured by collapse, waiting, delay, and emergency, the sundial offers cosmic time. It says: stand here. Watch the earth move. You are in history, not outside it.
+
+The Ottoman Gazebo sits at the heart of the axis. It draws from the kiosk, the sabil, the triple arch, and the civic culture of water as hospitality. A sabil is not just a fountain. It is an ethic: water offered freely in public. In a city where so many basic services have become private burdens, the act of drinking cold water from a beautiful stone fountain becomes quietly political. It turns utility into dignity.
+
+The Pigeon Tower is perhaps the most misunderstood intervention, which is why it matters so much. Pigeon keeping in Beirut is often dismissed as a rough rooftop subculture, associated with boys and men on the margins, with neighborhoods that respectable society prefers to ignore. But that is exactly why it needed a monument. The point was to take something stigmatized and reveal the discipline, tenderness, rivalry, and longing inside it. Pigeon keeping is about control and release, ownership and sky, poverty and majesty. A pigeon tower in the center of the city says that working-class culture is not dirt to be cleaned away from national identity. It is part of the nation.
+
+It also reaches deeper. The bird connects to older Near Eastern dovecotes and to the sacred associations of Astarte. The tower houses birds, collects guano for the gardens, creates an ecological loop, and produces a daily spectacle at sunset. It is symbol, infrastructure, and social repair at once.
+
+The Adonis Grove carries the emotional center of the project. Tammuz, later known as Adonis, belongs to the deep mythological landscape of this land. The story is simple and devastating: a beautiful young god dies, his blood enters the soil, and red anemones bloom. The river runs red. The land mourns and returns. Death becomes seasonal. Grief becomes botanical.
+
+This mattered because Lebanon has no shortage of grief, but it has very few shared containers for it. Every sect has its martyrs. Every community has its wound. Even mourning is divided. The Adonis Grove looks for a symbol older than the divisions, older than the confessional claims, older than the modern state. It does not ask a Christian, Muslim, Druze, secular Lebanese person, refugee, or visitor to surrender their identity. It gives them a pre-sectarian ground on which grief can be felt without being owned.
+
+In the grove, red anemones bloom every spring. The memorial is not a plaque. It is an event. You do not debate a flower. You return to it. You bring someone to see it. You remember that the land itself has carried stories of death and return for thousands of years.
+
+This is also a practical idea, not only a poetic one. In a country where enforcement is weak, sacredness becomes a kind of infrastructure. People behave differently around places they experience as extensions of identity. They do not need a sign to tell them not to litter in a mosque, carve into a shrine, or treat a cemetery like an empty lot. The restraint comes from inside the person. The question was whether a public park could borrow that same mechanism without belonging to one sect. The Adonis Grove tries to create that kind of shared sacredness: not religious control, but civic care.
+
+This is what I mean by narrative infrastructure. It is not branding. It is not a slogan. It is the embedding of memory into the physical behavior of a place, so that the place teaches without needing to lecture.
+
+The material strategy follows the same logic. We chose Ramli sandstone, basalt, gravel, iron, and local craft because materials are moral in a city exhausted by surfaces. If something looks like stone, it should be stone. If a path suggests earth, it should breathe like earth. Concrete often looks best on the day it is poured and worse every year after. Ramli stone does the opposite. It darkens, absorbs, cools, records, and ages. It is made of the coast. It is not simply a local material in the procurement sense. It is Beirut's geological memory.
+
+Gravel matters for the same reason. A gravel path slows you down. It makes sound. It asks the body to become aware of walking. It is cheap, repairable, permeable, and honest. If a root moves beneath it, the gravel can shift. If a path is damaged, a worker can repair it with simple tools. In a fragile country, beauty that requires constant imported systems is irresponsible. The park had to be built from things that can survive electricity cuts, budget cuts, institutional neglect, and time.
+
+That is why we replaced the fantasy of the artificial river with the dry wadi. A pumped water feature in Beirut is a promise the state cannot keep. It looks luxurious in a rendering, then becomes a cracked basin, stagnant trench, or maintenance headache. A wadi is honest about the Mediterranean climate. In winter, it carries stormwater. In summer, it rests. It uses gravity rather than electricity. It teaches that a dry landscape is not a dead landscape.
+
+This matters because maintenance is governance. A public space that depends on invisible systems will eventually reveal whether the institution behind it is serious. When the pump fails, when the imported tile cracks, when the lawn burns, the public reads that failure instantly. It becomes another lesson in abandonment. We wanted the opposite: a park whose beauty depends on things Lebanon can realistically maintain, repair, and understand.
+
+The planting strategy is also political. We did not want a decorative green ceiling of identical trees. We wanted a sovereign arboretum, a living collection of Lebanon's ecological regions. Cedar, oak, fir, olive, pomegranate, oleander, rosemary, anemone. The idea is not to create a botanical museum, but to make the country physically present in the capital. Walking the park should feel, subtly, like walking through the ecological memory of Lebanon.
+
+There are also smaller, more social interventions, because a park is finally judged by where people sit.
+
+Backgammon tables carved into stone dignify tawleh as a civic ritual, not a waste of time. A cafe serving coffee and nargileh gives lingering a legitimate home. Benches are placed for conversation, not just rest. The goal is to turn loitering into inhabiting. In a society where public space is often policed by class signals, the right to sit for hours with one coffee is not trivial. It is the beginning of civic life.
+
+This is where the comparison with the other version becomes clearest. The difference is not only style. It is a different theory of the human being.
+
+A park optimized for flow sees people as bodies in motion. A park optimized for dwell time sees people as citizens who need reasons to stay. The first produces corridors. The second produces rooms. The first is usually easier to render. The second is harder to design because it requires asking awkwardly human questions. Where does an old man sit without feeling exposed? Where does a teenager go without being treated as a threat? Where does a couple argue quietly? Where does a child discover something? Where does a grieving person stand when the country has given them nowhere to put their grief?
+
+Those questions are not soft. They are the hard questions of public life.
+
+Ray Oldenburg called cafes, parks, libraries, and plazas third places: spaces outside home and work where society becomes itself. Beirut has lost too many of these. Some were destroyed. Some were privatized. Some became too expensive. Some became symbolically unavailable to large parts of the population. When third places disappear, people do not just lose leisure. They lose the ordinary ground on which trust forms.
+
+This is why a public park in Beirut cannot be treated as decoration. It is social infrastructure. It is political infrastructure. It is psychological infrastructure.
+
+It is also economic infrastructure, though not in the shallow sense of saying "parks raise property values." Of course they can. But the deeper economic argument is that identity is increasingly the scarce asset in a world of copyable forms. A generic park competes with every other generic park in Dubai, Doha, Riyadh, Singapore, and Miami. Beirut cannot out-generic the places with more money, better maintenance, and stronger institutions. Its advantage is that it can only be Beirut.
+
+That advantage has been underused. Sometimes it has been buried. Sometimes literally.
+
+The reconstructed downtown solved certain problems of physical stabilization, but it created another problem: a district many Lebanese experience as beautiful, expensive, and not fully theirs. This is not only a moral issue. It is a business issue. Places that people do not feel attached to become fragile. They require heavier security, heavier programming, heavier marketing, heavier spending to remain alive. Places that people claim as their own generate care. They create what developers call value and what citizens call belonging.
+
+The Beirut Park proposal tries to align those interests instead of pretending they are opposed. A park made of local stone, local stories, local rituals, local ecology, and local craft can be more beloved and more economically valuable. It can reduce maintenance costs because its systems are simpler. It can increase dwell time because there are reasons to stay. It can improve the reputation of the district because it gives the public something back. It can become a future heritage asset because it was designed to age.
+
+That last phrase matters to me: future heritage.
+
+We often speak about heritage as if it is only something we inherit. But every inherited thing was once new. Someone laid the first stone of Beiteddine. Someone designed the first triple arch that later felt inevitable. Someone decided that a public ceremony, a costume, a ritual, a monument, or a garden would stand for a people. The question is not whether we invent tradition. We do. The question is whether we invent cheaply or seriously, cynically or lovingly, with costume or with structure.
+
+The park we designed is an argument for serious invention.
+
+It says Lebanon does not need to choose between modernity and memory. It does not need to imitate the global city in order to prove it has a future. It does not need to bury its civilizational layers because they are politically inconvenient. It can build something new that acknowledges everything that came before.
+
+This is not nostalgia. Nostalgia wants to return to a past that cannot return. What we are proposing is continuity. Continuity is different. Continuity accepts rupture, then builds across it.
+
+That is why the park had to be layered rather than pure. Roman, Ottoman, Canaanite, Islamic, Mediterranean, French Mandate, working-class Beirut, ecological Lebanon, post-blast Beirut, future Beirut. If that sounds messy, good. Lebanon is messy. The task was never to purify it. The task was to give the mess order without killing it.
+
+At one point, while preparing to speak about the project to a Theory of Knowledge class, I realized that the park was not only a design proposal. It was an epistemological question. How do we know what belongs in a place? Who gets to decide what is authentic? Can a space produce knowledge that an essay cannot? Can a tradition be true if it is invented? Can a nation be designed?
+
+Those are large questions, but the park answers them in concrete ways.
+
+You know a place through the body as much as through the mind. Through shade. Through stone under your hand. Through the sound of gravel. Through the smell of rosemary. Through the public ritual of water. Through a flower that returns every spring. Through an old man teaching a child tawleh. Through pigeons rising over the city at sunset. Through the fact that a Roman column, instead of being abandoned as debris, now tells time.
+
+That is knowledge. Not the kind that sits in a textbook, but the kind that slowly teaches a population how to feel at home.
+
+In the end, the Beirut Park is important because Beirut has been trained to accept too little from public space. We have accepted spaces that are pretty but empty, expensive but lifeless, secure but unwelcoming, modern but placeless. We have accepted the idea that a park is a patch of green rather than a civic instrument. We have accepted the idea that memory belongs in museums while the city itself becomes generic.
+
+I do not accept that.
+
+A city like Beirut deserves public spaces that are as intelligent as its history, as emotionally complex as its people, and as durable as the stone beneath it. It deserves a park that does more than soften the waterfront. It deserves a park that helps the city recognize itself.
+
+That is what we tried to design.
+
+Not a theme park. Not a museum. Not an escape from Beirut.
+
+A place that could only be Beirut.
+
+And maybe, if it is built seriously enough, a place that one day feels as though it was always meant to be there.
+
 # Letters
