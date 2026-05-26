@@ -175,6 +175,9 @@ def events_geojson(clusters: list[GeoTaggedCluster]) -> dict:
                     "source_lanes": cluster.source_lanes,
                     "civilian_impact_flags": cluster.civilian_impact_flags,
                     "what_is_missing": cluster.what_is_missing,
+                    "verification_status": cluster.verification_status,
+                    "verification_label": cluster.verification.label,
+                    "verification_missing": cluster.verification.missing,
                 },
             }
         )

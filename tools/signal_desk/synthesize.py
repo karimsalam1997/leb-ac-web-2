@@ -60,6 +60,17 @@ def source_text(cluster: GeoTaggedCluster) -> str:
     return compact_list(cluster.sources_span) or lane_text(cluster)
 
 
+def verification_text(cluster: GeoTaggedCluster) -> str:
+    missing = compact_list(cluster.verification.missing, limit=4) or clean_missing(cluster.what_is_missing)
+    next_check = cluster.verification.next_checks[0] if cluster.verification.next_checks else cluster.recommended_next_check
+    return (
+        f"Verification: {cluster.verification.label}. "
+        f"{cluster.verification.summary} "
+        f"Missing: {missing}. "
+        f"Next check: {next_check}"
+    )
+
+
 def lead_opening(cluster: GeoTaggedCluster) -> str:
     place = cluster.primary_location.name if cluster.primary_location else cluster.where or "The lead cluster"
     status = cluster.confirmation_status.replace("-", " ")
@@ -71,14 +82,14 @@ def lead_opening(cluster: GeoTaggedCluster) -> str:
     if cluster.confirmation_status in {"single-source", "unconfirmed"} or cluster.location_precision in {"unknown", "national", "district"}:
         return (
             f"Start with the limit: {place} leads the run, but the record is {status} and the location is {precision}. "
-            f"The live trail comes through {sources}; the source lanes are {lanes}. {missing} "
+            f"The live trail comes through {sources}; the source lanes are {lanes}. {cluster.verification.summary} {missing} "
             "Read this as a signal to check before treating it as a settled account."
         )
 
     return (
         f"{place} leads the run because separate sources are now touching the same story. "
         f"The record is {status}, the location is {precision}, and the live trail comes through {sources}. "
-        f"{missing} Keep the event, the source interest, and the civilian effect in view at the same time."
+        f"{cluster.verification.summary} {missing} Keep the event, the source interest, and the civilian effect in view at the same time."
     )
 
 
@@ -86,7 +97,7 @@ def evidence_line(cluster: GeoTaggedCluster) -> str:
     return (
         f"Evidence: {source_text(cluster)}. "
         f"Source lanes: {lane_text(cluster)}. "
-        f"{clean_missing(cluster.what_is_missing)}"
+        f"{verification_text(cluster)}"
     )
 
 
@@ -107,7 +118,7 @@ def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime) -
     quiet = [cluster for cluster in clusters if cluster.confirmation_status in {"single-source", "unconfirmed"}]
     quiet_text = "\n".join(f"- {cluster.headline}" for cluster in quiet[:4]) or "- No low-confidence cluster dominated the run."
     unconfirmed = "\n".join(
-        f"- {cluster.headline}: {', '.join(cluster.sources_span) or 'single source'}."
+        f"- {cluster.headline}: {cluster.verification.label}; {', '.join(cluster.sources_span) or 'single source'}."
         for cluster in clusters
         if cluster.confirmation_status != "corroborated"
     ) or "- No major high-risk claim required a single-source warning."

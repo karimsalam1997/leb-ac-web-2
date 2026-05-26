@@ -17,6 +17,7 @@ from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceHealth
 from tools.signal_desk.normalize import normalize
 from tools.signal_desk.source_lanes import build_ground_needs, build_source_lanes
 from tools.signal_desk.synthesize import synthesize_brief
+from tools.signal_desk.verification import attach_verification_dossiers
 
 
 T = TypeVar("T")
@@ -74,7 +75,7 @@ def main() -> None:
     scored = timed(stage_timings, "filter", lambda: filter_items(canonical))
     framework_config = timed(stage_timings, "load-frameworks-config", load_framework_config)
     frameworks = timed(stage_timings, "load-frameworks", lambda: load_frameworks(framework_config))
-    clusters = timed(stage_timings, "analyze-and-geo", lambda: geo_tag(analyze(scored, frameworks)))
+    clusters = timed(stage_timings, "analyze-geo-verify", lambda: attach_verification_dossiers(geo_tag(analyze(scored, frameworks))))
     brief = timed(stage_timings, "synthesize-brief", lambda: synthesize_brief(clusters, generated_at))
     aggregates = timed(stage_timings, "district-aggregates", lambda: district_aggregates(clusters))
     tags = timed(stage_timings, "signal-tags", lambda: sorted({tag for cluster in clusters for tag in cluster.signal_tags}))

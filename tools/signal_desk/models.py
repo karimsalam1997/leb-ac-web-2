@@ -20,6 +20,13 @@ Confidence = Literal["high", "medium", "low"]
 Severity = Literal["critical", "high", "moderate", "low"]
 LocationPrecision = Literal["exact", "district", "national", "unknown"]
 ConfirmationStatus = Literal["corroborated", "partly-corroborated", "single-source", "unconfirmed"]
+VerificationStatus = Literal[
+    "ready",
+    "watch",
+    "needs-source",
+    "needs-location",
+    "needs-source-and-location",
+]
 
 
 def utc_now() -> datetime:
@@ -69,6 +76,18 @@ class Location(BaseModel):
     match_confidence: float = Field(ge=0, le=1)
 
 
+class VerificationDossier(BaseModel):
+    status: VerificationStatus = "needs-source"
+    label: str = "Needs another source"
+    summary: str = "The cluster still needs a second source before it can carry much weight."
+    source_count: int = 0
+    source_lanes: list[str] = Field(default_factory=list)
+    location_precision: LocationPrecision = "unknown"
+    missing: list[str] = Field(default_factory=list)
+    next_checks: list[str] = Field(default_factory=list)
+    provenance: list[str] = Field(default_factory=list)
+
+
 class AnalyzedCluster(BaseModel):
     id: str
     item_ids: list[str]
@@ -95,6 +114,8 @@ class AnalyzedCluster(BaseModel):
     who_disputes_or_complicates: list[str] = Field(default_factory=list)
     why_it_matters: str = ""
     what_is_missing: str = ""
+    verification_status: VerificationStatus = "needs-source"
+    verification: VerificationDossier = Field(default_factory=VerificationDossier)
 
 
 class GeoTaggedCluster(AnalyzedCluster):

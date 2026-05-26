@@ -212,3 +212,57 @@ Information Architecture. The system now has better evidence and better geocodin
 ### One Thing Outside The Rubric
 
 Running Python checks creates `__pycache__` folders under `tools/signal_desk/`. They are easy to remove, but the repo still does not ignore them.
+
+## Cycle 5, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 5/10
+
+Lowest-scoring dimension: Information Architecture.
+
+Chosen fix: Information Architecture.
+
+Reason: the platform had the right evidence ingredients, but they were scattered across separate fields and prose. A reader, brief, map, or frontend component had to reconstruct the same question each time: is this item ready to read, does it need another source, does it need a sharper place, and what should be checked next?
+
+### What Changed
+
+- Added a typed `verification_status` to every cluster.
+- Added a compact `verification` dossier with label, summary, source count, source lanes, location precision, missing pieces, next checks, and provenance trail.
+- Built the dossier after geo-tagging so location warnings reflect the final map decision.
+- Updated brief synthesis to use the same verification dossier that the API now carries.
+- Added verification status, label, and missing pieces to map GeoJSON feature properties.
+- Left feeds and source lanes untouched, so Arabic and source coverage were not reduced.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 6/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/verification.py tools/signal_desk/run.py tools/signal_desk/synthesize.py tools/signal_desk/geo.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted verification assertions passed: a sample cluster received `verification_status: needs-source`, the brief included `Verification: Needs another source`, and GeoJSON properties carried the same verification fields.
+- Pipeline dry run passed: 2 raw RSS items, 2 clusters, 2 located clusters, no store output, and no public copy.
+- Dry-run health reported 40 source-health records, 1 ok, 39 failed, `store_output_written: false`, and `public_copy_written: false`.
+- No browser check was needed because this cycle changed backend data structure and brief synthesis only.
+
+### Next Highest-Priority Improvement
+
+Pipeline Robustness. Add a publication safety guard before public copy, because the current environment can still produce a technically successful run from a collapsed source shelf. A normal run should refuse to copy public data when live source health is too poor or when the output is fallback-thin.
+
+### One Thing Outside The Rubric
+
+The frontend type file under `src/lib/signal-desk.ts` is currently untracked in this worktree. Future UI work should avoid mixing that file into an automation commit unless the whole Signal Desk frontend is being intentionally added.
