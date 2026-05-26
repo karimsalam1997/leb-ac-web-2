@@ -259,3 +259,31 @@ Sources consulted:
 - [ACLED Codebook](https://acleddata.com/methodology/acled-codebook)
 - [RFC 7946, The GeoJSON Format](https://www.rfc-editor.org/rfc/rfc7946)
 - [Leaflet reference documentation](https://leafletjs.com/reference)
+
+## Cycle 10, 2026-05-26, Brief Quality
+
+Chosen dimension: Brief Quality.
+
+Why this was chosen: after Cycle 9, Brief Quality remained one of the lowest-scoring dimensions. The backend now knows whether a map point is exact, representative, or unmapped, but the generated brief still reads the map line as if all locations were equally precise.
+
+Findings:
+
+- The Associated Press guidance stresses attribution and source credibility. For Signal Desk, the map itself is a kind of claim, so the brief should attribute the level of location certainty just as it attributes source certainty.
+- BBC accuracy guidance says factual output should be clear, precise, well sourced, and honest about what is not known. A map sentence that names a place without saying that the point is only representative can mislead even when the data underneath is careful.
+- PBS standards warn that accuracy includes sufficient context so the public is not misled, including care with places. The brief should therefore state the mapping caveat beside the event summary, not bury it in the data file.
+- ACAPS methodology notes repeatedly treat limitations as part of the analytical product. Signal Desk should bring its location limitation into the brief's evidence line, especially for district-level and unlocated claims.
+- The existing brief already has a compact evidence line. This is the least disruptive place to add map precision because it keeps the prose readable and aligns the brief with the map data from Cycle 9.
+
+Implementation decision:
+
+- Add a compact map-context sentence to the brief evidence line.
+- Make the `On the map` section show whether each listed item is a named-place pin, representative area, or unmapped claim.
+- Use the new `map_marker_kind`, `map_precision_label`, `map_radius_meters`, and `map_warning` fields instead of recalculating precision in prose.
+- Keep the existing brief structure and source coverage unchanged.
+
+Sources consulted:
+
+- [Associated Press, Telling the Story](https://www.ap.org/about/news-values-and-principles/telling-the-story/)
+- [BBC Editorial Guidelines, Accuracy PDF](https://downloads.bbc.co.uk/guidelines/editorialguidelines/pdfs/bbc-editorial-guidelines-section-3-accuracy.pdf)
+- [PBS Standards, Accuracy](https://www.pbs.org/standards/accuracy/)
+- [ACAPS methodology note](https://www.acaps.org/fileadmin/Dataset/Methodology_files/20260204_ACAPS_Methodology_Note_-_Syria_Area-Based_Analysis__SABA__Dashboard_and_Core_Dataset_.pdf)

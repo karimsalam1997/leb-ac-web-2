@@ -60,6 +60,35 @@ def source_text(cluster: GeoTaggedCluster) -> str:
     return compact_list(cluster.sources_span) or lane_text(cluster)
 
 
+def radius_text(meters: int) -> str:
+    if meters <= 0:
+        return ""
+    kilometers = round(meters / 1000)
+    return f"{kilometers} km"
+
+
+def map_context_text(cluster: GeoTaggedCluster) -> str:
+    place = cluster.primary_location.name if cluster.primary_location else cluster.where or "Location unclear"
+    if cluster.map_marker_kind == "representative-area":
+        radius = radius_text(cluster.map_radius_meters)
+        radius_phrase = f" with about a {radius} radius" if radius else ""
+        return f"Map: {place} is shown as a representative area{radius_phrase}. Treat the coordinate as a center marker."
+    if cluster.map_marker_kind == "unmapped" or cluster.location_precision == "unknown":
+        return f"Map: no pin yet because the place is unclear. {cluster.map_warning}"
+    return f"Map: {place} is a named-place pin. {cluster.map_warning}"
+
+
+def map_line_text(cluster: GeoTaggedCluster) -> str:
+    place = cluster.primary_location.name if cluster.primary_location else "Unlocated"
+    if cluster.map_marker_kind == "representative-area":
+        radius = radius_text(cluster.map_radius_meters)
+        radius_phrase = f", {radius} radius" if radius else ""
+        return f"{place}: {cluster.headline} ({cluster.map_precision_label.lower()}{radius_phrase})"
+    if cluster.map_marker_kind == "unmapped" or cluster.location_precision == "unknown":
+        return f"{place}: {cluster.headline} (unmapped)"
+    return f"{place}: {cluster.headline} ({cluster.map_precision_label.lower()})"
+
+
 def verification_text(cluster: GeoTaggedCluster) -> str:
     missing = compact_list(cluster.verification.missing, limit=4) or clean_missing(cluster.what_is_missing)
     next_check = cluster.verification.next_checks[0] if cluster.verification.next_checks else cluster.recommended_next_check
@@ -97,6 +126,7 @@ def evidence_line(cluster: GeoTaggedCluster) -> str:
     return (
         f"Evidence: {source_text(cluster)}. "
         f"Source lanes: {lane_text(cluster)}. "
+        f"{map_context_text(cluster)} "
         f"{verification_text(cluster)}"
     )
 
@@ -111,10 +141,7 @@ def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime) -
         f"### {cluster.headline}\n{cluster.what_happened or cluster.analysis}\n\n{evidence_line(cluster)}\n\nStatus: {cluster.confirmation_status.replace('-', ' ')}. Next check: {cluster.recommended_next_check or cluster.what_to_watch}"
         for cluster in clusters[:6]
     )
-    map_line = "; ".join(
-        f"{cluster.primary_location.name if cluster.primary_location else 'Unlocated'}: {cluster.headline}"
-        for cluster in clusters[:4]
-    )
+    map_line = "; ".join(map_line_text(cluster) for cluster in clusters[:4])
     quiet = [cluster for cluster in clusters if cluster.confirmation_status in {"single-source", "unconfirmed"}]
     quiet_text = "\n".join(f"- {cluster.headline}" for cluster in quiet[:4]) or "- No low-confidence cluster dominated the run."
     unconfirmed = "\n".join(

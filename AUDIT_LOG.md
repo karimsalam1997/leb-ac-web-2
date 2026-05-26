@@ -494,3 +494,58 @@ Brief Quality. The brief now has verification language, but it still does not us
 ### One Thing Outside The Rubric
 
 The frontend map currently has hard-coded low-confidence circle radii. The data now publishes `map_radius_meters`, but the frontend has not yet been wired to use it.
+
+## Cycle 10, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Lowest-scoring dimensions: Signal Quality, Brief Quality, and Information Architecture.
+
+Chosen fix: Brief Quality.
+
+Reason: Cycle 9 made map uncertainty visible in the data, but the generated brief still read the map line as if every place label carried the same precision. A reader should not need to inspect `events.geojson` to know whether South Lebanon is a real pin or a representative area.
+
+### What Changed
+
+- Added map context to each brief evidence line.
+- Added a map-line formatter for the `On the map` section.
+- Exact named places now appear as named-place pins.
+- Representative areas now show their radius in the brief, for example a 36 km South Lebanon radius.
+- Unmapped claims now say they are unmapped because the place is unclear.
+- Reused the map fields added in Cycle 9 instead of recalculating precision inside the prose layer.
+- Kept the existing brief structure and did not touch source feeds or lanes.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/synthesize.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted brief assertion passed: a South Lebanon cluster produced a brief sentence saying it is a representative area with about a 36 km radius, and the `On the map` line carried the same caveat.
+- Normal RSS dry run passed with no public writes.
+- Dry-run health still showed DNS-blocked live source access, 39 `dns-error` records, 1 fallback record, 2 fallback items, and public copy blocked by the guard.
+- No browser check was needed because this cycle changed backend brief synthesis only.
+
+### Next Highest-Priority Improvement
+
+Information Architecture. Most dimensions now sit at 7, but the information model still leaves run-level health separate from the brief and cluster dossiers. A useful next pass would expose a compact run-level source condition in the generated API or brief so readers can see when the whole source shelf is degraded.
+
+### One Thing Outside The Rubric
+
+The brief still uses a fixed title, `MENA Morning Brief`, even though the product is now more specifically a Lebanon and Levant Signal Desk.
