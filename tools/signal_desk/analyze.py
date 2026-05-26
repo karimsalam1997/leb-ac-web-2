@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from datetime import datetime, timezone
 from hashlib import sha1
+import re
 
 from tools.signal_desk.models import AnalyzedCluster, Framework, GeoTaggedCluster, ScoredItem
 from tools.signal_desk.source_lanes import lane_for
@@ -10,6 +11,9 @@ from tools.signal_desk.source_lanes import lane_for
 
 CORROBORATING_LANES = {"lebanese-local", "israeli-dissent", "wires-regional"}
 PRIMARY_CLAIM_LANES = {"resistance-apparatus", "israeli-establishment"}
+LEBANESE_PLACE_HINTS = ["Tyre", "Bint Jbeil", "Marjayoun", "Nabatieh", "Sidon", "Beirut", "Baalbek", "Tripoli", "Dahiyeh", "South Lebanon"]
+LEBANON_CONTEXT_HINTS = [*LEBANESE_PLACE_HINTS, "Lebanon", "Lebanese", "Hezbollah"]
+FOREIGN_PLACE_HINTS = ["Gaza", "Gaza Strip", "Southern Gaza Strip", "Northern Gaza Strip", "Palestinian territory"]
 
 
 def load_frameworks(config: dict) -> list[Framework]:
@@ -120,6 +124,8 @@ def location_precision_for(location: str) -> str:
     broad = {"lebanon", "israel", "iran", "syria"}
     district = {"south lebanon", "mount lebanon", "nabatieh", "beqaa", "bekaa", "baalbek-hermel"}
     lowered = location.lower()
+    if lowered in {"location unclear", "external place"}:
+        return "unknown"
     if lowered in broad:
         return "national"
     if lowered in district:
@@ -196,6 +202,18 @@ def re_key(value: str) -> str:
     return value.lower().replace(" ", "-")
 
 
+def has_place_token(text: str, name: str) -> bool:
+    return bool(re.search(rf"(?<!\w){re.escape(name.lower())}(?!\w)", text.lower()))
+
+
+def has_lebanon_context(text: str) -> bool:
+    return any(has_place_token(text, hint) for hint in LEBANON_CONTEXT_HINTS)
+
+
+def has_foreign_place_without_lebanon_context(text: str) -> bool:
+    return any(has_place_token(text, hint) for hint in FOREIGN_PLACE_HINTS) and not has_lebanon_context(text)
+
+
 def analyze(items: list[ScoredItem], frameworks: list[Framework]) -> list[GeoTaggedCluster]:
     buckets: dict[str, list[ScoredItem]] = defaultdict(list)
     event_items = [item for item in items if item.source_type != "analysis"]
@@ -261,11 +279,12 @@ def severity_rank(severity: str) -> int:
 
 
 def location_hint(text: str) -> str:
-    lowered = text.lower()
-    for place in ["Tyre", "Bint Jbeil", "Marjayoun", "Nabatieh", "Sidon", "Beirut", "Baalbek", "Tripoli", "Dahiyeh", "South Lebanon"]:
-        if place.lower() in lowered:
+    if has_foreign_place_without_lebanon_context(text):
+        return "Location unclear"
+    for place in LEBANESE_PLACE_HINTS:
+        if has_place_token(text, place):
             return place
-    if "lebanon" in lowered:
+    if has_place_token(text, "Lebanon"):
         return "Lebanon"
     return "Beirut"
 

@@ -88,3 +88,28 @@ Sources consulted:
 - [Associated Press, Telling the Story](https://www.ap.org/about/news-values-and-principles/telling-the-story/)
 - [BBC Editorial Guidelines, Accuracy](https://bbctodays.pages.dev/editorialguidelines/guidelines/accuracy)
 - [ACAPS, Our methodologies](https://www.acaps.org/en/methodology/our-methodologies)
+
+## Cycle 4, 2026-05-26, Signal Quality
+
+Chosen dimension: Signal Quality.
+
+Why this was chosen: after Cycle 3, Signal Quality and Information Architecture were the lowest-scoring dimensions at 5/10. Signal Quality is the better next fix because one bad geographic inference corrupts several surfaces at once: map pin, brief language, next-check instruction, and perceived confidence. The visible example was a Gaza casualty headline being read as Tyre because the string matcher found `Tyre` inside `Martyred`.
+
+Findings:
+
+- GeoNames search documentation distinguishes broad text search from exact place-name matching and supports country filters. The practical lesson for the local fallback gazetteer is the same: a place resolver should not treat arbitrary substring hits as place matches.
+- Nominatim's current search documentation warns that `countrycodes` is a hard filter, while the structured `country` term is fuzzy. For Signal Desk, Lebanon map pins should behave like a hard Lebanon context. If a story clearly says Gaza and does not mention Lebanon, Hezbollah, or a Lebanese place, it should not be forced onto a Lebanese pin.
+- Natural Earth's populated places documentation frames places as named point features. That supports the fallback approach of keeping a local gazetteer, but only if matching respects the name boundary. Short aliases like `tyr` are dangerous unless they are handled as whole tokens.
+- The current bug is local and fixable: `tools/signal_desk/analyze.py` uses substring matching in `location_hint()`, while `tools/signal_desk/geo.py` uses a word-boundary regex but then falls back to raw substring matching with `or name in text`. Both paths can turn non-place text into a Lebanese place.
+
+Implementation decision:
+
+- Replace substring place matching with a shared-style word-boundary helper in both analysis and geo-tagging.
+- Add a small foreign-place guard for Gaza terms. If Gaza appears without Lebanon, Hezbollah, or a named Lebanese place, keep the item visible but unpinned as `Location unclear`.
+- Keep source collection unchanged so Arabic, Palestinian, Gulf, Iranian, and Israeli Arabic-facing coverage is not reduced.
+
+Sources consulted:
+
+- [GeoNames Search Webservice](https://www.geonames.org/export/geonames-search.html)
+- [Nominatim Search API manual](https://nominatim.org/release-docs/latest/api/Search/)
+- [Natural Earth populated places documentation](https://worldwind.arc.nasa.gov/web/examples/data/shapefiles/naturalearth/ne_10m_populated_places/ne_10m_populated_places.README.html)

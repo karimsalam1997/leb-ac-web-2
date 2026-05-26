@@ -55,15 +55,34 @@ FALLBACK_DISTRICTS = {
 }
 
 
+FOREIGN_PLACE_HINTS = ["gaza", "gaza strip", "southern gaza strip", "northern gaza strip", "palestinian territory"]
+
+
+def has_place_token(text: str, name: str) -> bool:
+    return bool(re.search(rf"(?<!\w){re.escape(name.lower())}(?!\w)", text.lower()))
+
+
+def has_lebanon_context(text: str) -> bool:
+    for place in FALLBACK_GAZETTEER:
+        names = [place["name"], place.get("name_ar", ""), *place.get("aliases", [])]
+        if any(has_place_token(text, name) for name in names if name):
+            return True
+    return has_place_token(text, "Lebanon") or has_place_token(text, "Lebanese") or has_place_token(text, "Hezbollah")
+
+
+def has_foreign_place_without_lebanon_context(text: str) -> bool:
+    return any(has_place_token(text, hint) for hint in FOREIGN_PLACE_HINTS) and not has_lebanon_context(text)
+
+
 def match_locations(text: str) -> list[Location]:
-    lowered = text.lower()
+    if has_foreign_place_without_lebanon_context(text):
+        return []
     matches: list[Location] = []
     for place in FALLBACK_GAZETTEER:
         names = [place["name"], place.get("name_ar", ""), *place.get("aliases", [])]
         found = False
         for name in sorted([name for name in names if name], key=len, reverse=True):
-            pattern = re.escape(name.lower())
-            if re.search(rf"(?<!\w){pattern}(?!\w)", lowered) or name in text:
+            if has_place_token(text, name):
                 found = True
                 break
         if found:

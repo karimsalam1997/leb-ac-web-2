@@ -159,3 +159,56 @@ Signal Quality. The generated public data still shows at least one likely place-
 ### One Thing Outside The Rubric
 
 The brief now exposes source evidence more honestly, but it is getting longer. A later UI pass may need collapsible evidence notes or a denser "source shelf" layout so readers can scan without losing the audit trail.
+
+## Cycle 4, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 5/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 5/10
+
+Lowest-scoring dimensions: Signal Quality and Information Architecture.
+
+Chosen fix: Signal Quality.
+
+Reason: a single bad place inference can bend the whole product. In the current public data, a Gaza casualty headline was being treated as Tyre because the matcher found `Tyre` inside the word `Martyred`. That made the map, the brief, and the next-check language sound locally grounded when the item was actually a Gaza item.
+
+### What Changed
+
+- Replaced substring location matching in `tools/signal_desk/analyze.py` with token-boundary matching.
+- Removed the raw substring fallback in `tools/signal_desk/geo.py` that allowed short aliases like `tyr` to match inside ordinary words.
+- Added a small Gaza guard: if Gaza terms appear without Lebanon, Hezbollah, or a named Lebanese place, the cluster stays visible but unpinned as `Location unclear`.
+- Updated `location_precision_for()` so `Location unclear` is treated as `unknown`.
+- Kept feeds and source lanes unchanged, so Arabic/source coverage was not reduced.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 5/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/analyze.py tools/signal_desk/geo.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted regression assertions passed: `Martyred` no longer maps to Tyre, real Tyre mentions still map, and Gaza-only clusters become `Location unclear`.
+- Pipeline dry run passed: 33 sources, 591 raw items, 12 clusters, 7 located clusters.
+- Dry-run health reported 39 source-health records, 39 ok, 0 failed, `store_output_written: false`, and `public_copy_written: false`.
+- No browser check was needed because this cycle changed backend analysis and geo-tagging only.
+
+### Next Highest-Priority Improvement
+
+Information Architecture. The system now has better evidence and better geocoding, but the reader still has to move across brief, map, source lanes, and verification gaps as separate surfaces. The next cycle should make the data structure easier to scan, probably by adding a compact dossier summary or verification status field that the frontend and brief can both reuse.
+
+### One Thing Outside The Rubric
+
+Running Python checks creates `__pycache__` folders under `tools/signal_desk/`. They are easy to remove, but the repo still does not ignore them.
