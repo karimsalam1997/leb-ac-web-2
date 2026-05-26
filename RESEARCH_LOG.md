@@ -369,3 +369,29 @@ Sources consulted:
 
 - [Great Expectations, Validation Result](https://docs.greatexpectations.io/docs/0.18/reference/learn/terms/validation_result/)
 - [Python json documentation](https://docs.python.org/3/library/json.html)
+
+## Cycle 14, 2026-05-26, Signal Quality
+
+Chosen dimension: Signal Quality.
+
+Why this was chosen: after Cycle 13, Pipeline Robustness moved to 8/10 while the other dimensions remained at 7/10. Frontend/map wiring is still blocked by browser verification limits in this sandbox, so the best backend-only signal improvement is the location fallback in `tools/signal_desk/analyze.py`: if no named place is found, the system still returns `Beirut`.
+
+Findings:
+
+- Nominatim's current search documentation distinguishes free-form search from structured search and supports hard country filters. The practical lesson for Signal Desk is that a location resolver should not invent a capital-city point just because the item is regionally relevant.
+- Nominatim's `countrycodes` parameter is described as a hard filter, while the structured `country` field is fuzzy. Signal Desk's local resolver should be similarly strict: Lebanon context can justify a broad Lebanon-level reading, but it should not create a Beirut pin unless Beirut is named.
+- ACLED records a `geo_precision` field and treats higher numbers as lower precision. That supports carrying broad or uncertain location as a lower-precision state instead of upgrading it to a city.
+- ACLED's spatial precision guidance says specific towns get the highest precision, broader areas get lower precision, and country-level imprecision is generally not treated as a single precise event. Signal Desk is a briefing tool rather than an ACLED clone, but it should still avoid turning no-place text into a Beirut event.
+
+Implementation decision:
+
+- Change `location_hint()` so named Lebanese places still win.
+- If a text has Lebanon context but no named local place, return `Lebanon` as national precision.
+- If a text has no Lebanese place or Lebanon context, return `Location unclear`.
+- Keep the Gaza guard and token-boundary matching unchanged.
+- Do not touch feeds, source lanes, Arabic/source coverage, public data, or frontend files.
+
+Sources consulted:
+
+- [Nominatim Search API manual](https://nominatim.org/release-docs/latest/api/Search/)
+- [ACLED Codebook](https://acleddata.com/methodology/acled-codebook)

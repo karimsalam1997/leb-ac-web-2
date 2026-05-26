@@ -305,7 +305,9 @@ def location_hint(text: str) -> str:
             return place
     if has_place_token(text, "Lebanon"):
         return "Lebanon"
-    return "Beirut"
+    if has_lebanon_context(text):
+        return "Lebanon"
+    return "Location unclear"
 
 
 def build_analysis(location: str, signal: str, items: list[ScoredItem], framework_ids: list[str]) -> str:

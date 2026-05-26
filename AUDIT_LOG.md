@@ -715,3 +715,59 @@ Map Quality / UI wiring once a browser-verifiable environment is available. The 
 ### One Thing Outside The Rubric
 
 This sandbox currently denies local port binding with `PermissionError: [Errno 1] Operation not permitted`, and the in-app browser blocks local file URLs. That prevents the automation from completing browser verification for frontend Signal Desk changes in this run.
+
+## Cycle 14, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 7/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Lowest-scoring dimensions: Signal Quality, Source Coverage, Map Quality, Brief Quality, UI/UX & Design, and Information Architecture.
+
+Chosen fix: Signal Quality.
+
+Reason: the frontend/map path remains blocked by browser verification limits, and live Source Coverage remains blocked by DNS. The most useful backend-only signal fix was the location fallback: vague text with no named Lebanese place was still being assigned to Beirut. That makes the signal look locally sharper than the source record allows.
+
+### What Changed
+
+- Updated `location_hint()` in `tools/signal_desk/analyze.py`.
+- Named Lebanese places still resolve as named places.
+- Lebanon, Lebanese, Hezbollah, UNIFIL, or Blue Line context without a named local place now resolves to national-level `Lebanon`.
+- Text with no Lebanese place or Lebanon context now resolves to `Location unclear`.
+- Kept the Gaza guard and token-boundary place matching unchanged.
+- Did not change feeds, source lanes, Arabic coverage, public data, or frontend files.
+
+### Scores After
+
+1. Signal Quality: 8/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Signal Quality improves because the pipeline no longer invents a Beirut location when the text has no named place. It now either uses a named place, a national Lebanon-level marker, or no map location.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/analyze.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted location assertions passed: no-place text becomes `Location unclear`, Hezbollah/Lebanese context becomes national-level `Lebanon`, real Beirut mentions still resolve to `Beirut`, and Gaza-only text remains `Location unclear`.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed with no public writes.
+- Dry-run health still showed DNS-blocked live source access, `source_health.live_ok: 0`, `fallback_ok: 1`, 39 `dns-error` records, and public copy blocked by the publication guard.
+- No browser check was needed because this cycle changed backend signal analysis only.
+
+### Next Highest-Priority Improvement
+
+Source Coverage once DNS/network access is available, or Map Quality/UI wiring once browser verification is available. In this sandbox, both paths are currently blocked for safe completion.
+
+### One Thing Outside The Rubric
+
+The live public data under `public/data/signal-desk/` appears older than the latest store output and does not yet carry the newer map-radius fields. A guarded public copy should wait until live source health recovers or a reviewed snapshot run is intentionally promoted.
