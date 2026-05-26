@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from hashlib import sha1
 from html import unescape
+from pathlib import Path
 import re
 import socket
 import ssl
@@ -48,6 +49,38 @@ def entry_id(source_name: str, url: str, title: str) -> str:
     return sha1(f"{source_name}:{url}:{title}".encode("utf-8")).hexdigest()[:16]
 
 
+def snapshot_slug(value: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return slug or "source"
+
+
+def snapshot_candidates(snapshot_dir: Path, feed: dict) -> list[Path]:
+    slug = snapshot_slug(str(feed["name"]))
+    if feed.get("kind") == "html_index":
+        extensions = [".html", ".htm"]
+    else:
+        extensions = [".xml", ".rss", ".atom"]
+    return [snapshot_dir / f"{slug}{extension}" for extension in extensions]
+
+
+def find_snapshot(snapshot_dir: Path, feed: dict) -> Path | None:
+    for candidate in snapshot_candidates(snapshot_dir, feed):
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def snapshot_missing_health(feed: dict, snapshot_dir: Path) -> SourceHealth:
+    expected = ", ".join(candidate.name for candidate in snapshot_candidates(snapshot_dir, feed))
+    return SourceHealth(
+        source=str(feed["name"]),
+        ok=False,
+        item_count=0,
+        note=f"Missing cached source snapshot in {snapshot_dir}: expected one of {expected}.",
+        error_kind="snapshot-missing",
+    )
+
+
 def error_kind(exc: Exception) -> SourceHealthErrorKind:
     if isinstance(exc, urllib.error.HTTPError):
         return "http-error"
@@ -73,24 +106,10 @@ def failed_health(source: str, exc: Exception) -> SourceHealth:
     return SourceHealth(source=source, ok=False, item_count=0, note=str(exc)[:180], error_kind=error_kind(exc))
 
 
-def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth]:
+def parse_feed_xml(feed: dict, since: datetime, xml: bytes, raw_extra: dict | None = None) -> list[RawItem]:
     name = str(feed["name"])
-    url = str(feed["url"])
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": "Mozilla/5.0 (compatible; LebaneseAcademicSignalDesk/0.2; +https://lebaneseacademic.com)",
-            "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, text/html;q=0.6, */*;q=0.3",
-        },
-    )
-    ssl_context = ssl.create_default_context(cafile=certifi.where())
-
-    try:
-        with urllib.request.urlopen(request, timeout=14, context=ssl_context) as response:
-            xml = response.read()
-        root = ET.fromstring(xml)
-    except Exception as exc:
-        return [], failed_health(name, exc)
+    raw_extra = raw_extra or {}
+    root = ET.fromstring(xml)
 
     items = root.findall(".//item") or root.findall(".//{http://www.w3.org/2005/Atom}entry")
     output: list[RawItem] = []
@@ -128,30 +147,38 @@ def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth
                 text=summary or title,
                 url=link,
                 published_at=published_at,
-                raw={"tier": feed.get("tier", 2)},
+                raw={"tier": feed.get("tier", 2), **raw_extra},
             )
         )
 
-    return output, SourceHealth(source=name, ok=True, item_count=len(output), error_kind="ok")
+    return output
 
 
-def fetch_html_index(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth]:
+def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth]:
     name = str(feed["name"])
     url = str(feed["url"])
     request = urllib.request.Request(
         url,
         headers={
             "User-Agent": "Mozilla/5.0 (compatible; LebaneseAcademicSignalDesk/0.2; +https://lebaneseacademic.com)",
-            "Accept": "text/html,application/xhtml+xml,*/*;q=0.6",
+            "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, text/html;q=0.6, */*;q=0.3",
         },
     )
     ssl_context = ssl.create_default_context(cafile=certifi.where())
 
     try:
         with urllib.request.urlopen(request, timeout=14, context=ssl_context) as response:
-            html = response.read().decode("utf-8", "ignore")
+            xml = response.read()
+        output = parse_feed_xml(feed, since, xml)
     except Exception as exc:
         return [], failed_health(name, exc)
+
+    return output, SourceHealth(source=name, ok=True, item_count=len(output), error_kind="ok")
+
+
+def parse_html_index(feed: dict, since: datetime, html: str, raw_extra: dict | None = None) -> list[RawItem]:
+    name = str(feed["name"])
+    raw_extra = raw_extra or {}
 
     seen: set[str] = set()
     output: list[RawItem] = []
@@ -174,13 +201,58 @@ def fetch_html_index(feed: dict, since: datetime) -> tuple[list[RawItem], Source
                 text=title,
                 url=link,
                 published_at=datetime.now(timezone.utc),
-                raw={"tier": feed.get("tier", 2), "html_index": True, "since": since.isoformat()},
+                raw={"tier": feed.get("tier", 2), "html_index": True, "since": since.isoformat(), **raw_extra},
             )
         )
         if len(output) >= int(feed.get("limit", 18)):
             break
 
+    return output
+
+
+def fetch_html_index(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth]:
+    name = str(feed["name"])
+    url = str(feed["url"])
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (compatible; LebaneseAcademicSignalDesk/0.2; +https://lebaneseacademic.com)",
+            "Accept": "text/html,application/xhtml+xml,*/*;q=0.6",
+        },
+    )
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+
+    try:
+        with urllib.request.urlopen(request, timeout=14, context=ssl_context) as response:
+            html = response.read().decode("utf-8", "ignore")
+        output = parse_html_index(feed, since, html)
+    except Exception as exc:
+        return [], failed_health(name, exc)
+
     return output, SourceHealth(source=name, ok=True, item_count=len(output), note="Read from public homepage because RSS was blocked or unavailable.", error_kind="ok")
+
+
+def read_snapshot(feed: dict, since: datetime, snapshot_dir: Path) -> tuple[list[RawItem], SourceHealth] | None:
+    path = find_snapshot(snapshot_dir, feed)
+    if path is None:
+        return None
+
+    raw_extra = {"rss_snapshot": True, "snapshot_path": str(path), "snapshot_dir": str(snapshot_dir)}
+    try:
+        if path.suffix.lower() in {".html", ".htm"}:
+            items = parse_html_index(feed, since, path.read_text(encoding="utf-8", errors="ignore"), raw_extra)
+        else:
+            items = parse_feed_xml(feed, since, path.read_bytes(), raw_extra)
+    except Exception as exc:
+        return [], SourceHealth(source=str(feed["name"]), ok=False, item_count=0, note=f"Snapshot parse failed for {path.name}: {exc}", error_kind=error_kind(exc))
+
+    return items, SourceHealth(
+        source=str(feed["name"]),
+        ok=True,
+        item_count=len(items),
+        note=f"Read cached source snapshot from {path.name}; not counted as live reporting.",
+        error_kind="snapshot",
+    )
 
 
 def fallback_items(since: datetime) -> list[RawItem]:
@@ -220,11 +292,16 @@ def fallback_items(since: datetime) -> list[RawItem]:
     ]
 
 
-def collect(since: datetime) -> tuple[list[RawItem], list[SourceHealth]]:
+def collect(since: datetime, snapshot_dir: Path | None = None, snapshot_only: bool = False) -> tuple[list[RawItem], list[SourceHealth]]:
     all_items: list[RawItem] = []
     health: list[SourceHealth] = []
     for feed in load_feeds():
-        if feed.get("kind") == "html_index":
+        snapshot_result = read_snapshot(feed, since, snapshot_dir) if snapshot_dir else None
+        if snapshot_result is not None:
+            items, status = snapshot_result
+        elif snapshot_only and snapshot_dir:
+            items, status = [], snapshot_missing_health(feed, snapshot_dir)
+        elif feed.get("kind") == "html_index":
             items, status = fetch_html_index(feed, since)
         else:
             items, status = fetch_feed(feed, since)

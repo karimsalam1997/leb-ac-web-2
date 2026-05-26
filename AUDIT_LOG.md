@@ -379,3 +379,63 @@ Blocked for live Source Coverage until DNS/network access is available to the Py
 ### One Thing Outside The Rubric
 
 `source_health.ok` still counts fallback as ok in the compact summary, even though the new `live_source_count` and guard metrics now separate it. A later polish pass could add `live_ok` to the summary for less ambiguity.
+
+## Cycle 8, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Lowest-scoring dimensions: Signal Quality, Source Coverage, Map Quality, Brief Quality, and Information Architecture.
+
+Chosen fix: Source Coverage.
+
+Reason: live DNS is still blocked in this shell, so the useful source-coverage move is not to remove failed feeds. The useful move is to let the same source shelf be tested from saved RSS, Atom, or HTML snapshots, while making the run health say plainly that these are cached source records, not live reporting.
+
+### What Changed
+
+- Added `--rss-snapshot-dir` to `tools/signal_desk/run.py`.
+- Added `--rss-snapshot-only` so a fully offline run can avoid network fetches for missing snapshot files.
+- Refactored RSS and HTML-index parsing so live fetches and local snapshots use the same parser.
+- Added feed-name snapshot matching, for example `The Times of Israel` becomes `the-times-of-israel.xml`.
+- Added `snapshot` and `snapshot-missing` source-health categories.
+- Added `rss_snapshot_dir`, `rss_snapshot_only`, and `snapshot_source_count` to run health.
+- Updated the publication guard so cached snapshots do not count as live source access.
+- Documented the snapshot workflow in `tools/signal_desk/README.md`.
+- Kept all existing feeds and source lanes intact, so Arabic and source coverage were not reduced.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Source Coverage improves because the full source shelf can now be tested from cached source evidence in an offline environment. Live source access is still blocked by DNS, so this is not a claim that live collection is fixed.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/collectors/rss.py tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- `python3 -m tools.signal_desk.run --help` showed the new `--rss-snapshot-dir` and `--rss-snapshot-only` flags.
+- Targeted snapshot assertions passed with a temporary RSS file: one snapshot source was read, missing snapshots were reported as `snapshot-missing`, and snapshot items were not counted as live items.
+- Snapshot-only pipeline dry run passed: 1 cached source item, 1 cluster, `snapshot_source_count: 1`, `live_source_count: 0`, and public copy blocked by the guard.
+- Normal RSS dry run still passed under DNS failure: 39 `dns-error` source-health records, 1 fallback record, 2 fallback items, no public writes, and public copy blocked by the guard.
+- No browser check was needed because this cycle changed backend collection and run-health behavior only.
+
+### Next Highest-Priority Improvement
+
+Map Quality. The pipeline now has a safer way to test source inputs offline, but the map still treats most location work as a final point or an unclear point. The next scoped pass should improve how district-level or low-confidence places are represented so the map does not look more precise than the evidence.
+
+### One Thing Outside The Rubric
+
+Python verification still creates `__pycache__` directories under `tools/signal_desk/`. They are untracked, but the repo still lacks an ignore rule for them.

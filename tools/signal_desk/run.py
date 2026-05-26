@@ -11,7 +11,7 @@ from typing import Callable, TypeVar
 
 from tools.signal_desk.analyze import analyze, load_frameworks
 from tools.signal_desk.collectors import local_analysis, rss, telegram, youtube
-from tools.signal_desk.config import PUBLIC_DATA_DIR, STORE_DIR, load_framework_config, parse_since
+from tools.signal_desk.config import PUBLIC_DATA_DIR, STORE_DIR, load_framework_config, parse_since, resolve_project_path
 from tools.signal_desk.filter import filter_items
 from tools.signal_desk.geo import district_aggregates, events_geojson, geo_tag, write_fallback_districts
 from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceHealth
@@ -50,6 +50,11 @@ def source_health_summary(source_health: list[SourceHealth]) -> dict[str, object
     }
 
 
+def is_live_source_item(item: object) -> bool:
+    raw = getattr(item, "raw", {})
+    return not raw.get("fallback") and not raw.get("rss_snapshot")
+
+
 def plural(value: int, singular: str, plural_form: str | None = None) -> str:
     if value == 1:
         return singular
@@ -68,7 +73,7 @@ def publication_guard(
 ) -> dict[str, object]:
     total_sources = len(source_health)
     failed_sources = len([status for status in source_health if not status.ok])
-    live_ok_sources = len([status for status in source_health if status.ok and status.error_kind != "fallback"])
+    live_ok_sources = len([status for status in source_health if status.ok and status.error_kind not in {"fallback", "snapshot"}])
     failure_rate = (failed_sources / total_sources) if total_sources else 1.0
     reasons: list[str] = []
 
@@ -104,6 +109,8 @@ def main() -> None:
     parser.add_argument("--only-rss", action="store_true", help="Skip Telegram and YouTube collectors.")
     parser.add_argument("--no-public-copy", action="store_true", help="Do not copy latest output into public/data.")
     parser.add_argument("--dry-run", action="store_true", help="Run the full pipeline and health checks without writing output files.")
+    parser.add_argument("--rss-snapshot-dir", help="Read cached RSS, Atom, or HTML source snapshots from this directory.")
+    parser.add_argument("--rss-snapshot-only", action="store_true", help="When using --rss-snapshot-dir, do not fetch missing RSS sources from the network.")
     parser.add_argument("--min-live-sources", type=int, default=3, help="Minimum live sources required before public copy.")
     parser.add_argument("--min-scored-items", type=int, default=6, help="Minimum scored items required before public copy.")
     parser.add_argument("--max-source-failure-rate", type=float, default=0.75, help="Maximum source-health failure rate allowed before public copy.")
@@ -111,11 +118,16 @@ def main() -> None:
     args = parser.parse_args()
 
     since = parse_since(args.since)
+    rss_snapshot_dir = resolve_project_path(args.rss_snapshot_dir) if args.rss_snapshot_dir else None
     generated_at = datetime.now(timezone.utc)
     run_dir = STORE_DIR / generated_at.strftime("%Y-%m-%d")
     stage_timings: dict[str, float] = {}
 
-    raw_items, source_health = timed(stage_timings, "collect:rss", lambda: rss.collect(since))
+    raw_items, source_health = timed(
+        stage_timings,
+        "collect:rss",
+        lambda: rss.collect(since, snapshot_dir=rss_snapshot_dir, snapshot_only=args.rss_snapshot_only),
+    )
     if not args.only_rss:
         for name, collector in (
             ("collect:telegram", telegram),
@@ -162,7 +174,8 @@ def main() -> None:
     )
 
     source_count = len({item.source_id for item in raw_items})
-    live_source_count = len({item.source_id for item in raw_items if not item.raw.get("fallback")})
+    live_source_count = len({item.source_id for item in raw_items if is_live_source_item(item)})
+    snapshot_source_count = len({item.source_id for item in raw_items if item.raw.get("rss_snapshot")})
     guard = publication_guard(
         source_health=source_health,
         live_source_count=live_source_count,
@@ -182,6 +195,8 @@ def main() -> None:
         "window_start": since.isoformat(),
         "dry_run": args.dry_run,
         "only_rss": args.only_rss,
+        "rss_snapshot_dir": str(rss_snapshot_dir) if rss_snapshot_dir else "",
+        "rss_snapshot_only": args.rss_snapshot_only,
         "store_output_written": store_output_written,
         "public_copy_requested": public_copy_requested,
         "public_copy_written": public_copy_written,
@@ -194,6 +209,7 @@ def main() -> None:
         "located_cluster_count": len([cluster for cluster in clusters if cluster.primary_location and cluster.location_precision != "unknown"]),
         "source_count": source_count,
         "live_source_count": live_source_count,
+        "snapshot_source_count": snapshot_source_count,
         "source_health": source_health_summary(source_health),
         "publication_guard": guard,
         "source_lane_counts": {lane.id: lane.item_count for lane in source_lanes},

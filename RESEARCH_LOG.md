@@ -201,3 +201,33 @@ Sources consulted:
 
 - [Python urllib.error documentation](https://docs.python.org/3.10/library/urllib.error.html)
 - [Python urllib.request documentation](https://docs.python.org/3.11/library/urllib.request.html)
+
+## Cycle 8, 2026-05-26, Source Coverage
+
+Chosen dimension: Source Coverage.
+
+Why this was chosen: after Cycle 7, live source access remained blocked by DNS in the Python process. The right response is not to shrink the Arabic, Israeli, Palestinian, Gulf, Iranian, wire, or Lebanese source shelf. The safer response is to let the same feed list be tested from saved source snapshots, while marking those snapshots clearly as cached evidence rather than live reporting.
+
+Findings:
+
+- The RSS 2.0 specification keeps the core record simple: a feed contains channel metadata and item records, with item fields such as title, link, description, and publication date. A local snapshot path can reuse the existing RSS parser because the source shape is the same whether the XML came from the network or from disk.
+- RFC 4287 defines Atom entries with title, updated time, links, and summary/content fields. The current collector already handles Atom-style entries, so cached Atom files should pass through the same code path instead of needing a separate import format.
+- The WARC standard exists for full web archives and is the stronger long-term format when saving complete crawl evidence. It is too heavy for this cycle. A simple directory of named `.xml`, `.rss`, `.atom`, or `.html` files is enough for source debugging without pretending to be a full archive.
+- JSON Lines remains useful for later append-only source-event history, but it is not the best fit for this specific problem. The collector needs to test the original source formats, especially XML and HTML, not a transformed intermediate file.
+- Python's current `pathlib` documentation supports straightforward text reads from local paths. That keeps the implementation small and explicit: resolve one operator-provided snapshot directory, match files by feed name, parse them, and record snapshot health.
+
+Implementation decision:
+
+- Add a `--rss-snapshot-dir` option to the pipeline.
+- Match snapshot files to existing feed names rather than creating a second source list.
+- Parse RSS, Atom, and HTML-index snapshots through the same collector logic used for live sources.
+- Mark snapshot source health as `snapshot`, and exclude snapshots from live-source publication-guard counts.
+- Keep fallback samples separate from snapshots, and keep all existing source entries intact.
+
+Sources consulted:
+
+- [RSS 2.0 Specification](https://www.rssboard.org/rss-specification)
+- [RFC 4287, The Atom Syndication Format](https://www.rfc-editor.org/rfc/rfc4287)
+- [ISO 28500:2017, WARC file format](https://www.iso.org/standard/68004.html)
+- [JSON Lines documentation](https://jsonlines.org/?lang=en)
+- [Python pathlib documentation](https://docs.python.org/3/library/pathlib.html)

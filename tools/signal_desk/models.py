@@ -35,6 +35,8 @@ SourceHealthErrorKind = Literal[
     "tls-error",
     "parse-error",
     "fetch-error",
+    "snapshot",
+    "snapshot-missing",
     "fallback",
 ]
 
