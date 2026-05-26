@@ -56,6 +56,12 @@ FALLBACK_DISTRICTS = {
 
 
 FOREIGN_PLACE_HINTS = ["gaza", "gaza strip", "southern gaza strip", "northern gaza strip", "palestinian territory"]
+BROAD_AREA_RADII = {
+    "Lebanon": 70000,
+    "South Lebanon": 36000,
+    "Mount Lebanon": 32000,
+    "Litani River": 24000,
+}
 
 
 def has_place_token(text: str, name: str) -> bool:
@@ -88,6 +94,31 @@ def match_locations(text: str) -> list[Location]:
         if found:
             matches.append(Location(**{key: place[key] for key in ["name", "name_ar", "district", "caza", "governorate", "lat", "lng"]}, match_confidence=0.88))
     return matches
+
+
+def apply_map_display(cluster: GeoTaggedCluster) -> None:
+    location = cluster.primary_location
+    if not location or cluster.location_precision == "unknown":
+        cluster.map_marker_kind = "unmapped"
+        cluster.map_precision_label = "Unmapped"
+        cluster.map_radius_meters = 0
+        cluster.map_warning = "No precise place is available yet, so this cluster should not be read as a mapped event."
+        return
+
+    if cluster.location_precision == "exact":
+        cluster.map_marker_kind = "pin"
+        cluster.map_precision_label = "Named place pin"
+        cluster.map_radius_meters = 2500
+        cluster.map_warning = "The place name was matched, but the claim still needs the source checks listed in the dossier."
+        return
+
+    cluster.map_marker_kind = "representative-area"
+    cluster.map_precision_label = "Representative area"
+    cluster.map_radius_meters = BROAD_AREA_RADII.get(location.name, 18000)
+    cluster.map_warning = (
+        "This is a representative center for a broader place mention. "
+        "Do not read it as a street-level pin."
+    )
 
 
 def geo_tag(clusters: list[GeoTaggedCluster]) -> list[GeoTaggedCluster]:
@@ -129,6 +160,7 @@ def geo_tag(clusters: list[GeoTaggedCluster]) -> list[GeoTaggedCluster]:
             cluster.where = locations[0].name
         cluster.locations = locations
         cluster.primary_location = locations[0]
+        apply_map_display(cluster)
         tagged.append(cluster)
     return tagged
 
@@ -178,6 +210,10 @@ def events_geojson(clusters: list[GeoTaggedCluster]) -> dict:
                     "verification_status": cluster.verification_status,
                     "verification_label": cluster.verification.label,
                     "verification_missing": cluster.verification.missing,
+                    "map_marker_kind": cluster.map_marker_kind,
+                    "map_precision_label": cluster.map_precision_label,
+                    "map_radius_meters": cluster.map_radius_meters,
+                    "map_warning": cluster.map_warning,
                 },
             }
         )

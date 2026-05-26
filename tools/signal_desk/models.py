@@ -20,6 +20,7 @@ Confidence = Literal["high", "medium", "low"]
 Severity = Literal["critical", "high", "moderate", "low"]
 LocationPrecision = Literal["exact", "district", "national", "unknown"]
 ConfirmationStatus = Literal["corroborated", "partly-corroborated", "single-source", "unconfirmed"]
+MapMarkerKind = Literal["pin", "representative-area", "unmapped"]
 VerificationStatus = Literal[
     "ready",
     "watch",
@@ -126,6 +127,10 @@ class AnalyzedCluster(BaseModel):
     who_disputes_or_complicates: list[str] = Field(default_factory=list)
     why_it_matters: str = ""
     what_is_missing: str = ""
+    map_marker_kind: MapMarkerKind = "unmapped"
+    map_precision_label: str = "Unmapped"
+    map_radius_meters: int = 0
+    map_warning: str = "No precise place is available yet."
     verification_status: VerificationStatus = "needs-source"
     verification: VerificationDossier = Field(default_factory=VerificationDossier)
 

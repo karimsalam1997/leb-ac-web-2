@@ -231,3 +231,31 @@ Sources consulted:
 - [ISO 28500:2017, WARC file format](https://www.iso.org/standard/68004.html)
 - [JSON Lines documentation](https://jsonlines.org/?lang=en)
 - [Python pathlib documentation](https://docs.python.org/3/library/pathlib.html)
+
+## Cycle 9, 2026-05-26, Map Quality
+
+Chosen dimension: Map Quality.
+
+Why this was chosen: after Cycle 8, Map Quality remained one of the lowest-scoring dimensions. The map already avoids totally unclear claims, but it still sends broad locations through a point-shaped GeoJSON feature. That can make a district or regional mention look sharper than the source evidence allows.
+
+Findings:
+
+- ACLED's codebook treats geocoding precision as a separate data field. It distinguishes a specific town or coordinate from a broader area where the chosen coordinate is only a representative point. Signal Desk should make that distinction visible in the map data, not only in prose.
+- RFC 7946 defines GeoJSON Feature objects with geometry and properties. The current point geometry can stay valid, while the properties object carries the needed caveat: marker kind, radius, precision label, and warning.
+- Leaflet's documented difference between circles and circle markers matters here. A Circle radius is geographic and measured in meters, while a CircleMarker radius is screen-sized. Signal Desk should publish a meter radius for uncertain places so the frontend can draw a real uncertainty halo.
+- The current frontend already uses circles for lower-precision claims, but the radius is hard-coded. Moving that radius into the data makes the map more honest and reusable, even before changing the frontend.
+- This cycle should not add or remove locations. It should make existing map output carry clearer uncertainty metadata.
+
+Implementation decision:
+
+- Add map display fields to every cluster: marker kind, precision label, uncertainty radius in meters, and a short warning.
+- Compute those fields during geo-tagging after the final location precision is known.
+- Add the same fields to `events.geojson` properties so map consumers do not have to infer precision from raw coordinates.
+- Keep the existing point geometry for compatibility, but label broad-area points as representative centers.
+- Do not touch source feeds or source lanes.
+
+Sources consulted:
+
+- [ACLED Codebook](https://acleddata.com/methodology/acled-codebook)
+- [RFC 7946, The GeoJSON Format](https://www.rfc-editor.org/rfc/rfc7946)
+- [Leaflet reference documentation](https://leafletjs.com/reference)

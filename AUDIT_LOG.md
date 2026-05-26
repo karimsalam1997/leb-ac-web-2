@@ -439,3 +439,58 @@ Map Quality. The pipeline now has a safer way to test source inputs offline, but
 ### One Thing Outside The Rubric
 
 Python verification still creates `__pycache__` directories under `tools/signal_desk/`. They are untracked, but the repo still lacks an ignore rule for them.
+
+## Cycle 9, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Lowest-scoring dimensions: Signal Quality, Map Quality, Brief Quality, and Information Architecture.
+
+Chosen fix: Map Quality.
+
+Reason: the map already avoids pinning totally unclear claims, but broad places still move through the data as point geometry. That is technically usable, but it can make a district or regional mention look sharper than the source evidence. The data should say when a point is a named-place pin and when it is only a representative center for a broader area.
+
+### What Changed
+
+- Added map display fields to every cluster: `map_marker_kind`, `map_precision_label`, `map_radius_meters`, and `map_warning`.
+- Set exact named places to `pin` with a small reference radius.
+- Set district or broad-area mentions to `representative-area` with a larger meter radius.
+- Set unknown locations to `unmapped` with a direct warning.
+- Added the same map display fields to `events.geojson` feature properties.
+- Kept GeoJSON point geometry for compatibility, but made the uncertainty visible in properties.
+- Did not touch feeds or source lanes, so Arabic and source coverage were not reduced.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/geo.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted map-data assertions passed: Tyre resolved as a `pin`, South Lebanon resolved as a `representative-area` with a 36 km radius, unclear Gaza-only location stayed `unmapped`, and `events.geojson` carried map display properties while excluding the unmapped cluster.
+- Normal RSS dry run passed with no public writes.
+- Dry-run health still showed DNS-blocked live source access, 39 `dns-error` records, 1 fallback record, 2 fallback items, and public copy blocked by the guard.
+- No browser check was needed because this cycle changed backend map data only.
+
+### Next Highest-Priority Improvement
+
+Brief Quality. The brief now has verification language, but it still does not use the new map display warning. A useful next pass would make the brief name when a mapped point is only a representative area, so prose and map data carry the same caution.
+
+### One Thing Outside The Rubric
+
+The frontend map currently has hard-coded low-confidence circle radii. The data now publishes `map_radius_meters`, but the frontend has not yet been wired to use it.
