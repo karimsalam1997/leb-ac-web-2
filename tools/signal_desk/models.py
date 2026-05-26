@@ -27,6 +27,16 @@ VerificationStatus = Literal[
     "needs-location",
     "needs-source-and-location",
 ]
+SourceHealthErrorKind = Literal[
+    "ok",
+    "dns-error",
+    "timeout",
+    "http-error",
+    "tls-error",
+    "parse-error",
+    "fetch-error",
+    "fallback",
+]
 
 
 def utc_now() -> datetime:
@@ -140,6 +150,7 @@ class SourceHealth(BaseModel):
     ok: bool
     item_count: int
     note: str = ""
+    error_kind: SourceHealthErrorKind = "ok"
 
 
 class SourceLaneItem(BaseModel):

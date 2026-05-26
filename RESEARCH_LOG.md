@@ -174,3 +174,30 @@ Sources consulted:
 - [AWS Glue, Evaluating data quality for ETL jobs](https://docs.aws.amazon.com/glue/latest/dg/tutorial-data-quality.html)
 - [AWS Glue Data Quality](https://docs.aws.amazon.com/glue/latest/dg/glue-data-quality.html)
 - [HDX Data Review](https://centre.humdata.org/ufaqs/data-review/)
+
+## Cycle 7, 2026-05-26, Source Coverage
+
+Chosen dimension: Source Coverage.
+
+Why this was chosen: after Cycle 6, Source Coverage remained at 6/10 and the latest collector diagnosis showed a more precise problem. Every live RSS source failed with the same DNS-style `urlopen` error, then the fallback emitted two sample items. That means the immediate issue is not that Arabic or regional sources should be removed; it is that source-health output does not yet distinguish feed failure, HTTP failure, parse failure, timeout, and local network failure.
+
+Findings:
+
+- Python's `urllib.error` documentation says `URLError` is the base exception for request problems and exposes a `reason` field, which can itself be another exception. The collector should inspect that reason instead of flattening every failure into a text note.
+- Python's `urllib.request` documentation confirms that `urlopen()` raises `URLError` on protocol errors and returns response status information for HTTP/HTTPS responses. Source health should therefore separate HTTP errors from DNS or socket failures.
+- Python's `urllib.request.Request` supports custom headers, including User-Agent, and the collector already uses that. Since the current failure happens before host resolution, changing the source diet or headers would not solve this run.
+- The current failure note, `<urlopen error [Errno 8] nodename nor servname provided, or not known>`, points to name resolution rather than a source-specific RSS structure problem. The audit should show that as an environment/network error.
+- Source coverage should not be reduced in response to an environment-level DNS failure. The safer move is to keep all Arabic, Israeli, Palestinian, Gulf, Iranian, wire, and Lebanese lanes intact, while making the failure category visible in run health.
+
+Implementation decision:
+
+- Add a typed `error_kind` field to `SourceHealth`.
+- Classify RSS and HTML index failures into `dns-error`, `timeout`, `http-error`, `tls-error`, `parse-error`, or `fetch-error`.
+- Mark successful live feeds as `ok` and fallback sample emission as `fallback`.
+- Add `error_kind_counts` to run health so future audits can see whether source coverage failed because of the network, a source URL, or parsing.
+- Do not remove or reduce any source entries.
+
+Sources consulted:
+
+- [Python urllib.error documentation](https://docs.python.org/3.10/library/urllib.error.html)
+- [Python urllib.request documentation](https://docs.python.org/3.11/library/urllib.request.html)

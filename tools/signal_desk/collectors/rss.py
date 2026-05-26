@@ -5,14 +5,16 @@ from email.utils import parsedate_to_datetime
 from hashlib import sha1
 from html import unescape
 import re
+import socket
 import ssl
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 
 import certifi
 
 from tools.signal_desk.config import load_feeds
-from tools.signal_desk.models import RawItem, SourceHealth
+from tools.signal_desk.models import RawItem, SourceHealth, SourceHealthErrorKind
 
 
 def strip_html(value: str) -> str:
@@ -46,6 +48,31 @@ def entry_id(source_name: str, url: str, title: str) -> str:
     return sha1(f"{source_name}:{url}:{title}".encode("utf-8")).hexdigest()[:16]
 
 
+def error_kind(exc: Exception) -> SourceHealthErrorKind:
+    if isinstance(exc, urllib.error.HTTPError):
+        return "http-error"
+    if isinstance(exc, ET.ParseError):
+        return "parse-error"
+    if isinstance(exc, urllib.error.URLError):
+        reason = exc.reason
+        if isinstance(reason, socket.gaierror):
+            return "dns-error"
+        if isinstance(reason, (TimeoutError, socket.timeout)):
+            return "timeout"
+        if isinstance(reason, ssl.SSLError):
+            return "tls-error"
+        return "fetch-error"
+    if isinstance(exc, (TimeoutError, socket.timeout)):
+        return "timeout"
+    if isinstance(exc, ssl.SSLError):
+        return "tls-error"
+    return "fetch-error"
+
+
+def failed_health(source: str, exc: Exception) -> SourceHealth:
+    return SourceHealth(source=source, ok=False, item_count=0, note=str(exc)[:180], error_kind=error_kind(exc))
+
+
 def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth]:
     name = str(feed["name"])
     url = str(feed["url"])
@@ -63,7 +90,7 @@ def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth
             xml = response.read()
         root = ET.fromstring(xml)
     except Exception as exc:
-        return [], SourceHealth(source=name, ok=False, item_count=0, note=str(exc)[:180])
+        return [], failed_health(name, exc)
 
     items = root.findall(".//item") or root.findall(".//{http://www.w3.org/2005/Atom}entry")
     output: list[RawItem] = []
@@ -105,7 +132,7 @@ def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth
             )
         )
 
-    return output, SourceHealth(source=name, ok=True, item_count=len(output))
+    return output, SourceHealth(source=name, ok=True, item_count=len(output), error_kind="ok")
 
 
 def fetch_html_index(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth]:
@@ -124,7 +151,7 @@ def fetch_html_index(feed: dict, since: datetime) -> tuple[list[RawItem], Source
         with urllib.request.urlopen(request, timeout=14, context=ssl_context) as response:
             html = response.read().decode("utf-8", "ignore")
     except Exception as exc:
-        return [], SourceHealth(source=name, ok=False, item_count=0, note=str(exc)[:180])
+        return [], failed_health(name, exc)
 
     seen: set[str] = set()
     output: list[RawItem] = []
@@ -153,7 +180,7 @@ def fetch_html_index(feed: dict, since: datetime) -> tuple[list[RawItem], Source
         if len(output) >= int(feed.get("limit", 18)):
             break
 
-    return output, SourceHealth(source=name, ok=True, item_count=len(output), note="Read from public homepage because RSS was blocked or unavailable.")
+    return output, SourceHealth(source=name, ok=True, item_count=len(output), note="Read from public homepage because RSS was blocked or unavailable.", error_kind="ok")
 
 
 def fallback_items(since: datetime) -> list[RawItem]:
@@ -206,6 +233,6 @@ def collect(since: datetime) -> tuple[list[RawItem], list[SourceHealth]]:
 
     if not all_items:
         all_items = fallback_items(since)
-        health.append(SourceHealth(source="fallback", ok=True, item_count=len(all_items), note="No live RSS items available; emitted review-only sample data."))
+        health.append(SourceHealth(source="fallback", ok=True, item_count=len(all_items), note="No live RSS items available; emitted review-only sample data.", error_kind="fallback"))
 
     return all_items, health

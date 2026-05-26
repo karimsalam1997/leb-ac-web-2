@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -38,12 +39,14 @@ def timed(stage_timings: dict[str, float], name: str, work: Callable[[], T]) -> 
 
 def source_health_summary(source_health: list[SourceHealth]) -> dict[str, object]:
     failed = [status.source for status in source_health if not status.ok]
+    error_kind_counts = Counter(status.error_kind for status in source_health)
     return {
         "total": len(source_health),
         "ok": len(source_health) - len(failed),
         "failed": len(failed),
         "failed_sources": failed[:12],
         "items_returned": sum(status.item_count for status in source_health),
+        "error_kind_counts": dict(sorted(error_kind_counts.items())),
     }
 
 
@@ -56,7 +59,7 @@ def plural(value: int, singular: str, plural_form: str | None = None) -> str:
 def publication_guard(
     *,
     source_health: list[SourceHealth],
-    source_count: int,
+    live_source_count: int,
     scored_item_count: int,
     min_live_sources: int,
     min_scored_items: int,
@@ -65,14 +68,14 @@ def publication_guard(
 ) -> dict[str, object]:
     total_sources = len(source_health)
     failed_sources = len([status for status in source_health if not status.ok])
-    ok_sources = total_sources - failed_sources
+    live_ok_sources = len([status for status in source_health if status.ok and status.error_kind != "fallback"])
     failure_rate = (failed_sources / total_sources) if total_sources else 1.0
     reasons: list[str] = []
 
-    if source_count < min_live_sources:
-        reasons.append(f"Only {source_count} live {plural(source_count, 'source')} returned items; minimum is {min_live_sources}.")
-    if ok_sources < min_live_sources:
-        reasons.append(f"Only {ok_sources} source-health {plural(ok_sources, 'check')} passed; minimum is {min_live_sources}.")
+    if live_source_count < min_live_sources:
+        reasons.append(f"Only {live_source_count} live {plural(live_source_count, 'source')} returned items; minimum is {min_live_sources}.")
+    if live_ok_sources < min_live_sources:
+        reasons.append(f"Only {live_ok_sources} live source-health {plural(live_ok_sources, 'check')} passed; minimum is {min_live_sources}.")
     if scored_item_count < min_scored_items:
         reasons.append(f"Only {scored_item_count} scored {plural(scored_item_count, 'item')} survived filtering; minimum is {min_scored_items}.")
     if failure_rate > max_source_failure_rate:
@@ -83,8 +86,8 @@ def publication_guard(
         "override_used": override,
         "reasons": reasons,
         "metrics": {
-            "live_source_count": source_count,
-            "ok_source_health_count": ok_sources,
+            "live_source_count": live_source_count,
+            "live_ok_source_health_count": live_ok_sources,
             "failed_source_health_count": failed_sources,
             "source_failure_rate": round(failure_rate, 3),
             "scored_item_count": scored_item_count,
@@ -159,9 +162,10 @@ def main() -> None:
     )
 
     source_count = len({item.source_id for item in raw_items})
+    live_source_count = len({item.source_id for item in raw_items if not item.raw.get("fallback")})
     guard = publication_guard(
         source_health=source_health,
-        source_count=source_count,
+        live_source_count=live_source_count,
         scored_item_count=len(scored),
         min_live_sources=args.min_live_sources,
         min_scored_items=args.min_scored_items,
@@ -189,6 +193,7 @@ def main() -> None:
         "cluster_count": len(clusters),
         "located_cluster_count": len([cluster for cluster in clusters if cluster.primary_location and cluster.location_precision != "unknown"]),
         "source_count": source_count,
+        "live_source_count": live_source_count,
         "source_health": source_health_summary(source_health),
         "publication_guard": guard,
         "source_lane_counts": {lane.id: lane.item_count for lane in source_lanes},

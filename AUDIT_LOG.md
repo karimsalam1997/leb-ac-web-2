@@ -321,3 +321,61 @@ Source Coverage. The guard prevents bad publication, but it does not fix why mos
 ### One Thing Outside The Rubric
 
 The guard writes safer health metadata, but `run-health.json` is still stored only inside the dated output folder on normal runs. A later observability pass could add a small append-only health history for comparing runs across days.
+
+## Cycle 7, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Lowest-scoring dimensions: Signal Quality, Source Coverage, Map Quality, Brief Quality, and Information Architecture.
+
+Chosen fix: Source Coverage.
+
+Reason: the next priority was to inspect why source coverage collapsed. The inspection showed that all live RSS and HTML-index sources failed with the same DNS-style `urlopen` error. That is not evidence that the Arabic, Palestinian, Israeli, Gulf, Iranian, wire, or Lebanese sources should be cut. It is evidence that this shell cannot resolve external hostnames right now.
+
+### What Changed
+
+- Added a typed `error_kind` to `SourceHealth`.
+- Classified RSS and HTML-index failures as `dns-error`, `timeout`, `http-error`, `tls-error`, `parse-error`, or `fetch-error`.
+- Marked fallback sample emission as `fallback`.
+- Added `error_kind_counts` to `source_health` in run health.
+- Added `live_source_count` to run health.
+- Updated the publication guard so fallback no longer counts as a live source-health pass.
+- Did not remove or reduce any source entries, preserving Arabic and source-lane coverage.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Source Coverage remains at 6 because the diagnostic is better, but live source access is still blocked by DNS/network resolution in this environment.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/collectors/rss.py tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted source-health assertions passed: DNS failures classify as `dns-error`, HTTP failures as `http-error`, XML parse failures as `parse-error`, and fallback does not count as a live source.
+- Pipeline dry run passed with no public writes.
+- Dry-run health reported `error_kind_counts: {"dns-error": 39, "fallback": 1}` and `live_source_count: 0`.
+- The publication guard reported `public_copy_allowed: false` with zero live sources and zero live source-health checks.
+- No browser check was needed because this cycle changed collector diagnostics and run health only.
+
+### Next Highest-Priority Improvement
+
+Blocked for live Source Coverage until DNS/network access is available to the Python process. Once that is restored, rerun the source audit and fix any actual feed-level `http-error`, `parse-error`, or `timeout` failures. If this environment must remain offline, the next safe improvement is an explicit cached-feed input path so local source snapshots can be tested without pretending fallback samples are live reporting.
+
+### One Thing Outside The Rubric
+
+`source_health.ok` still counts fallback as ok in the compact summary, even though the new `live_source_count` and guard metrics now separate it. A later polish pass could add `live_ok` to the summary for less ambiguity.
