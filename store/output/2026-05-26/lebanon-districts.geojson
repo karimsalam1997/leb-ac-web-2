@@ -1,0 +1,269 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "Akkar"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.82,
+              34.35
+            ],
+            [
+              36.38,
+              34.35
+            ],
+            [
+              36.38,
+              34.72
+            ],
+            [
+              35.82,
+              34.72
+            ],
+            [
+              35.82,
+              34.35
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "North Lebanon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.58,
+              34.14
+            ],
+            [
+              36.05,
+              34.14
+            ],
+            [
+              36.05,
+              34.45
+            ],
+            [
+              35.58,
+              34.45
+            ],
+            [
+              35.58,
+              34.14
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "Beirut"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.45,
+              33.86
+            ],
+            [
+              35.56,
+              33.86
+            ],
+            [
+              35.56,
+              33.94
+            ],
+            [
+              35.45,
+              33.94
+            ],
+            [
+              35.45,
+              33.86
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "Mount Lebanon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.42,
+              33.55
+            ],
+            [
+              36.02,
+              33.55
+            ],
+            [
+              36.02,
+              34.22
+            ],
+            [
+              35.42,
+              34.22
+            ],
+            [
+              35.42,
+              33.55
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "Beqaa"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.78,
+              33.52
+            ],
+            [
+              36.28,
+              33.52
+            ],
+            [
+              36.28,
+              34.1
+            ],
+            [
+              35.78,
+              34.1
+            ],
+            [
+              35.78,
+              33.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "Baalbek-Hermel"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              36.02,
+              33.9
+            ],
+            [
+              36.62,
+              33.9
+            ],
+            [
+              36.62,
+              34.52
+            ],
+            [
+              36.02,
+              34.52
+            ],
+            [
+              36.02,
+              33.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "South Lebanon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.08,
+              33.08
+            ],
+            [
+              35.55,
+              33.08
+            ],
+            [
+              35.55,
+              33.64
+            ],
+            [
+              35.08,
+              33.64
+            ],
+            [
+              35.08,
+              33.08
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district": "Nabatieh"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.35,
+              33.05
+            ],
+            [
+              35.82,
+              33.05
+            ],
+            [
+              35.82,
+              33.58
+            ],
+            [
+              35.35,
+              33.58
+            ],
+            [
+              35.35,
+              33.05
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
