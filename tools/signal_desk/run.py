@@ -47,12 +47,64 @@ def source_health_summary(source_health: list[SourceHealth]) -> dict[str, object
     }
 
 
+def plural(value: int, singular: str, plural_form: str | None = None) -> str:
+    if value == 1:
+        return singular
+    return plural_form or f"{singular}s"
+
+
+def publication_guard(
+    *,
+    source_health: list[SourceHealth],
+    source_count: int,
+    scored_item_count: int,
+    min_live_sources: int,
+    min_scored_items: int,
+    max_source_failure_rate: float,
+    override: bool,
+) -> dict[str, object]:
+    total_sources = len(source_health)
+    failed_sources = len([status for status in source_health if not status.ok])
+    ok_sources = total_sources - failed_sources
+    failure_rate = (failed_sources / total_sources) if total_sources else 1.0
+    reasons: list[str] = []
+
+    if source_count < min_live_sources:
+        reasons.append(f"Only {source_count} live {plural(source_count, 'source')} returned items; minimum is {min_live_sources}.")
+    if ok_sources < min_live_sources:
+        reasons.append(f"Only {ok_sources} source-health {plural(ok_sources, 'check')} passed; minimum is {min_live_sources}.")
+    if scored_item_count < min_scored_items:
+        reasons.append(f"Only {scored_item_count} scored {plural(scored_item_count, 'item')} survived filtering; minimum is {min_scored_items}.")
+    if failure_rate > max_source_failure_rate:
+        reasons.append(f"Source failure rate is {failure_rate:.0%}; maximum allowed is {max_source_failure_rate:.0%}.")
+
+    return {
+        "public_copy_allowed": override or not reasons,
+        "override_used": override,
+        "reasons": reasons,
+        "metrics": {
+            "live_source_count": source_count,
+            "ok_source_health_count": ok_sources,
+            "failed_source_health_count": failed_sources,
+            "source_failure_rate": round(failure_rate, 3),
+            "scored_item_count": scored_item_count,
+            "min_live_sources": min_live_sources,
+            "min_scored_items": min_scored_items,
+            "max_source_failure_rate": max_source_failure_rate,
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the Lebanese Academic Signal Desk pipeline.")
     parser.add_argument("--since", default="7d", help="Window to collect, e.g. 24h, 3d, 7d, or ISO date.")
     parser.add_argument("--only-rss", action="store_true", help="Skip Telegram and YouTube collectors.")
     parser.add_argument("--no-public-copy", action="store_true", help="Do not copy latest output into public/data.")
     parser.add_argument("--dry-run", action="store_true", help="Run the full pipeline and health checks without writing output files.")
+    parser.add_argument("--min-live-sources", type=int, default=3, help="Minimum live sources required before public copy.")
+    parser.add_argument("--min-scored-items", type=int, default=6, help="Minimum scored items required before public copy.")
+    parser.add_argument("--max-source-failure-rate", type=float, default=0.75, help="Maximum source-health failure rate allowed before public copy.")
+    parser.add_argument("--allow-unsafe-public-copy", action="store_true", help="Override the publication guard and copy public files anyway.")
     args = parser.parse_args()
 
     since = parse_since(args.since)
@@ -106,8 +158,19 @@ def main() -> None:
         ground_needs=ground_needs,
     )
 
+    source_count = len({item.source_id for item in raw_items})
+    guard = publication_guard(
+        source_health=source_health,
+        source_count=source_count,
+        scored_item_count=len(scored),
+        min_live_sources=args.min_live_sources,
+        min_scored_items=args.min_scored_items,
+        max_source_failure_rate=args.max_source_failure_rate,
+        override=args.allow_unsafe_public_copy,
+    )
     store_output_written = not args.dry_run
-    public_copy_written = store_output_written and not args.no_public_copy
+    public_copy_requested = store_output_written and not args.no_public_copy
+    public_copy_written = public_copy_requested and bool(guard["public_copy_allowed"])
     public_output_files = ["brief.md", "clusters.json", "events.geojson", "api.json", "lebanon-districts.geojson"]
     store_output_files = [*public_output_files, "run-health.json"]
     health = {
@@ -116,6 +179,7 @@ def main() -> None:
         "dry_run": args.dry_run,
         "only_rss": args.only_rss,
         "store_output_written": store_output_written,
+        "public_copy_requested": public_copy_requested,
         "public_copy_written": public_copy_written,
         "run_dir": str(run_dir),
         "public_data_dir": str(PUBLIC_DATA_DIR),
@@ -124,8 +188,9 @@ def main() -> None:
         "scored_item_count": len(scored),
         "cluster_count": len(clusters),
         "located_cluster_count": len([cluster for cluster in clusters if cluster.primary_location and cluster.location_precision != "unknown"]),
-        "source_count": len({item.source_id for item in raw_items}),
+        "source_count": source_count,
         "source_health": source_health_summary(source_health),
+        "publication_guard": guard,
         "source_lane_counts": {lane.id: lane.item_count for lane in source_lanes},
         "stage_timings_seconds": stage_timings,
         "store_output_files": store_output_files if store_output_written else [],
@@ -156,6 +221,11 @@ def main() -> None:
         print(f"- {stage}: {seconds:.3f}s")
     print("Run health:")
     print(json.dumps(health, indent=2, ensure_ascii=False, default=str))
+    if public_copy_requested and not guard["public_copy_allowed"]:
+        print("Public copy blocked by publication guard:")
+        for reason in guard["reasons"]:
+            print(f"- {reason}")
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

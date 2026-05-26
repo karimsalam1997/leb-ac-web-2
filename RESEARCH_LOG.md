@@ -144,3 +144,33 @@ Sources consulted:
 - [The Centre for Humanitarian Data, Quality Measures for Humanitarian Data](https://centre.humdata.org/quality-measures-for-humanitarian-data/)
 - [HDX Dataset Quality Assurance Checklist](https://data.humdata.org/dataset/2048a947-5714-4220-905b-e662cbcd14c8/resource/658d5c4f-1680-4cb5-9fbf-10a0a64e2c39/download/hdx-qa-checklist.pdf)
 - [W3C PROV Data Model](https://www.w3.org/TR/prov-dm/Overview.html)
+
+## Cycle 6, 2026-05-26, Pipeline Robustness
+
+Chosen dimension: Pipeline Robustness.
+
+Why this was chosen: after Cycle 5, six dimensions were tied at 6/10, but the latest dry run exposed the sharpest operational risk. The run completed, but source health collapsed to 1 ok source and 39 failed sources. A normal public-copy run under those conditions would make the dashboard look current while actually publishing a thin and possibly distorted source shelf.
+
+Findings:
+
+- Great Expectations treats validation as a reusable checkpoint: it validates data, saves validation results, can run actions, and leaves human-readable results behind. Signal Desk should similarly keep the guard result in `run-health.json`, not only print a warning.
+- Dagster's asset checks can be marked blocking so downstream assets do not materialize when a critical check fails. For Signal Desk, the downstream step is public copy. The safe behavior is to write diagnostic output but block the public dashboard copy when source health fails.
+- AWS Glue Data Quality lets a job publish rule results and choose whether a failed ruleset should stop a job before loading target data, after loading, or not at all. Signal Desk should use the middle ground: keep the dated store output for diagnosis, but refuse to load `public/data/signal-desk/` unless an explicit override is supplied.
+- AWS Glue also exposes rule pass and fail counts as metrics. Signal Desk already has source-health totals and counts, so the guard should be transparent: source count, source-health failure rate, scored item count, and reason list.
+- HDX data review uses both automated checks and manual review criteria, including metadata completeness, relevance, resource integrity, and sensitive-data risk. For this pipeline, that supports a simple quality gate built around source shelf health and minimum usable output before public publication.
+
+Implementation decision:
+
+- Add a publication guard to `tools/signal_desk/run.py`.
+- Default public copy should be allowed only when the run has enough live sources, enough scored items, and an acceptable source-health failure rate.
+- Dry runs should report whether public copy would be blocked, but still exit successfully.
+- Normal runs should still write dated store output and `run-health.json`, then refuse public copy with a nonzero exit when the guard fails.
+- Add an explicit `--allow-unsafe-public-copy` override for emergency manual use, and record that override in health output.
+
+Sources consulted:
+
+- [Great Expectations, Data Validation workflow](https://docs.greatexpectations.io/docs/0.18/oss/guides/validation/validate_data_overview/)
+- [Dagster, Data Quality](https://dagster-io-dagster-6.mintlify.app/guides/data-quality)
+- [AWS Glue, Evaluating data quality for ETL jobs](https://docs.aws.amazon.com/glue/latest/dg/tutorial-data-quality.html)
+- [AWS Glue Data Quality](https://docs.aws.amazon.com/glue/latest/dg/glue-data-quality.html)
+- [HDX Data Review](https://centre.humdata.org/ufaqs/data-review/)

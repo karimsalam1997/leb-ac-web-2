@@ -266,3 +266,58 @@ Pipeline Robustness. Add a publication safety guard before public copy, because 
 ### One Thing Outside The Rubric
 
 The frontend type file under `src/lib/signal-desk.ts` is currently untracked in this worktree. Future UI work should avoid mixing that file into an automation commit unless the whole Signal Desk frontend is being intentionally added.
+
+## Cycle 6, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 6/10
+
+Lowest-scoring dimensions: Signal Quality, Source Coverage, Map Quality, Brief Quality, Pipeline Robustness, and Information Architecture.
+
+Chosen fix: Pipeline Robustness.
+
+Reason: the latest dry run completed, but it completed from a collapsed source shelf: 1 live source, 2 scored items, and 39 failed source-health checks out of 40. That is exactly the kind of run that should remain available for diagnosis but should not be allowed to refresh the public dashboard.
+
+### What Changed
+
+- Added a publication guard to `tools/signal_desk/run.py`.
+- Added CLI thresholds for `--min-live-sources`, `--min-scored-items`, and `--max-source-failure-rate`.
+- Added `--allow-unsafe-public-copy` as an explicit manual override.
+- Added a `publication_guard` object to run health with pass/fail status, override flag, reasons, and metrics.
+- Kept dry runs non-blocking while still reporting whether public copy would be refused.
+- Kept dated store output available for normal diagnostic runs, but public copy now exits with a nonzero status when the guard fails.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted publication guard assertions passed: weak source health blocks public copy, healthy source health passes, and the unsafe override is recorded.
+- `python3 -m tools.signal_desk.run --help` showed the new guard flags.
+- Pipeline dry run passed with no public writes and reported `publication_guard.public_copy_allowed: false`.
+- Dry-run health reported 40 source-health records, 1 ok, 39 failed, 2 scored items, and four guard reasons.
+- No browser check was needed because this cycle changed backend publication safety only.
+
+### Next Highest-Priority Improvement
+
+Source Coverage. The guard prevents bad publication, but it does not fix why most live sources failed in this environment. The next useful pass should inspect RSS failure notes and make source collection more resilient without reducing Arabic or regional coverage.
+
+### One Thing Outside The Rubric
+
+The guard writes safer health metadata, but `run-health.json` is still stored only inside the dated output folder on normal runs. A later observability pass could add a small append-only health history for comparing runs across days.
