@@ -1,0 +1,171 @@
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from typing import Any, Literal
+
+from pydantic import BaseModel, Field, HttpUrl
+
+
+SignalTag = Literal[
+    "casualty",
+    "strike-claim",
+    "rhetoric-shift",
+    "displacement",
+    "political-maneuver",
+    "economic",
+    "heritage",
+]
+
+Confidence = Literal["high", "medium", "low"]
+Severity = Literal["critical", "high", "moderate", "low"]
+LocationPrecision = Literal["exact", "district", "national", "unknown"]
+ConfirmationStatus = Literal["corroborated", "partly-corroborated", "single-source", "unconfirmed"]
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+class MediaItem(BaseModel):
+    type: str
+    url: str
+    local_path: str | None = None
+
+
+class RawItem(BaseModel):
+    id: str
+    source_id: str
+    source_type: Literal["telegram", "youtube", "rss", "analysis"]
+    source_bias: str
+    lang: str
+    title: str
+    text: str
+    url: str
+    published_at: datetime
+    media: list[MediaItem] = Field(default_factory=list)
+    raw: dict[str, Any] = Field(default_factory=dict)
+
+
+class CanonicalItem(RawItem):
+    dedupe_key: str
+    also_seen_in: list[str] = Field(default_factory=list)
+    in_scope: bool = True
+
+
+class ScoredItem(CanonicalItem):
+    relevance: float = Field(ge=0, le=1)
+    text_en: str
+    signal_tags: list[SignalTag] = Field(default_factory=list)
+
+
+class Location(BaseModel):
+    name: str
+    name_ar: str = ""
+    district: str
+    caza: str
+    governorate: str
+    lat: float
+    lng: float
+    match_confidence: float = Field(ge=0, le=1)
+
+
+class AnalyzedCluster(BaseModel):
+    id: str
+    item_ids: list[str]
+    headline: str
+    frameworks: list[str] = Field(default_factory=list)
+    analysis: str
+    confidence: Confidence
+    sources_span: list[str] = Field(default_factory=list)
+    what_to_watch: str
+    signal_tags: list[SignalTag] = Field(default_factory=list)
+    published_at: datetime
+    source_biases: list[str] = Field(default_factory=list)
+    urls: list[str] = Field(default_factory=list)
+    severity: Severity = "low"
+    location_precision: LocationPrecision = "unknown"
+    civilian_impact_flags: list[str] = Field(default_factory=list)
+    source_lanes: list[str] = Field(default_factory=list)
+    claim_side: str = "mixed reporting"
+    confirmation_status: ConfirmationStatus = "unconfirmed"
+    recommended_next_check: str = ""
+    what_happened: str = ""
+    where: str = ""
+    who_says_so: list[str] = Field(default_factory=list)
+    who_disputes_or_complicates: list[str] = Field(default_factory=list)
+    why_it_matters: str = ""
+    what_is_missing: str = ""
+
+
+class GeoTaggedCluster(AnalyzedCluster):
+    locations: list[Location] = Field(default_factory=list)
+    primary_location: Location | None = None
+
+
+class Framework(BaseModel):
+    id: str
+    name: str
+    lens: str
+
+
+class DistrictAggregate(BaseModel):
+    district: str
+    event_count: int
+    dominant_signal_tag: str
+
+
+class SourceHealth(BaseModel):
+    source: str
+    ok: bool
+    item_count: int
+    note: str = ""
+
+
+class SourceLaneItem(BaseModel):
+    title: str
+    source: str
+    source_type: str
+    url: str
+    published_at: datetime
+    signal_tags: list[str] = Field(default_factory=list)
+    bias: str = ""
+
+
+class SourceLane(BaseModel):
+    id: str
+    label: str
+    question: str
+    role: str
+    item_count: int
+    sources: list[str] = Field(default_factory=list)
+    items: list[SourceLaneItem] = Field(default_factory=list)
+
+
+class GroundNeed(BaseModel):
+    id: str
+    label: str
+    answer: str
+    check: str
+    related_clusters: list[str] = Field(default_factory=list)
+
+
+class ApiMeta(BaseModel):
+    generated_at: datetime
+    window_start: datetime
+    source_count: int
+    cluster_count: int
+    located_cluster_count: int
+    mode: str
+    notes: list[str] = Field(default_factory=list)
+
+
+class SignalDeskApi(BaseModel):
+    meta: ApiMeta
+    brief_markdown: str
+    clusters: list[GeoTaggedCluster]
+    district_aggregates: list[DistrictAggregate]
+    signal_tags: list[str]
+    frameworks: list[Framework]
+    source_health: list[SourceHealth]
+    source_lanes: list[SourceLane] = Field(default_factory=list)
+    ground_needs: list[GroundNeed] = Field(default_factory=list)

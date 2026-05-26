@@ -1,0 +1,36 @@
+sources:
+  - name: "Lebanese Academic war framework"
+    path: "RESEARCH/lebanon-israel_war_perspectives.md"
+    bias: "Local Lebanese Academic research notes; analytical context, not a breaking-news source"
+    tags: ["war", "hezbollah", "israel", "framework"]
+    tier: 1
+
+  - name: "Lebanon-Israel-Hezbollah perspectives"
+    path: "RESEARCH/analyzing_lebanon-israel-hezbollah_conflict_perspectives.md"
+    bias: "Local Lebanese Academic synthesis; useful for argument structure and competing readings"
+    tags: ["hezbollah", "israel", "analysis"]
+    tier: 1
+
+  - name: "Israel security-zone paradox"
+    path: "RESEARCH/israel's_security_zone_paradox_in_lebanon.md"
+    bias: "Local strategic analysis; tracks the buffer-zone logic and its political cost"
+    tags: ["south lebanon", "buffer zone", "israel"]
+    tier: 1
+
+  - name: "Electronic Intifada battlefield analysis"
+    path: "RESEARCH/electronic-intifada-hezbollah-captions/electronic-intifada-lebanon-battlefield-analysis-2026-05-22.md"
+    bias: "Resistance-sympathetic analysis; useful as a claim frame but requires cross-checking"
+    tags: ["hezbollah", "battlefield", "south lebanon"]
+    tier: 2
+
+  - name: "Jad Ghosn analytical points"
+    path: "RESEARCH/jad_ghosn's_analytical_points.md"
+    bias: "Local notes from Lebanese political commentary; useful for domestic framing"
+    tags: ["politics", "state", "hezbollah"]
+    tier: 2
+
+  - name: "Sectarian system framework"
+    path: "RESEARCH/sectarianism_as_lebanon's_central_problem.md"
+    bias: "Local structural research note; useful for confessional-system interpretation"
+    tags: ["sectarianism", "state", "framework"]
+    tier: 1

@@ -1,0 +1,21 @@
+channels:
+  - id: electronic_intifada
+    url: "https://www.youtube.com/@TheElectronicIntifada"
+    channel_id: "UC9jY5IcAA99wX8MZQ9K9r-Q"
+    bias: "Palestine-centered anti-Israeli analysis and reporting"
+    tier: 1
+    enabled: true
+
+  - id: jad_ghosn
+    url: "https://www.youtube.com/channel/UCEMIZ62JDVya8lSuKlM_a-w"
+    channel_id: "UCEMIZ62JDVya8lSuKlM_a-w"
+    bias: "Lebanese political commentary, strong on domestic structure and class/state framing"
+    tier: 1
+    enabled: true
+
+searches:
+  - id: jad_ghosn_interviews
+    label: "Jad Ghosn interviews"
+    query: "Jad Ghosn Lebanon Hezbollah interview"
+    bias: "YouTube search lead; use for discovery, then verify the host channel and full context"
+    enabled: false

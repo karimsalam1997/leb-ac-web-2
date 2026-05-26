@@ -35,3 +35,30 @@ Sources consulted:
 - [Press TV RSS listing](https://www.presstv.ir/Satellites)
 - [Tehran Times RSS help](https://www.tehrantimes.com/rss-help)
 - [IRNA English](https://www2.irna.ir/en)
+
+## Cycle 2, 2026-05-26, Pipeline Robustness
+
+Chosen dimension: Pipeline Robustness.
+
+Why this was chosen: after Cycle 1, four dimensions sat at 5/10, but Pipeline Robustness had the clearest immediate failure mode. The run command could write dated output and copy to `public/data/signal-desk/`, but it could not safely preview a run, show stage timing, or leave a compact health record for later checks. That means a source or parser experiment could still overwrite the public dashboard before the operator sees what happened.
+
+Findings:
+
+- Python's current `argparse` documentation still treats optional command flags as the normal way to expose command-line behavior, and it automatically produces help and usage text. A visible `--dry-run` flag belongs in the CLI, not in a hidden environment variable or manual convention.
+- Python's current `time` documentation recommends monotonic clocks such as `perf_counter()` for elapsed time because they are not affected by normal wall-clock changes. Stage timing should use that clock, while the public run timestamp can stay as UTC wall time.
+- Python's `shutil.copyfile()` documentation confirms that file copy operations may use platform fast-copy calls, but the important Signal Desk question is not copy speed. The copy should be skipped entirely during dry runs so `public/data/signal-desk/` is protected.
+- JSON Lines remains a simple fit for operational health events because each line is its own JSON value. For this cycle, a single compact `run-health.json` file is enough; JSONL can come later if the pipeline needs a long append-only history.
+
+Implementation decision:
+
+- Add `--dry-run` to `tools/signal_desk/run.py`. It should execute collection, normalization, scoring, geo-tagging, synthesis, and health reporting, but avoid writing dated output or copying files into the public dashboard directory.
+- Add stage-by-stage timing with `time.perf_counter()`, printed at the end of every run.
+- Add a compact run health payload with counts, source-health summary, stage timings, output paths, and whether public files were copied.
+- Keep source coverage untouched in this cycle.
+
+Sources consulted:
+
+- [Python argparse documentation](https://docs.python.org/3.12/library/argparse.html)
+- [Python time documentation](https://docs.python.org/3.13/library/time.html)
+- [Python shutil documentation](https://docs.python.org/3/library/shutil.html)
+- [JSON Lines documentation](https://jsonlines.org/?lang=en)

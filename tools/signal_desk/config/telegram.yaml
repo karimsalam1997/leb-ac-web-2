@@ -1,0 +1,19 @@
+local_jsonl_sources:
+  - name: "Hezbollah media scraper JSONL"
+    path: "/Users/karimsalam/Documents/Scraper/data/hezbollah_media.jsonl"
+    lang: "en"
+    bias: "Resistance-aligned Telegram relay; primary-source claim stream, not independent verification"
+    tier: 1
+
+channels:
+  - id: hezbollah_warmedia
+    handle: "@PLACEHOLDER"
+    bias: "Hezbollah War Media, primary resistance apparatus"
+    tier: 1
+    download_media: true
+
+  - id: idf_arabic
+    handle: "@PLACEHOLDER"
+    bias: "IDF Arabic, Israeli military messaging"
+    tier: 1
+    download_media: false

@@ -53,3 +53,56 @@ Pipeline Robustness. The rubric asks for `--dry-run`, but the CLI still does not
 ### One Thing Outside The Rubric
 
 The brief is 713 words and structurally valid, but it still opens with a slightly generic "pressure point" formula when the top cluster is messy. The synthesis engine needs a stronger rule: if the lead cluster is low-location or low-confirmation, the opening should admit that immediately rather than making the uncertainty sound dramatic.
+
+## Cycle 2, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 5/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 5/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 5/10
+7. Information Architecture: 5/10
+
+Lowest-scoring dimensions: Signal Quality, Brief Quality, Pipeline Robustness, and Information Architecture.
+
+Chosen fix: Pipeline Robustness.
+
+Reason: the dashboard already has a broader source shelf after Cycle 1, but the operator still needed a safe way to test the pipeline before touching public data. That is the boring part of the system, and it matters. If the collector fails or the source mix collapses, the dashboard should show that before anything overwrites `public/data/signal-desk/`.
+
+### What Changed
+
+- Added `--dry-run` to `tools/signal_desk/run.py`.
+- Added stage-by-stage timing using a monotonic timer.
+- Added a compact run health payload with counts, source-health status, lane counts, write status, output paths, and timing data.
+- Normal runs now write `run-health.json` beside the generated store output.
+- Dry runs now execute the pipeline but skip both dated store writes and public dashboard copies.
+
+### Scores After
+
+1. Signal Quality: 5/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 5/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 5/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- `python3 -m tools.signal_desk.run --help` showed the new `--dry-run` flag.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed and reported `store_output_written: false` and `public_copy_written: false`.
+- The dry run completed the full pipeline path and printed stage timings plus the run health payload.
+- A normal public-copy run was deliberately not executed because the current environment returned fallback-only collection: 40 source-health records, 39 failed sources, 2 fallback items, and 2 clusters. Copying that would have reduced the public dashboard data.
+
+### Next Highest-Priority Improvement
+
+Pipeline Robustness again. Add a minimum-live-source guard before public copy, probably something like "do not publish if only fallback data is present" and "do not publish if too many sources fail." That would turn the warning from this cycle into a hard safety rail.
+
+### One Thing Outside The Rubric
+
+The store output path still uses only the date, `store/output/YYYY-MM-DD/`. Multiple normal runs on the same day can overwrite each other, which makes later comparison harder.
