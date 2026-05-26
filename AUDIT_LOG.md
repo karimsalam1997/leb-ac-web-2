@@ -771,3 +771,57 @@ Source Coverage once DNS/network access is available, or Map Quality/UI wiring o
 ### One Thing Outside The Rubric
 
 The live public data under `public/data/signal-desk/` appears older than the latest store output and does not yet carry the newer map-radius fields. A guarded public copy should wait until live source health recovers or a reviewed snapshot run is intentionally promoted.
+
+## Cycle 15, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 8/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Lowest-scoring dimensions: Source Coverage, Map Quality, Brief Quality, UI/UX & Design, and Information Architecture.
+
+Chosen fix: Brief Quality.
+
+Reason: Source Coverage remains blocked by DNS/network resolution, and Map/UI work remains blocked by browser verification limits. The useful backend-only brief fix was the title. The generated brief still called itself `MENA Morning Brief`, but the pipeline is now a Lebanon-centered Signal Desk with regional source context, not a general MENA digest.
+
+### What Changed
+
+- Added `brief_title()` in `tools/signal_desk/synthesize.py`.
+- Changed empty and non-empty generated briefs from `MENA Morning Brief` to `Lebanon Signal Desk Brief`.
+- Left the existing section structure, source-condition text, map evidence, and verification language unchanged.
+- Did not change feeds, source lanes, Arabic coverage, public data, or frontend files.
+
+### Scores After
+
+1. Signal Quality: 8/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Brief Quality improves because the first line now sets the correct geographic and editorial frame before the reader reaches the source-condition caveat.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/synthesize.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted brief-title assertion passed: empty generated briefs now start with `# Lebanon Signal Desk Brief, May 26, 2026` and do not contain `MENA Morning Brief`.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed with no public writes.
+- Dry-run health still showed DNS-blocked live source access, `source_health.live_ok: 0`, `fallback_ok: 1`, 39 `dns-error` records, and public copy blocked by the publication guard.
+- No browser check was needed because this cycle changed backend Markdown synthesis only.
+
+### Next Highest-Priority Improvement
+
+Source Coverage needs live DNS/network access. Map Quality, UI/UX, and frontend Information Architecture need a browser-verifiable environment before committing display changes. In this run, those are the practical stop conditions.
+
+### One Thing Outside The Rubric
+
+The frontend type layer still needs to expose newer backend fields such as `meta.source_condition` and `map_radius_meters`, but that should be paired with a browser-rendered dashboard check.

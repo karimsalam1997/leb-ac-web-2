@@ -141,10 +141,14 @@ def source_condition_section(source_condition: SourceCondition | None) -> str:
     )
 
 
+def brief_title(date_label: str) -> str:
+    return f"Lebanon Signal Desk Brief, {date_label}"
+
+
 def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime, source_condition: SourceCondition | None = None) -> str:
     date_label = generated_at.strftime("%B %-d, %Y") if hasattr(generated_at, "strftime") else "today"
     if not clusters:
-        return f"# MENA Morning Brief, {date_label}\n\n## The one thing that matters today\nNo verified clusters were produced. The honest answer is silence until the sources give us something stronger.{source_condition_section(source_condition)}\n"
+        return f"# {brief_title(date_label)}\n\n## The one thing that matters today\nNo verified clusters were produced. The honest answer is silence until the sources give us something stronger.{source_condition_section(source_condition)}\n"
 
     lead = clusters[0]
     moved = "\n\n".join(
@@ -160,7 +164,7 @@ def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime, s
         if cluster.confirmation_status != "corroborated"
     ) or "- No major high-risk claim required a single-source warning."
 
-    return f"""# MENA Morning Brief, {date_label}
+    return f"""# {brief_title(date_label)}
 
 ## The one thing that matters today
 {lead_opening(lead)}{source_condition_section(source_condition)}

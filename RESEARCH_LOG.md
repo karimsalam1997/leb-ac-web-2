@@ -395,3 +395,28 @@ Sources consulted:
 
 - [Nominatim Search API manual](https://nominatim.org/release-docs/latest/api/Search/)
 - [ACLED Codebook](https://acleddata.com/methodology/acled-codebook)
+
+## Cycle 15, 2026-05-26, Brief Quality
+
+Chosen dimension: Brief Quality.
+
+Why this was chosen: after Cycle 14, Signal Quality and Pipeline Robustness sit at 8/10, while Brief Quality remains at 7/10. Source Coverage is blocked by DNS, and frontend/map work is blocked by browser verification limits. The best backend-only brief improvement is to stop labeling the product as `MENA Morning Brief` when the pipeline and dashboard are now the Lebanese Academic Signal Desk.
+
+Findings:
+
+- AP standards for graphics and interactive work emphasize clear, concise information and source credit. A brief title is not decoration; it tells the reader what kind of product they are reading and how far its geographic claim extends.
+- AP's wider story standards stress factual and contextual accuracy. A title that says `MENA` overstates the product's operating frame when the source shelf, map, and analysis rules are Lebanon-centered with regional context.
+- BBC accuracy guidance describes due accuracy as accuracy appropriate to the subject, output, and audience expectation. For Signal Desk, the audience expectation should be set at the top: this is a Lebanon Signal Desk brief, not a general MENA wire digest.
+- The current brief already has a `Source condition` section and location caveats. Renaming the title is a small alignment fix: it makes the top line match the evidence model already built in earlier cycles.
+
+Implementation decision:
+
+- Add one brief-title helper in `tools/signal_desk/synthesize.py`.
+- Use `Lebanon Signal Desk Brief` for both empty and non-empty generated briefs.
+- Keep the section structure and source evidence language unchanged.
+- Do not touch feeds, source lanes, Arabic/source coverage, public data, or frontend files.
+
+Sources consulted:
+
+- [Associated Press, Telling the Story](https://www.ap.org/about/news-values-and-principles/telling-the-story/)
+- [BBC Editorial Guidelines, Accuracy PDF](https://downloads.bbc.co.uk/guidelines/editorialguidelines/pdfs/Section_03_Accuracy.pdf)
