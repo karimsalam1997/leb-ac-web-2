@@ -21,6 +21,7 @@ Severity = Literal["critical", "high", "moderate", "low"]
 LocationPrecision = Literal["exact", "district", "national", "unknown"]
 ConfirmationStatus = Literal["corroborated", "partly-corroborated", "single-source", "unconfirmed"]
 MapMarkerKind = Literal["pin", "representative-area", "unmapped"]
+SourceConditionStatus = Literal["healthy", "degraded", "snapshot-only", "fallback-only", "empty"]
 VerificationStatus = Literal[
     "ready",
     "watch",
@@ -188,6 +189,19 @@ class GroundNeed(BaseModel):
     related_clusters: list[str] = Field(default_factory=list)
 
 
+class SourceCondition(BaseModel):
+    status: SourceConditionStatus = "empty"
+    label: str = "No source condition"
+    summary: str = "No source run has been assessed yet."
+    caution: str = "Treat the run as unavailable until source health is known."
+    live_source_count: int = 0
+    snapshot_source_count: int = 0
+    total_source_health_count: int = 0
+    failed_source_health_count: int = 0
+    source_failure_rate: float = 0
+    error_kind_counts: dict[str, int] = Field(default_factory=dict)
+
+
 class ApiMeta(BaseModel):
     generated_at: datetime
     window_start: datetime
@@ -195,6 +209,7 @@ class ApiMeta(BaseModel):
     cluster_count: int
     located_cluster_count: int
     mode: str
+    source_condition: SourceCondition = Field(default_factory=SourceCondition)
     notes: list[str] = Field(default_factory=list)
 
 

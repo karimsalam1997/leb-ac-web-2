@@ -14,7 +14,7 @@ from tools.signal_desk.collectors import local_analysis, rss, telegram, youtube
 from tools.signal_desk.config import PUBLIC_DATA_DIR, STORE_DIR, load_framework_config, parse_since, resolve_project_path
 from tools.signal_desk.filter import filter_items
 from tools.signal_desk.geo import district_aggregates, events_geojson, geo_tag, write_fallback_districts
-from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceHealth
+from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceCondition, SourceHealth
 from tools.signal_desk.normalize import normalize
 from tools.signal_desk.source_lanes import build_ground_needs, build_source_lanes
 from tools.signal_desk.synthesize import synthesize_brief
@@ -53,6 +53,58 @@ def source_health_summary(source_health: list[SourceHealth]) -> dict[str, object
 def is_live_source_item(item: object) -> bool:
     raw = getattr(item, "raw", {})
     return not raw.get("fallback") and not raw.get("rss_snapshot")
+
+
+def build_source_condition(
+    *,
+    source_health: list[SourceHealth],
+    raw_item_count: int,
+    live_source_count: int,
+    snapshot_source_count: int,
+) -> SourceCondition:
+    total = len(source_health)
+    failed = len([status for status in source_health if not status.ok])
+    failure_rate = (failed / total) if total else 1.0
+    error_kind_counts = dict(sorted(Counter(status.error_kind for status in source_health).items()))
+
+    if raw_item_count == 0:
+        status = "empty"
+        label = "No source output"
+        summary = "The run produced no source items."
+        caution = "Do not use this run for analysis."
+    elif live_source_count == 0 and snapshot_source_count > 0:
+        status = "snapshot-only"
+        label = "Snapshot-only source run"
+        summary = f"The run used {snapshot_source_count} cached {plural(snapshot_source_count, 'source')} and no live source items."
+        caution = "Use it to test structure and analysis, not to describe the current day."
+    elif live_source_count == 0:
+        status = "fallback-only"
+        label = "Fallback-only source run"
+        summary = "No live sources returned items; the visible clusters come from local fallback samples."
+        caution = "Treat the brief as a pipeline diagnostic until live source access returns."
+    elif failure_rate > 0.75:
+        status = "degraded"
+        label = "Degraded source run"
+        summary = f"{live_source_count} live {plural(live_source_count, 'source')} returned items, but source failure is {failure_rate:.0%}."
+        caution = "Read the brief with source-shelf caution and check the failed lanes before publishing."
+    else:
+        status = "healthy"
+        label = "Live source run"
+        summary = f"{live_source_count} live {plural(live_source_count, 'source')} returned items with source failure at {failure_rate:.0%}."
+        caution = "Normal verification caveats still apply to each cluster."
+
+    return SourceCondition(
+        status=status,
+        label=label,
+        summary=summary,
+        caution=caution,
+        live_source_count=live_source_count,
+        snapshot_source_count=snapshot_source_count,
+        total_source_health_count=total,
+        failed_source_health_count=failed,
+        source_failure_rate=round(failure_rate, 3),
+        error_kind_counts=error_kind_counts,
+    )
 
 
 def plural(value: int, singular: str, plural_form: str | None = None) -> str:
@@ -143,7 +195,16 @@ def main() -> None:
     framework_config = timed(stage_timings, "load-frameworks-config", load_framework_config)
     frameworks = timed(stage_timings, "load-frameworks", lambda: load_frameworks(framework_config))
     clusters = timed(stage_timings, "analyze-geo-verify", lambda: attach_verification_dossiers(geo_tag(analyze(scored, frameworks))))
-    brief = timed(stage_timings, "synthesize-brief", lambda: synthesize_brief(clusters, generated_at))
+    source_count = len({item.source_id for item in raw_items})
+    live_source_count = len({item.source_id for item in raw_items if is_live_source_item(item)})
+    snapshot_source_count = len({item.source_id for item in raw_items if item.raw.get("rss_snapshot")})
+    source_condition = build_source_condition(
+        source_health=source_health,
+        raw_item_count=len(raw_items),
+        live_source_count=live_source_count,
+        snapshot_source_count=snapshot_source_count,
+    )
+    brief = timed(stage_timings, "synthesize-brief", lambda: synthesize_brief(clusters, generated_at, source_condition))
     aggregates = timed(stage_timings, "district-aggregates", lambda: district_aggregates(clusters))
     tags = timed(stage_timings, "signal-tags", lambda: sorted({tag for cluster in clusters for tag in cluster.signal_tags}))
     source_lanes = timed(stage_timings, "source-lanes", lambda: build_source_lanes(scored))
@@ -157,6 +218,7 @@ def main() -> None:
             cluster_count=len(clusters),
             located_cluster_count=len([cluster for cluster in clusters if cluster.primary_location and cluster.location_precision != "unknown"]),
             mode="rss-first-review",
+            source_condition=source_condition,
             notes=[
                 "Telegram live scraping remains review-first; local scraper JSONL can feed source leads without touching credentials.",
                 "Longer analysis files are loaded as context and kept separate from live reporting claims.",
@@ -173,9 +235,6 @@ def main() -> None:
         ground_needs=ground_needs,
     )
 
-    source_count = len({item.source_id for item in raw_items})
-    live_source_count = len({item.source_id for item in raw_items if is_live_source_item(item)})
-    snapshot_source_count = len({item.source_id for item in raw_items if item.raw.get("rss_snapshot")})
     guard = publication_guard(
         source_health=source_health,
         live_source_count=live_source_count,
@@ -211,6 +270,7 @@ def main() -> None:
         "live_source_count": live_source_count,
         "snapshot_source_count": snapshot_source_count,
         "source_health": source_health_summary(source_health),
+        "source_condition": source_condition.model_dump(mode="json"),
         "publication_guard": guard,
         "source_lane_counts": {lane.id: lane.item_count for lane in source_lanes},
         "stage_timings_seconds": stage_timings,

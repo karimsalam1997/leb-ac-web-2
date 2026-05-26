@@ -549,3 +549,60 @@ Information Architecture. Most dimensions now sit at 7, but the information mode
 ### One Thing Outside The Rubric
 
 The brief still uses a fixed title, `MENA Morning Brief`, even though the product is now more specifically a Lebanon and Levant Signal Desk.
+
+## Cycle 11, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 6/10
+
+Lowest-scoring dimensions: Signal Quality and Information Architecture.
+
+Chosen fix: Information Architecture.
+
+Reason: cluster dossiers now explain individual claims, but the whole-run source state was still split across `source_health`, `run-health.json`, and the publication guard. A reader of the generated brief or API needed one compact answer to a basic question: was this a live source run, a degraded source run, a snapshot run, or only fallback data?
+
+### What Changed
+
+- Added a `SourceCondition` model.
+- Added `source_condition` to `api.meta`.
+- Added `source_condition` to run health.
+- Classified runs as `healthy`, `degraded`, `snapshot-only`, `fallback-only`, or `empty`.
+- Added source-condition text to the generated brief.
+- Reused the existing source-health counts and error-kind categories instead of creating a second source-health system.
+- Kept the detailed `source_health` array unchanged.
+- Did not touch feeds or source lanes, so Arabic and source coverage were not reduced.
+
+### Scores After
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 7/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/run.py tools/signal_desk/synthesize.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted source-condition assertions passed for `fallback-only` and `snapshot-only` runs.
+- Targeted brief assertion passed: an empty brief with fallback-only source condition included a `Source condition` section.
+- Normal RSS dry run passed with no public writes.
+- Dry-run health included `source_condition.status: fallback-only`, 39 `dns-error` records, 1 fallback record, 2 fallback items, and public copy blocked by the guard.
+- No browser check was needed because this cycle changed backend API metadata and brief synthesis only.
+
+### Next Highest-Priority Improvement
+
+Signal Quality. It is now the lowest-scoring remaining dimension. The next scoped pass should improve clustering or deduplication so fallback/sample, snapshot, Telegram, and RSS items do not produce misleading clusters when headlines overlap only loosely.
+
+### One Thing Outside The Rubric
+
+The frontend type file does not yet expose `meta.source_condition`, so the dashboard cannot display the new run-level source condition without a small frontend typing and UI pass.

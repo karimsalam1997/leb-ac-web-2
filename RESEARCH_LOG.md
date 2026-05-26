@@ -287,3 +287,32 @@ Sources consulted:
 - [BBC Editorial Guidelines, Accuracy PDF](https://downloads.bbc.co.uk/guidelines/editorialguidelines/pdfs/bbc-editorial-guidelines-section-3-accuracy.pdf)
 - [PBS Standards, Accuracy](https://www.pbs.org/standards/accuracy/)
 - [ACAPS methodology note](https://www.acaps.org/fileadmin/Dataset/Methodology_files/20260204_ACAPS_Methodology_Note_-_Syria_Area-Based_Analysis__SABA__Dashboard_and_Core_Dataset_.pdf)
+
+## Cycle 11, 2026-05-26, Information Architecture
+
+Chosen dimension: Information Architecture.
+
+Why this was chosen: after Cycle 10, Information Architecture remained one of the lowest-scoring dimensions. Cluster dossiers now explain individual claims, but run-level source health still lives mostly in `run-health.json`. A reader of the brief or API cannot quickly tell whether the whole source shelf was live, degraded, snapshot-only, or fallback-only.
+
+Findings:
+
+- Great Expectations treats validation results as records that can be saved as JSON and rendered into human-readable documentation. Signal Desk needs the same split: machine-readable run health and a human-readable source condition in the brief.
+- OpenLineage models run and dataset metadata as attachable facets. The useful lesson here is not to build a full lineage system, but to make run-level quality an explicit object beside the generated product.
+- W3C PROV treats provenance as information about the entities, activities, and agents involved in producing data, because that helps users assess reliability. For Signal Desk, the source condition is a small provenance layer for the whole run.
+- Cycle 6 and Cycle 7 already created detailed health and guard data. The architecture gap is that downstream readers need a compact summary, not the full operational payload.
+- The source condition should reuse existing counts and error-kind categories. It should not create a second truth about source health.
+
+Implementation decision:
+
+- Add a `SourceCondition` model to API metadata.
+- Classify each run as `healthy`, `degraded`, `snapshot-only`, `fallback-only`, or `empty`.
+- Add the source condition to `api.meta`, `run-health.json`, and the generated brief.
+- Keep the detailed `source_health` array unchanged.
+- Do not touch feeds or source lanes.
+
+Sources consulted:
+
+- [Great Expectations, Validation Result](https://docs.greatexpectations.io/docs/0.18/reference/learn/terms/validation_result)
+- [OpenLineage, About OpenLineage](https://openlineage.io/docs/)
+- [OpenLineage, Data Quality Assertions Facet](https://openlineage.io/docs/next/spec/facets/dataset-facets/data_quality_assertions)
+- [W3C PROV Data Model](https://www.w3.org/TR/prov-dm/Overview.html)

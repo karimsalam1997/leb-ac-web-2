@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from tools.signal_desk.models import GeoTaggedCluster
+from tools.signal_desk.models import GeoTaggedCluster, SourceCondition
 
 
 LANE_LABELS = {
@@ -131,10 +131,19 @@ def evidence_line(cluster: GeoTaggedCluster) -> str:
     )
 
 
-def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime) -> str:
+def source_condition_section(source_condition: SourceCondition | None) -> str:
+    if source_condition is None:
+        return ""
+    return (
+        "\n\n## Source condition\n"
+        f"{source_condition.label}. {source_condition.summary} {source_condition.caution}"
+    )
+
+
+def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime, source_condition: SourceCondition | None = None) -> str:
     date_label = generated_at.strftime("%B %-d, %Y") if hasattr(generated_at, "strftime") else "today"
     if not clusters:
-        return f"# MENA Morning Brief, {date_label}\n\n## The one thing that matters today\nNo verified clusters were produced. The honest answer is silence until the sources give us something stronger.\n"
+        return f"# MENA Morning Brief, {date_label}\n\n## The one thing that matters today\nNo verified clusters were produced. The honest answer is silence until the sources give us something stronger.{source_condition_section(source_condition)}\n"
 
     lead = clusters[0]
     moved = "\n\n".join(
@@ -153,7 +162,7 @@ def synthesize_brief(clusters: list[GeoTaggedCluster], generated_at: datetime) -
     return f"""# MENA Morning Brief, {date_label}
 
 ## The one thing that matters today
-{lead_opening(lead)}
+{lead_opening(lead)}{source_condition_section(source_condition)}
 
 ## What moved
 {moved}
