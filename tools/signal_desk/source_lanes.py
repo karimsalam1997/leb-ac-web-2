@@ -7,6 +7,13 @@ from tools.signal_desk.models import GeoTaggedCluster, GroundNeed, ScoredItem, S
 
 LANES = [
     {
+        "id": "pipeline-sample",
+        "label": "Pipeline sample",
+        "question": "Which items are local samples rather than live reporting?",
+        "role": "Use this lane only to confirm the pipeline still renders when live sources are unavailable.",
+        "needles": ["signal desk fallback", "fallback sample"],
+    },
+    {
         "id": "israeli-establishment",
         "label": "Israeli establishment",
         "question": "What is the official or security-facing Israeli story?",

@@ -6,6 +6,7 @@ from tools.signal_desk.models import GeoTaggedCluster, SourceCondition
 
 
 LANE_LABELS = {
+    "pipeline-sample": "pipeline sample",
     "israeli-establishment": "Israeli establishment",
     "israeli-dissent": "Israeli dissent",
     "lebanese-local": "Lebanese local record",

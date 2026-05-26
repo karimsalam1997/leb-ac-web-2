@@ -606,3 +606,58 @@ Signal Quality. It is now the lowest-scoring remaining dimension. The next scope
 ### One Thing Outside The Rubric
 
 The frontend type file does not yet expose `meta.source_condition`, so the dashboard cannot display the new run-level source condition without a small frontend typing and UI pass.
+
+## Cycle 12, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 6/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 7/10
+
+Lowest-scoring dimension: Signal Quality.
+
+Chosen fix: Signal Quality.
+
+Reason: fallback samples are useful for dry-run diagnostics, but they were still flowing through clustering as normal-looking signals. In a DNS-blocked run, that can make local sample text look like fresh reporting unless every downstream surface preserves the fallback label.
+
+### What Changed
+
+- Added fallback-only cluster detection in `tools/signal_desk/analyze.py`.
+- Forced fallback-only clusters to `low` severity and `unconfirmed` status.
+- Prefixed fallback-only cluster headlines with `Fallback sample:`.
+- Replaced normal event language with explicit review-only fallback language.
+- Routed fallback items into a dedicated `pipeline-sample` source lane.
+- Added the `pipeline-sample` lane label to brief synthesis.
+- Kept fallback samples available for diagnostics and did not remove or reduce any live source feed.
+
+### Scores After
+
+1. Signal Quality: 7/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 7/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/analyze.py tools/signal_desk/source_lanes.py tools/signal_desk/synthesize.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted fallback assertions passed: fallback clusters were prefixed, low severity, unconfirmed, marked as review-only fallback samples, and assigned to `pipeline-sample`.
+- Normal RSS dry run passed with no public writes.
+- Dry-run health showed `source_lane_counts.pipeline-sample: 2`, 39 `dns-error` records, 1 fallback record, 2 fallback items, and public copy blocked by the guard.
+- No browser check was needed because this cycle changed backend analysis, source-lane classification, and brief labels only.
+
+### Next Highest-Priority Improvement
+
+All rubric dimensions are now at 7/10. The next useful improvements are frontend wiring for `meta.source_condition` and `map_radius_meters`, or live source repair once DNS/network access is available. I am stopping here because those next steps either touch currently untracked frontend files or depend on live network resolution.
+
+### One Thing Outside The Rubric
+
+The preview server has its own hard-coded low-confidence map radius logic and does not yet read the new map radius fields.

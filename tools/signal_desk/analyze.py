@@ -36,6 +36,8 @@ def choose_framework_ids(text: str, frameworks: list[Framework]) -> list[str]:
 
 
 def confidence_for(items: list[ScoredItem]) -> str:
+    if is_fallback_sample_cluster(items):
+        return "low"
     source_count = len({item.source_id for item in items})
     if source_count >= 3:
         return "high"
@@ -45,10 +47,14 @@ def confidence_for(items: list[ScoredItem]) -> str:
 
 
 def source_lane_ids(items: list[ScoredItem]) -> list[str]:
+    if is_fallback_sample_cluster(items):
+        return ["pipeline-sample"]
     return sorted({lane_for(item) for item in items})
 
 
 def confirmation_status_for(items: list[ScoredItem]) -> str:
+    if is_fallback_sample_cluster(items):
+        return "unconfirmed"
     lanes = set(source_lane_ids(items))
     source_count = len({item.source_id for item in items})
     if source_count <= 1:
@@ -104,6 +110,8 @@ def civilian_flags_for(text: str, tags: list[str]) -> list[str]:
 
 
 def claim_side_for(items: list[ScoredItem], lanes: list[str]) -> str:
+    if is_fallback_sample_cluster(items):
+        return "Review-only fallback sample"
     lane_set = set(lanes)
     if lane_set == {"resistance-apparatus"}:
         return "Resistance primary claim"
@@ -157,6 +165,8 @@ def who_complicates_for(items: list[ScoredItem], lanes: list[str], confirmation_
 
 
 def missing_for(items: list[ScoredItem], confirmation_status: str, precision: str, lanes: list[str]) -> str:
+    if is_fallback_sample_cluster(items):
+        return "Missing: live source access, a real source record, current confirmation, and field checks."
     missing: list[str] = []
     if confirmation_status in {"single-source", "unconfirmed"}:
         missing.append("a second source")
@@ -172,6 +182,8 @@ def missing_for(items: list[ScoredItem], confirmation_status: str, precision: st
 
 
 def next_check_for(signal: str, confirmation_status: str, location: str, lanes: list[str]) -> str:
+    if "pipeline-sample" in lanes:
+        return "Restore live source access or provide cached source snapshots before treating this as a real signal."
     if signal in {"casualty", "displacement", "strike-claim"}:
         return f"Check {location} against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it."
     if confirmation_status in {"single-source", "unconfirmed"}:
@@ -214,6 +226,10 @@ def has_foreign_place_without_lebanon_context(text: str) -> bool:
     return any(has_place_token(text, hint) for hint in FOREIGN_PLACE_HINTS) and not has_lebanon_context(text)
 
 
+def is_fallback_sample_cluster(items: list[ScoredItem]) -> bool:
+    return bool(items) and all(bool(item.raw.get("fallback")) for item in items)
+
+
 def analyze(items: list[ScoredItem], frameworks: list[Framework]) -> list[GeoTaggedCluster]:
     buckets: dict[str, list[ScoredItem]] = defaultdict(list)
     event_items = [item for item in items if item.source_type != "analysis"]
@@ -224,6 +240,7 @@ def analyze(items: list[ScoredItem], frameworks: list[Framework]) -> list[GeoTag
     for key, bucket in buckets.items():
         ranked = sorted(bucket, key=lambda item: item.relevance, reverse=True)[:4]
         lead = ranked[0]
+        fallback_sample = is_fallback_sample_cluster(ranked)
         text = " ".join([item.title + " " + item.text_en for item in ranked])
         framework_ids = choose_framework_ids(text, frameworks)
         sources = sorted({item.source_id for item in ranked})
@@ -234,10 +251,12 @@ def analyze(items: list[ScoredItem], frameworks: list[Framework]) -> list[GeoTag
         lanes = source_lane_ids(ranked)
         status = confirmation_status_for(ranked)
         precision = location_precision_for(location_phrase)
-        severity = severity_for(all_tags, text, status)
+        severity = "low" if fallback_sample else severity_for(all_tags, text, status)
         civilian_flags = civilian_flags_for(text, all_tags)
         headline = lead.title if len(lead.title) < 110 else lead.title[:106].rstrip() + "..."
-        analysis = build_analysis(location_phrase, signal, ranked, framework_ids)
+        if fallback_sample and not headline.startswith("Fallback sample:"):
+            headline = "Fallback sample: " + headline
+        analysis = build_fallback_analysis(location_phrase) if fallback_sample else build_analysis(location_phrase, signal, ranked, framework_ids)
         watch = build_watch(location_phrase, signal)
         missing = missing_for(ranked, status, precision, lanes)
         cluster_id = sha1(f"{key}:{headline}:{lead.published_at.isoformat()}".encode("utf-8")).hexdigest()[:12]
@@ -262,11 +281,11 @@ def analyze(items: list[ScoredItem], frameworks: list[Framework]) -> list[GeoTag
                 claim_side=claim_side_for(ranked, lanes),
                 confirmation_status=status,
                 recommended_next_check=next_check_for(signal, status, location_phrase, lanes),
-                what_happened=build_what_happened(location_phrase, signal, headline, status),
+                what_happened=build_fallback_what_happened() if fallback_sample else build_what_happened(location_phrase, signal, headline, status),
                 where=location_phrase,
                 who_says_so=who_says_so_for(ranked),
                 who_disputes_or_complicates=who_complicates_for(ranked, lanes, status),
-                why_it_matters=build_why_it_matters(location_phrase, signal, severity, civilian_flags),
+                why_it_matters=build_fallback_why_it_matters() if fallback_sample else build_why_it_matters(location_phrase, signal, severity, civilian_flags),
                 what_is_missing=missing,
             )
         )
@@ -302,6 +321,10 @@ def build_analysis(location: str, signal: str, items: list[ScoredItem], framewor
     return f"{location} is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems."
 
 
+def build_fallback_analysis(location: str) -> str:
+    return f"{location} appears only because local fallback sample text was emitted after live sources failed. This is a pipeline diagnostic, not a field signal."
+
+
 def build_what_happened(location: str, signal: str, headline: str, status: str) -> str:
     if signal == "strike-claim":
         return f"A military claim or report is tied to {location}. The desk treats it as {status.replace('-', ' ')} until the same place and time appear across separate source lanes."
@@ -314,6 +337,10 @@ def build_what_happened(location: str, signal: str, headline: str, status: str) 
     return f"The cluster centers on {headline}"
 
 
+def build_fallback_what_happened() -> str:
+    return "This is a review-only fallback sample emitted because live sources returned no usable items."
+
+
 def build_why_it_matters(location: str, signal: str, severity: str, civilian_flags: list[str]) -> str:
     if severity in {"critical", "high"}:
         return f"{location} matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise."
@@ -322,6 +349,10 @@ def build_why_it_matters(location: str, signal: str, severity: str, civilian_fla
     if signal == "rhetoric-shift":
         return "The statement matters because rhetoric often prepares the ground for later military, diplomatic, or media moves."
     return f"{location} matters if it stops being an isolated item and begins repeating across towns, roads, or source lanes."
+
+
+def build_fallback_why_it_matters() -> str:
+    return "It matters only as a pipeline check. It should disappear once live sources or cached source snapshots are available."
 
 
 def build_watch(location: str, signal: str) -> str:

@@ -316,3 +316,32 @@ Sources consulted:
 - [OpenLineage, About OpenLineage](https://openlineage.io/docs/)
 - [OpenLineage, Data Quality Assertions Facet](https://openlineage.io/docs/next/spec/facets/dataset-facets/data_quality_assertions)
 - [W3C PROV Data Model](https://www.w3.org/TR/prov-dm/Overview.html)
+
+## Cycle 12, 2026-05-26, Signal Quality
+
+Chosen dimension: Signal Quality.
+
+Why this was chosen: after Cycle 11, Signal Quality was the only remaining 6/10 dimension. The most immediate risk is that fallback samples, which exist only to keep the pipeline testable when live sources fail, can still become ordinary-looking clusters with ordinary-looking map and brief language.
+
+Findings:
+
+- AP's AI standards say generated material used in a news context should be clearly labeled when it is the subject of the story, and that synthetic or generated material requires normal editorial caution. Signal Desk fallback samples are not AI news claims, but the same principle applies: generated or local sample content must be visibly labeled.
+- NIST's synthetic-content transparency report emphasizes provenance, labeling, metadata, and auditing as ways to reduce risk from synthetic content. For this project, a fallback sample should carry provenance inside the cluster itself, not only in source health.
+- GOV.UK's synthetic data guidance says synthetic data should be documented and version controlled so it can be evaluated and recreated. Signal Desk already marks fallback raw items; the missing step is carrying that mark into cluster analysis and source lanes.
+- Research Data Scotland's synthetic data policy calls for information about how synthetic data was generated and whether real data or metadata was used. The Signal Desk equivalent is a plain warning that the item came from local fallback text, not live reporting.
+- The current code already marks raw fallback items. This cycle should not remove samples, because they are useful for dry-run testing. It should make them impossible to mistake for live signals.
+
+Implementation decision:
+
+- Detect clusters made only from fallback samples.
+- Force fallback-only clusters to low severity, unconfirmed status, and explicit fallback language.
+- Prefix fallback cluster headlines with `Fallback sample`.
+- Route fallback items into a dedicated `pipeline-sample` source lane.
+- Keep fallback samples available for diagnostics, but stop them from looking like field reporting.
+
+Sources consulted:
+
+- [Associated Press, Standards around generative AI](https://www.ap.org/standards-around-generative-ai)
+- [NIST, Reducing Risks Posed by Synthetic Content](https://www.nist.gov/publications/reducing-risks-posed-synthetic-content-overview-technical-approaches-digital-content)
+- [GOV.UK, AI Insights: Synthetic Data](https://www.gov.uk/government/publications/ai-insights/ai-insights-synthetic-data-html)
+- [Research Data Scotland, Synthetic Data Policy](https://www.researchdata.scot/engage-and-learn/data-explainers/intro-to-synthetic-data/synthetic-data-policy/)
