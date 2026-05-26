@@ -106,3 +106,56 @@ Pipeline Robustness again. Add a minimum-live-source guard before public copy, p
 ### One Thing Outside The Rubric
 
 The store output path still uses only the date, `store/output/YYYY-MM-DD/`. Multiple normal runs on the same day can overwrite each other, which makes later comparison harder.
+
+## Cycle 3, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 5/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 5/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 5/10
+
+Lowest-scoring dimensions: Signal Quality, Brief Quality, and Information Architecture.
+
+Chosen fix: Brief Quality.
+
+Reason: the system already had the evidence fields it needed, but the generated brief opened too theatrically. It named a "pressure point" before explaining source depth, location precision, or what was missing. For a war-monitoring desk, that is the wrong order. The brief should show the reader the floor before asking them to walk across it.
+
+### What Changed
+
+- Updated `tools/signal_desk/synthesize.py` so the lead paragraph opens with confirmation status, location precision, source trail, source lanes, and missing checks.
+- Added compact source and lane formatting helpers for readable brief prose.
+- Added an evidence line under each top moved cluster, so the reader sees the source trail before the next-check instruction.
+- Kept the existing brief section structure, so no frontend changes were needed.
+- Did not touch feeds, Arabic coverage, or source-lane coverage.
+
+### Scores After
+
+1. Signal Quality: 5/10
+2. Source Coverage: 6/10
+3. Map Quality: 6/10
+4. Brief Quality: 6/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 6/10
+7. Information Architecture: 5/10
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/synthesize.py tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted brief assertion passed: the generated brief now includes `Evidence:` and `Source lanes:`, and no longer includes `morning's first pressure point`.
+- Pipeline dry run passed: 33 sources, 588 raw items, 12 clusters, 8 located clusters.
+- Dry-run health reported 39 source-health records, 39 ok, 0 failed, `store_output_written: false`, and `public_copy_written: false`.
+- No browser check was needed because this cycle changed only backend brief synthesis.
+
+### Next Highest-Priority Improvement
+
+Signal Quality. The generated public data still shows at least one likely place-matching error: a Gaza headline can be pulled into a Lebanon/Tyre reading. The next cycle should harden geographic disambiguation so non-Lebanon place names do not get forced into Lebanese map logic.
+
+### One Thing Outside The Rubric
+
+The brief now exposes source evidence more honestly, but it is getting longer. A later UI pass may need collapsible evidence notes or a denser "source shelf" layout so readers can scan without losing the audit trail.

@@ -62,3 +62,29 @@ Sources consulted:
 - [Python time documentation](https://docs.python.org/3.13/library/time.html)
 - [Python shutil documentation](https://docs.python.org/3/library/shutil.html)
 - [JSON Lines documentation](https://jsonlines.org/?lang=en)
+
+## Cycle 3, 2026-05-26, Brief Quality
+
+Chosen dimension: Brief Quality.
+
+Why this was chosen: after Cycle 2, Signal Quality, Brief Quality, and Information Architecture were still the lowest-scoring dimensions at 5/10. Brief Quality is the best immediate fix because the previous audit had already named the defect: the brief opened with a dramatic "pressure point" formula even when the lead cluster had uncertainty around place, corroboration, or missing checks. That makes the brief sound more settled than the record is.
+
+Findings:
+
+- The Associated Press standards say disputable material should be attributed and internet-sourced information should be vetted and tied back to its original source. For Signal Desk, that means the brief should name the source span or source lane early, especially when the lead item is partly corroborated or single-source.
+- The BBC accuracy guidance says reporting should be well sourced, based on evidence, corroborated where possible, and honest about what is not known. That maps directly onto the brief's first paragraph: the opening should admit missing place, confirmation, or source depth before offering a reading.
+- ACAPS presents methodology as part of analytical work rather than a private back-office concern. For this project, the brief should expose a small part of the method, including confirmation status, source lanes, and missing checks, so the reader can see how the desk moved from items to interpretation.
+- The current public brief already has useful fields downstream, especially `confirmation_status`, `source_lanes`, `sources_span`, and `what_is_missing`. The flaw is ordering. The evidence warning appears too late, after the opening has already framed the day.
+
+Implementation decision:
+
+- Update `tools/signal_desk/synthesize.py` so the lead paragraph is evidence-first.
+- Include confirmation status, location precision, source lanes or source names, and missing checks in the opening.
+- Keep the existing section structure so the dashboard does not need frontend changes.
+- Avoid touching feeds or source-lane coverage in this cycle.
+
+Sources consulted:
+
+- [Associated Press, Telling the Story](https://www.ap.org/about/news-values-and-principles/telling-the-story/)
+- [BBC Editorial Guidelines, Accuracy](https://bbctodays.pages.dev/editorialguidelines/guidelines/accuracy)
+- [ACAPS, Our methodologies](https://www.acaps.org/en/methodology/our-methodologies)
