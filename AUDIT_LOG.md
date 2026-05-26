@@ -661,3 +661,57 @@ All rubric dimensions are now at 7/10. The next useful improvements are frontend
 ### One Thing Outside The Rubric
 
 The preview server has its own hard-coded low-confidence map radius logic and does not yet read the new map radius fields.
+
+## Cycle 13, 2026-05-26
+
+### Scores Before
+
+1. Signal Quality: 7/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 7/10
+7. Information Architecture: 7/10
+
+All rubric dimensions were tied at 7/10.
+
+Chosen fix: Pipeline Robustness.
+
+Reason: the first candidate was a tracked preview-map fix for `map_radius_meters`, but this sandbox blocks local server binding and the in-app browser blocks local file URLs. Since frontend rendering could not be verified here, I pivoted to the next fully testable robustness issue already named in Cycle 7: fallback source health still appeared under the same top-level `ok` count as live source recovery.
+
+### What Changed
+
+- Updated `tools/signal_desk/run.py` so `source_health` in run health now separates `live_ok`, `snapshot_ok`, and `fallback_ok`.
+- Kept the existing `ok` field for compatibility with any older checks.
+- Preserved the publication guard's stricter live-source metrics.
+- Did not change feeds, source lanes, Arabic coverage, public data, or frontend files.
+
+### Scores After
+
+1. Signal Quality: 7/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 7/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Pipeline Robustness improves because a fallback-only run now says `ok: 1`, `live_ok: 0`, and `fallback_ok: 1` in the top-level health summary, which is much harder to misread.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted source-health assertion passed for live, snapshot, fallback, and failed source-health records.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed with no public writes.
+- Dry-run health showed `source_health.live_ok: 0`, `source_health.snapshot_ok: 0`, `source_health.fallback_ok: 1`, 39 `dns-error` records, and public copy blocked by the publication guard.
+- Browser rendering was not required for the final code change because the committed change is backend health reporting only.
+
+### Next Highest-Priority Improvement
+
+Map Quality / UI wiring once a browser-verifiable environment is available. The preview server and the Next.js map can still be wired to read `map_radius_meters`, but that should be committed only where local preview rendering can be checked.
+
+### One Thing Outside The Rubric
+
+This sandbox currently denies local port binding with `PermissionError: [Errno 1] Operation not permitted`, and the in-app browser blocks local file URLs. That prevents the automation from completing browser verification for frontend Signal Desk changes in this run.

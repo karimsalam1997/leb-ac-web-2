@@ -345,3 +345,27 @@ Sources consulted:
 - [NIST, Reducing Risks Posed by Synthetic Content](https://www.nist.gov/publications/reducing-risks-posed-synthetic-content-overview-technical-approaches-digital-content)
 - [GOV.UK, AI Insights: Synthetic Data](https://www.gov.uk/government/publications/ai-insights/ai-insights-synthetic-data-html)
 - [Research Data Scotland, Synthetic Data Policy](https://www.researchdata.scot/engage-and-learn/data-explainers/intro-to-synthetic-data/synthetic-data-policy/)
+
+## Cycle 13, 2026-05-26, Pipeline Robustness
+
+Chosen dimension: Pipeline Robustness.
+
+Why this was chosen: all seven rubric dimensions were tied at 7/10 after Cycle 12. A map preview improvement was attempted first, but this sandbox blocks local port binding and the in-app browser blocks local file URLs, so a frontend verification pass cannot be completed here. The best fully verifiable improvement is the ambiguity already noted in Cycle 7: `source_health.ok` still counts fallback as ok, even though fallback is not live source recovery.
+
+Findings:
+
+- Great Expectations treats validation results as records that can be saved in JSON and rendered into human-readable documentation. Signal Desk's run health should follow that pattern by making the observed counts explicit instead of asking the operator to infer which ok records were live, snapshot, or fallback.
+- Great Expectations validation results expose both pass/fail state and summary statistics. For Signal Desk, the equivalent is not only `ok` and `failed`, but also `live_ok`, `snapshot_ok`, and `fallback_ok`, because those three states mean different things operationally.
+- Python's current JSON documentation keeps object order by default and supports readable pretty-printed output. Adding a few stable numeric fields to `run-health.json` is a low-risk way to make the health record easier to scan without changing the public API surface.
+- The current publication guard already calculates `live_ok_source_health_count`, but that value is buried under `publication_guard.metrics`. Operators reading the top-level source-health summary still see `ok: 1` in fallback-only runs, which can look healthier than it is.
+
+Implementation decision:
+
+- Update `source_health_summary()` so `run-health.json` separates total ok, live ok, snapshot ok, fallback ok, and failed source-health checks.
+- Keep the existing `ok` field for backward compatibility.
+- Do not touch feed configuration, Arabic/source coverage, public dashboard data, or frontend files.
+
+Sources consulted:
+
+- [Great Expectations, Validation Result](https://docs.greatexpectations.io/docs/0.18/reference/learn/terms/validation_result/)
+- [Python json documentation](https://docs.python.org/3/library/json.html)

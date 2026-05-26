@@ -39,10 +39,20 @@ def timed(stage_timings: dict[str, float], name: str, work: Callable[[], T]) -> 
 
 def source_health_summary(source_health: list[SourceHealth]) -> dict[str, object]:
     failed = [status.source for status in source_health if not status.ok]
+    live_ok = [
+        status
+        for status in source_health
+        if status.ok and status.error_kind not in {"fallback", "snapshot"}
+    ]
+    snapshot_ok = [status for status in source_health if status.ok and status.error_kind == "snapshot"]
+    fallback_ok = [status for status in source_health if status.ok and status.error_kind == "fallback"]
     error_kind_counts = Counter(status.error_kind for status in source_health)
     return {
         "total": len(source_health),
         "ok": len(source_health) - len(failed),
+        "live_ok": len(live_ok),
+        "snapshot_ok": len(snapshot_ok),
+        "fallback_ok": len(fallback_ok),
         "failed": len(failed),
         "failed_sources": failed[:12],
         "items_returned": sum(status.item_count for status in source_health),
