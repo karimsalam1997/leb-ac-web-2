@@ -11,6 +11,7 @@ export function EditorialImage({
   priority,
   quality,
   sizes,
+  unoptimized,
 }: {
   src?: string;
   alt: string;
@@ -22,6 +23,7 @@ export function EditorialImage({
   priority?: boolean;
   quality?: number;
   sizes?: string;
+  unoptimized?: boolean;
 }) {
   const imageStyle =
     imagePosition || imageFit
@@ -42,6 +44,7 @@ export function EditorialImage({
           priority={priority}
           loading={priority ? "eager" : undefined}
           quality={quality}
+          unoptimized={unoptimized}
           sizes={sizes ?? "(min-width: 1024px) 50vw, 100vw"}
           className={`object-cover ${imageClassName ?? ""}`}
           style={imageStyle}

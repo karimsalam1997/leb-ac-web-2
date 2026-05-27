@@ -35,26 +35,9 @@ const latestEssays = essays.slice(1, 6);
 const moreEssays = essays.slice(6, 8);
 const recentLetters = letters.slice(0, 2);
 const leadNotebook = notebookEntries[0];
-
-const essayDeck =
-  "Lebanese Academic is an independent platform for long-form writing on Lebanon, power, memory, and identity - against the idea that collapse is natural.";
-
-const displayTitleLinesBySlug: Record<string, string[]> = {
-  "the-cartel-in-the-costume-of-a-country": [
-    "The Cartel",
-    "in the",
-    "Costume",
-    "of a",
-    "Country",
-  ],
-  "cartel-in-the-costume-of-a-country": [
-    "The Cartel",
-    "in the",
-    "Costume",
-    "of a",
-    "Country",
-  ],
-};
+const issueEditorPicks = essays
+  .filter((essay) => essay.slug !== heroEssay.slug && essay.slug !== beirutParkEssay.slug)
+  .slice(0, 3);
 
 const browseTopics = [
   {
@@ -101,19 +84,74 @@ const browseTopics = [
   },
 ];
 
-function editorialTitleLines(title: string) {
-  const words = title.split(" ");
-  const lineLength = Math.ceil(words.length / 3);
-
-  return [
-    words.slice(0, lineLength).join(" "),
-    words.slice(lineLength, lineLength * 2).join(" "),
-    words.slice(lineLength * 2).join(" "),
-  ].filter(Boolean);
-}
-
 function getTopicCount(tag: string) {
   return essays.filter((essay) => essay.tags.includes(tag)).length;
+}
+
+type FeatureImage = string | { src: string; alt?: string; position?: string };
+
+function HomeFeatureCard({
+  essay,
+  kicker,
+  image,
+  imagePosition,
+  headingLevel = "h2",
+  priority,
+  visualMode = "standard",
+}: {
+  essay: Essay;
+  kicker: string;
+  image?: FeatureImage;
+  imagePosition?: string;
+  headingLevel?: "h1" | "h2";
+  priority?: boolean;
+  visualMode?: "standard" | "background";
+}) {
+  const Heading = headingLevel;
+  const imageSrc = typeof image === "string" ? image : image?.src;
+  const imageAlt = typeof image === "string" ? essay.title : (image?.alt ?? essay.title);
+  const normalizedImagePosition =
+    typeof image === "string" ? imagePosition : (image?.position ?? imagePosition);
+
+  return (
+    <article
+      className="home-feature-card"
+      data-lead={headingLevel === "h1"}
+      data-visual={visualMode}
+    >
+      <div className="home-feature-image-link" aria-hidden={visualMode === "background"}>
+        <EditorialImage
+          src={imageSrc ?? getArticleImage(essay.slug, 0)}
+          alt={imageAlt}
+          className="home-feature-image"
+          imagePosition={normalizedImagePosition ?? "center 48%"}
+          priority={priority}
+          quality={92}
+          unoptimized
+          sizes="(min-width: 1280px) 34vw, (min-width: 768px) 48vw, 100vw"
+        />
+      </div>
+      <div className="home-feature-copy">
+        <div className="editorial-kicker">{kicker}</div>
+        <Heading className="display-title home-feature-title">
+          <Link href={`/essays/${essay.slug}`}>{essay.title}</Link>
+        </Heading>
+        <p>{essay.dek}</p>
+        <div className="home-feature-meta">
+          <Image src="/brand/la-editors-mark.png" alt="" width={36} height={36} />
+          <span>
+            <strong>{essay.byline}</strong>
+            <small>
+              {essay.date} / {essay.readTime}
+            </small>
+          </span>
+        </div>
+        <Link href={`/essays/${essay.slug}`} className="read-link">
+          Read essay <span className="link-arrow">-&gt;</span>
+        </Link>
+      </div>
+    </article>
+  );
 }
 
 function EssayCard({
@@ -183,8 +221,6 @@ function SectionHeading({
 }
 
 export default function Home() {
-  const heroTitleLines =
-    displayTitleLinesBySlug[heroEssay.slug] ?? editorialTitleLines(heroEssay.title);
   const heroImage = getArticleImage(heroEssay.slug, 0);
   const beirutParkImages = getArticleImages(beirutParkEssay.slug);
   const beirutParkFeatureImage =
@@ -193,97 +229,76 @@ export default function Home() {
 
   return (
     <SiteShell activePath="/">
-      <section className="paper-frame home-lead-section">
-        <div className="home-lead-grid">
-          <article className="home-lead-story">
-            <div className="editorial-kicker">Featured Essay</div>
-            <h1 className="display-title home-lead-title">
-              <Link href={`/essays/${heroEssay.slug}`}>
-                {heroTitleLines.map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-              </Link>
-            </h1>
-            <p className="home-lead-dek">{heroEssay.dek}</p>
-            <div className="home-lead-meta">
-              <Image
-                src="/brand/la-editors-mark.png"
-                alt=""
-                width={42}
-                height={42}
-              />
+      <section className="paper-frame home-front-section" aria-label="Featured essays">
+        <div className="home-front-grid">
+          <HomeFeatureCard
+            essay={beirutParkEssay}
+            kicker="Featured Essay"
+            image={beirutParkFeatureImage}
+            imagePosition={beirutParkFeatureImage?.position ?? "center 44%"}
+            headingLevel="h1"
+            visualMode="background"
+            priority
+          />
+
+          <HomeFeatureCard
+            essay={heroEssay}
+            kicker="Featured Essay"
+            image={heroImage}
+            imagePosition="center 48%"
+            priority
+          />
+
+          <aside id="about" className="home-issue-rail" aria-label="Issue 01">
+            <div className="home-issue-head">
+              <div>
+                <div className="editorial-kicker">Current Issue</div>
+                <h2>Issue 01</h2>
+                <p>May 2026 / Beirut</p>
+              </div>
+              <div className="home-issue-cover" aria-hidden="true">
+                <span>Lebanese Academic</span>
+                <strong>01</strong>
+                <em>May 2026</em>
+              </div>
+            </div>
+
+            <p className="home-issue-blurb">
+              The first register gathers every published essay on the site:
+              power, memory, sovereignty, culture, and the city.
+            </p>
+
+            <div className="home-issue-stats" aria-label="Issue contents">
               <span>
-                <strong>{heroEssay.byline}</strong>
-                <small>
-                  {heroEssay.date} / {heroEssay.readTime}
-                </small>
+                <strong>{essays.length}</strong>
+                Essays
+              </span>
+              <span>
+                <strong>{letters.length}</strong>
+                Letters
+              </span>
+              <span>
+                <strong>{notebookEntries.length}</strong>
+                Notes
               </span>
             </div>
-            <Link href={`/essays/${heroEssay.slug}`} className="read-link">
-              Read essay <span className="link-arrow">-&gt;</span>
+
+            <Link href="/essays" className="home-issue-button">
+              View issue <span className="link-arrow">-&gt;</span>
             </Link>
-          </article>
 
-          <Link href={`/essays/${heroEssay.slug}`} className="home-lead-image-link">
-            <EditorialImage
-              src={heroImage}
-              alt={heroEssay.title}
-              className="home-lead-image"
-              imagePosition="center 48%"
-              priority
-              quality={92}
-              sizes="(min-width: 1280px) 43vw, (min-width: 1024px) 48vw, 100vw"
-            />
-          </Link>
-
-          <Link
-            href={`/essays/${beirutParkEssay.slug}`}
-            className="home-park-feature"
-            aria-label={`Read ${beirutParkEssay.title}`}
-          >
-            <EditorialImage
-              src={beirutParkFeatureImage?.src}
-              alt={beirutParkFeatureImage?.alt ?? beirutParkEssay.title}
-              className="home-park-feature-image"
-              imagePosition={beirutParkFeatureImage?.position ?? "center 45%"}
-              priority
-              quality={92}
-              sizes="(min-width: 1280px) 23vw, (min-width: 1024px) 27vw, 100vw"
-            />
-            <span className="home-park-feature-copy">
-              <span className="editorial-kicker">Beirut Park</span>
-              <strong>{beirutParkEssay.title}</strong>
-              <span>{beirutParkEssay.dek}</span>
-              <em>
-                Read essay <span className="link-arrow">-&gt;</span>
-              </em>
-            </span>
-          </Link>
-        </div>
-
-        <div className="pattern-rule home-pattern-rule" aria-hidden="true" />
-      </section>
-
-      <section
-        id="about"
-        className="paper-frame home-mission-strip"
-        aria-label="Publication mission"
-      >
-        <span aria-hidden="true" />
-        <p>{essayDeck}</p>
-        <span aria-hidden="true" />
-      </section>
-
-      <section className="paper-frame home-latest-section">
-        <SectionHeading
-          title="Latest Essays"
-          arabic="أحدث المقالات"
-          href="/essays"
-        />
-        <div className="home-latest-grid">
-          {latestEssays.map((essay, index) => (
-            <EssayCard key={essay.slug} essay={essay} index={index + 1} />
-          ))}
+            <div className="home-editor-picks">
+              <div className="editorial-kicker">Editor&apos;s Picks</div>
+              {issueEditorPicks.map((essay) => (
+                <Link key={essay.slug} href={`/essays/${essay.slug}`}>
+                  <strong>{essay.title}</strong>
+                  <small>
+                    {essay.tags[0] ?? essay.category} / {essay.readTime}
+                  </small>
+                </Link>
+              ))}
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -318,17 +333,31 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="paper-frame home-latest-section">
+        <SectionHeading
+          title="Issue Contents"
+          arabic="محتويات العدد"
+          href="/essays"
+          cta="View full issue"
+        />
+        <div className="home-latest-grid">
+          {latestEssays.map((essay, index) => (
+            <EssayCard key={essay.slug} essay={essay} index={index + 1} />
+          ))}
+        </div>
+      </section>
+
       <section id="archive" className="paper-frame home-archive-section">
         <div className="home-archive-grid">
           <div className="home-archive-copy">
             <div className="editorial-kicker">Archive / من الأرشيف</div>
-            <h2 className="editorial-title">A compact first register, built for return.</h2>
+            <h2 className="editorial-title">A first issue, built for return.</h2>
             <p>
-              The archive is intentionally spare for now: eight launch essays, ordered
-              like a first issue rather than an endless feed.
+              Issue 01 is the current essay register, ordered like a publication
+              rather than an endless feed.
             </p>
             <Link href="/essays" className="read-link">
-              Open the essay register <span className="link-arrow">-&gt;</span>
+              View Issue 01 <span className="link-arrow">-&gt;</span>
             </Link>
           </div>
 
