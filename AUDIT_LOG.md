@@ -1004,3 +1004,44 @@ UI/UX & Design is now the only 7/10 dimension. The remaining useful work is fron
 ### One Thing Outside The Rubric
 
 `map_coverage` describes geometric precision, not source freshness. A fallback-only run can still show exact fallback sample pins, so readers must pair map coverage with `source_condition`.
+
+## Cycle 19, 2026-05-27, Blocked
+
+### Scores Before
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 8/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 8/10
+
+Lowest-scoring dimension: UI/UX & Design.
+
+Chosen fix: UI/UX & Design.
+
+Reason: UI/UX is now the only remaining 7/10 dimension. The next useful work is to display source condition, source inventory, and map coverage in the dashboard, and to render map uncertainty using `map_radius_meters`.
+
+### Blocker
+
+The remaining UI/UX work touches the frontend Signal Desk surface. In this worktree, `src/app/signal-desk/` and `src/lib/signal-desk.ts` are currently untracked, while the dashboard components are tracked. A safe automation commit should not absorb or rewrite pre-existing untracked frontend work. The UI change also requires browser-rendered verification, which was the same practical blocker named in the previous run.
+
+### Safe Diagnostic Changes
+
+- No source, UI, feed, or generated public data files were changed in this blocked cycle.
+- This entry records the stop condition so the next run can pick up from the same point without guessing.
+
+### Verification
+
+- `git status --short -- src/app/signal-desk src/components/signal-desk src/lib/signal-desk.ts` showed `src/app/signal-desk/` and `src/lib/signal-desk.ts` as untracked.
+- The tracked Signal Desk backend files were clean after Cycle 18.
+- No browser check was run because no frontend change was made.
+
+### Next Highest-Priority Improvement
+
+UI/UX & Design remains the next priority, but it should be done only after deciding whether the existing untracked Signal Desk route and data loader belong in the automation commit, or after those files are committed separately by the user.
+
+### One Thing Outside The Rubric
+
+The frontend route/data-loader state is now the main repository hygiene issue for Signal Desk. Until it is resolved, backend automation can keep improving metadata, but the dashboard cannot safely surface it.
