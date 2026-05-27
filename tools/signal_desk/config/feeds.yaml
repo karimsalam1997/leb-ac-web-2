@@ -145,6 +145,26 @@ feeds:
     bias: "Lebanese official state agency; primary record for ministries, cabinet, and official Lebanese statements, routed through Google News until a stable direct RSS endpoint is verified"
     tier: 1
 
+  - name: "UNIFIL News"
+    kind: "html_index"
+    url: "https://unifil.unmissions.org/news"
+    lang: "en"
+    bias: "Official UN peacekeeping mission in south Lebanon; primary institutional account for Blue Line, LAF coordination, peacekeeper safety, and Resolution 1701"
+    tier: 1
+    link_patterns: ["unifil.unmissions.org/"]
+    terms: ["LAF", "Blue Line", "peacekeeper", "peacekeepers", "IDF", "Israel", "Resolution 1701", "Naqoura", "Adeisse", "Kawkaba", "Kafer Chouba", "roadblocks", "explosive"]
+    limit: 14
+
+  - name: "Lebanese Army Official Arabic"
+    kind: "html_index"
+    url: "https://www.lebarmy.gov.lb/"
+    lang: "ar"
+    bias: "Official Lebanese Army Arabic source; primary state-security account, useful for LAF deployments, incidents, unexploded ordnance, arrests, and army-UNIFIL coordination"
+    tier: 1
+    link_patterns: ["/ar/content/"]
+    terms: ["الجنوب", "إسرائيل", "الإسرائيلي", "العدوان", "اليونيفيل", "الناقورة", "ذخائر", "قنبلة", "أسلحة", "إطلاق نار", "مساعدات", "دورية", "صيدا", "البقاع", "الحدود"]
+    limit: 12
+
   - name: "Lebanon24 Arabic"
     url: "https://www.lebanon24.com/Rss/News/1/%D9%84%D8%A8%D9%86%D8%A7%D9%86"
     lang: "ar"

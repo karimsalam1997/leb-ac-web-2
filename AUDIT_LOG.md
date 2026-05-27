@@ -825,3 +825,61 @@ Source Coverage needs live DNS/network access. Map Quality, UI/UX, and frontend 
 ### One Thing Outside The Rubric
 
 The frontend type layer still needs to expose newer backend fields such as `meta.source_condition` and `map_radius_meters`, but that should be paired with a browser-rendered dashboard check.
+
+## Cycle 16, 2026-05-27
+
+### Scores Before
+
+1. Signal Quality: 8/10
+2. Source Coverage: 7/10
+3. Map Quality: 7/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Lowest-scoring dimensions: Source Coverage, Map Quality, UI/UX & Design, and Information Architecture.
+
+Chosen fix: Source Coverage.
+
+Reason: Map Quality and UI/UX still need browser-rendered verification before frontend changes are safe to commit in this automation. Source Coverage had a contained backend gap: the source shelf had many media and Google News routes, but no direct official ingestion path for UNIFIL's mission news or the Lebanese Army's Arabic official statements.
+
+### What Changed
+
+- Added source-specific `link_patterns` support to the HTML-index collector.
+- Switched HTML-index parsing from one hard-coded `/article/` regex to a small `HTMLParser` anchor extractor.
+- Converted relative HTML links to absolute URLs using the source page as the base.
+- Kept the old default `/article/` behavior for existing L'Orient Today parsing.
+- Added `UNIFIL News` as an official English HTML-index source.
+- Added `Lebanese Army Official Arabic` as an official Arabic HTML-index source.
+- Kept every existing feed, source lane, fallback sample, and publication guard unchanged.
+
+### Scores After
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 7/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Source Coverage improves because the pipeline can now ingest official UNIFIL and Lebanese Army field-layer pages directly once network access is available, while still preserving the Arabic source layer and existing media shelf.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/collectors/rss.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted HTML parser assertions passed for UNIFIL official slugs, Lebanese Army Arabic `/ar/content/` links, relative-to-absolute URL conversion, and unchanged L'Orient Today `/article/` parsing.
+- Feed config assertion passed: `UNIFIL News` and `Lebanese Army Official Arabic` are present in `load_feeds()`.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed with no public writes.
+- Dry-run health showed `total: 42`, `live_ok: 0`, `fallback_ok: 1`, 41 `dns-error` records, 2 fallback items, and `source_condition.status: fallback-only`.
+- No browser check was needed because this cycle changed backend collection and feed configuration only.
+
+### Next Highest-Priority Improvement
+
+Map Quality and UI/UX remain at 7/10, but the next pass should only wire `map_radius_meters` or `meta.source_condition` into the dashboard where a browser-rendered Signal Desk page can be checked.
+
+### One Thing Outside The Rubric
+
+HTML-index items still use collection time as `published_at` because the collector does not yet parse nearby date text from official pages. That is acceptable for source leads, but future official-page work should preserve page dates when the markup exposes them clearly.

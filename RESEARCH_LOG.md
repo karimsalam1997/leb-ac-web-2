@@ -420,3 +420,30 @@ Sources consulted:
 
 - [Associated Press, Telling the Story](https://www.ap.org/about/news-values-and-principles/telling-the-story/)
 - [BBC Editorial Guidelines, Accuracy PDF](https://downloads.bbc.co.uk/guidelines/editorialguidelines/pdfs/Section_03_Accuracy.pdf)
+
+## Cycle 16, 2026-05-27, Source Coverage
+
+Chosen dimension: Source Coverage.
+
+Why this was chosen: after Cycle 15, Source Coverage, Map Quality, UI/UX & Design, and Information Architecture were tied at 7/10. Map and UI work still needs browser rendering, and this sandbox previously blocked local preview checks. Source Coverage has a backend-only gap that can be improved safely: the source shelf has many newspapers and Google News routes, but it does not directly ingest two official field layers that matter in south Lebanon, UNIFIL and the Lebanese Army.
+
+Findings:
+
+- UNIFIL's public site has a dedicated News section and a visible RSS subscription link. The page carries mission reporting on LAF coordination, Blue Line access, roadblocks, unexploded devices, and peacekeeper incidents. That is an official peacekeeping layer, not independent corroboration, but it is essential provenance for claims around Resolution 1701, Naqoura, Adeisse, Kawkaba, Kafer Chouba, and other southern locations.
+- UNIFIL article pages also carry related current mission items. One inspected page linked recent items on an explosives-risk campaign, an IDF Merkava tank firing near a UNIFIL position by Kafer Chouba, and a patrol finding an explosive device near Adeisse. That kind of source belongs in the pipeline even when it must be read as an institutional account.
+- The Lebanese Army homepage is an Arabic official source with current "بيانات ونشاطات" entries. On 26 May 2026 it listed arrests, weapons/ammunition items, convoy security, and local incidents; on 24 May 2026 it listed dismantling an unexploded aerial bomb from Israeli aggression in the southern suburbs. This is the state-security layer the current RSS shelf mostly reaches only indirectly.
+- The current HTML collector only accepts links containing `/article/`, which works for L'Orient Today but misses official sites whose article URLs use plain slugs or `/ar/content/` paths. A source-specific link-pattern option is safer than loosening the parser globally.
+
+Implementation decision:
+
+- Keep every existing feed intact.
+- Add official UNIFIL and Lebanese Army Arabic HTML-index sources.
+- Extend the HTML collector so each HTML-index source can declare allowed URL patterns.
+- Convert relative links to absolute URLs with the source page as base.
+- Keep fallback samples and publication-guard behavior unchanged.
+
+Sources consulted:
+
+- [UNIFIL News page](https://unifil.unmissions.org/news)
+- [UNIFIL article: training activities with LAF](https://unifil.unmissions.org/unifil-steps-training-activities-laf)
+- [Lebanese Army official homepage](https://www.lebarmy.gov.lb/)

@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from hashlib import sha1
+from html.parser import HTMLParser
 from html import unescape
 from pathlib import Path
 import re
@@ -10,12 +11,42 @@ import socket
 import ssl
 import urllib.error
 import urllib.request
+from urllib.parse import urljoin
 import xml.etree.ElementTree as ET
 
 import certifi
 
 from tools.signal_desk.config import load_feeds
 from tools.signal_desk.models import RawItem, SourceHealth, SourceHealthErrorKind
+
+
+class AnchorExtractor(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.anchors: list[tuple[str, str]] = []
+        self._href: str | None = None
+        self._chunks: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() != "a":
+            return
+        href = dict(attrs).get("href")
+        if not href:
+            return
+        self._href = href
+        self._chunks = []
+
+    def handle_data(self, data: str) -> None:
+        if self._href is not None:
+            self._chunks.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() != "a" or self._href is None:
+            return
+        title = strip_html(" ".join(self._chunks))
+        self.anchors.append((self._href, title))
+        self._href = None
+        self._chunks = []
 
 
 def strip_html(value: str) -> str:
@@ -68,6 +99,15 @@ def find_snapshot(snapshot_dir: Path, feed: dict) -> Path | None:
         if candidate.is_file():
             return candidate
     return None
+
+
+def list_setting(feed: dict, key: str, default: list[str]) -> list[str]:
+    value = feed.get(key, default)
+    if value is None:
+        return default
+    if isinstance(value, str):
+        return [value]
+    return [str(item) for item in value]
 
 
 def snapshot_missing_health(feed: dict, snapshot_dir: Path) -> SourceHealth:
@@ -179,15 +219,22 @@ def fetch_feed(feed: dict, since: datetime) -> tuple[list[RawItem], SourceHealth
 def parse_html_index(feed: dict, since: datetime, html: str, raw_extra: dict | None = None) -> list[RawItem]:
     name = str(feed["name"])
     raw_extra = raw_extra or {}
+    base_url = str(feed["url"])
+    link_patterns = [pattern.lower() for pattern in list_setting(feed, "link_patterns", ["/article/"])]
+    terms = [term.lower() for term in list_setting(feed, "terms", [])]
 
+    parser = AnchorExtractor()
+    parser.feed(html)
     seen: set[str] = set()
     output: list[RawItem] = []
-    for match in re.finditer(r'href="([^"]*/article/[^"]+)"[^>]*>(.*?)</a>', html, re.I | re.S):
-        link = match.group(1)
-        title = strip_html(match.group(2))
+    for href, title in parser.anchors:
+        link = urljoin(base_url, href)
+        haystack = f"{title} {link}".lower()
         if not title or link in seen:
             continue
-        if not any(term.lower() in title.lower() for term in feed.get("terms", [])):
+        if link_patterns and not any(pattern in link.lower() for pattern in link_patterns):
+            continue
+        if terms and not any(term in haystack for term in terms):
             continue
         seen.add(link)
         output.append(
