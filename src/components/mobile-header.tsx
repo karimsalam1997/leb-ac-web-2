@@ -2,26 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Languages, Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+// Letters intentionally hidden from mobile primary nav until /letters/[slug] ships.
 const mobileNavItems = [
   { href: "/essays", label: "Essays" },
-  { href: "/#archive", label: "Archive" },
-  { href: "/#about", label: "About" },
+  { href: "/signal-desk", label: "Signals" },
+  { href: "/#topics", label: "Topics" },
+  { href: "/notebook", label: "Notebook" },
   { href: "/submit", label: "Submit" },
 ];
 
 const drawerItems = [
-  { href: "/essays", label: "Essays", arabic: "مقالات" },
+  { href: "/about", label: "About", arabic: "عنّا" },
   { href: "/#archive", label: "Archive", arabic: "الأرشيف" },
-  { href: "/#about", label: "About", arabic: "عنّا" },
-  { href: "/submit", label: "Submit", arabic: "أرسل كتابة" },
-  { href: "/letters", label: "Letters", arabic: "رسائل" },
-  { href: "/notebook", label: "Notebook", arabic: "دفتر الملاحظات" },
-  { href: "/essays", label: "Manifesto" },
-  { href: "/essays", label: "Editorial Principles" },
-  { href: "/submit", label: "Contact" },
 ];
 
 function isActivePath(activePath: string, href: string) {
@@ -39,6 +34,14 @@ function isActivePath(activePath: string, href: string) {
 
   if (href === "/notebook") {
     return activePath.startsWith("/notebook");
+  }
+
+  if (href === "/signal-desk") {
+    return activePath.startsWith("/signal-desk");
+  }
+
+  if (href === "/about") {
+    return activePath.startsWith("/about");
   }
 
   return false;
@@ -120,27 +123,26 @@ export function MobileHeader({ activePath }: { activePath: string }) {
       <div className="mobile-brand-bar">
         <Link href="/" className="mobile-brand-link" aria-label="Lebanese Academic home">
           <Image
-            src="/brand/la-witness-glyph.png"
+            src="/brand/la-editors-mark.png"
             alt=""
-            width={42}
-            height={46}
+            width={82}
+            height={82}
             priority
-            className="mobile-brand-glyph"
-            style={{ width: "clamp(32px, 9.5vw, 40px)", height: "auto" }}
+            className="mobile-brand-mark"
           />
           <span className="mobile-wordmark">
-            <span>Lebanese Academic</span>
-            <span className="arabic">الأكاديمي اللبناني</span>
+            <span className="mobile-wordmark-english">
+              <span>Lebanese</span>
+              <span>Academic</span>
+            </span>
+            <span className="mobile-wordmark-arabic arabic">
+              <span>الأكاديمي</span>
+              <span>اللبناني</span>
+            </span>
           </span>
         </Link>
 
         <div className="mobile-header-actions">
-          <button className="mobile-icon-button" type="button" aria-label="Search">
-            <Search size={19} strokeWidth={1.55} />
-          </button>
-          <button className="mobile-icon-button" type="button" aria-label="Switch language">
-            <Languages size={19} strokeWidth={1.55} />
-          </button>
           <button
             ref={menuButtonRef}
             className="mobile-icon-button mobile-menu-button"
@@ -212,7 +214,7 @@ export function MobileHeader({ activePath }: { activePath: string }) {
 
             <div className="mobile-drawer-statement">
               <p>Publishing writing that decodes power and preserves memory.</p>
-              <p className="arabic">نشر الكتابة التي تفكك السلطة وتصون الذاكرة.</p>
+              <p className="arabic">نُصدِر كتابةً تُفكّك السلطة وتصون الذاكرة.</p>
             </div>
 
             <nav className="mobile-drawer-nav" aria-label="Mobile menu navigation">
@@ -235,8 +237,8 @@ export function MobileHeader({ activePath }: { activePath: string }) {
             </nav>
 
             <div className="mobile-drawer-footer">
-              <span>Beirut — Levant — Diaspora</span>
-              <span className="arabic">بيروت — الشام — المغترب</span>
+              <span>Beirut · Levant · Diaspora</span>
+              <span className="arabic">بيروت · المشرق · المهجر</span>
             </div>
           </div>
         </div>

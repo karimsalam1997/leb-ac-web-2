@@ -45,10 +45,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: absoluteUrl("/signal-desk"),
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.85,
+    },
+    {
       url: absoluteUrl("/submit"),
       lastModified: staticLastModified,
       changeFrequency: "yearly",
       priority: 0.4,
+    },
+    {
+      url: absoluteUrl("/about"),
+      lastModified: staticLastModified,
+      changeFrequency: "yearly",
+      priority: 0.6,
     },
   ];
 

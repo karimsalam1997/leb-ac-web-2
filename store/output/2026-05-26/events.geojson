@@ -11,7 +11,7 @@
         ]
       },
       "properties": {
-        "cluster_id": "04a0f6f66381",
+        "cluster_id": "0a3b25f68ca2",
         "headline": "US strikes on Iran amid negotiations; Israeli strikes killed over 34 people in Lebanon despite cease-fire:...",
         "signal_tags": [
           "casualty",
@@ -22,7 +22,7 @@
         "frameworks": [],
         "district": "South Lebanon",
         "analysis_short": "Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brok",
-        "published_at": "2026-05-26T11:14:21.027021+00:00",
+        "published_at": "2026-05-26T15:09:38.010244+00:00",
         "match_confidence": 0.52,
         "severity": "critical",
         "location_precision": "district",
@@ -37,7 +37,17 @@
         "civilian_impact_flags": [
           "casualties"
         ],
-        "what_is_missing": "Missing: a precise place, wire or regional corroboration."
+        "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+        "verification_status": "needs-location",
+        "verification_label": "Needs sharper place",
+        "verification_missing": [
+          "sharper place",
+          "wire or regional corroboration"
+        ],
+        "map_marker_kind": "representative-area",
+        "map_precision_label": "Representative area",
+        "map_radius_meters": 36000,
+        "map_warning": "This is a representative center for a broader place mention. Do not read it as a street-level pin."
       }
     },
     {
@@ -45,74 +55,42 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          35.4838,
-          33.3772
+          35.43,
+          33.275
         ]
       },
       "properties": {
-        "cluster_id": "e5c8ecae52b0",
-        "headline": "Israel orders forced evacuation of entire city of Nabatieh; Hezbollah says engaged in 'direct' fighting wi...",
+        "cluster_id": "46e5145cf669",
+        "headline": "Hezbollah targets troops in south Lebanon and north Israel - Naharnet",
         "signal_tags": [
-          "displacement",
-          "rhetoric-shift",
           "strike-claim"
         ],
         "confidence": "medium",
         "frameworks": [],
-        "district": "Nabatieh",
-        "analysis_short": "Nabatieh is where the military story and the civilian story are crossing today. The item set is still source-bound, with Israel National News, L'Orient Today carrying the available record, so the dashboard treats the cla",
-        "published_at": "2026-05-26T11:14:21.026817+00:00",
-        "match_confidence": 0.88,
-        "severity": "critical",
-        "location_precision": "exact",
+        "district": "South Lebanon",
+        "analysis_short": "South Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Naharnet, National News Agency Lebanon via Google News carrying the available record, so the d",
+        "published_at": "2026-05-26T07:46:00+00:00",
+        "match_confidence": 0.52,
+        "severity": "high",
+        "location_precision": "district",
         "confirmation_status": "partly-corroborated",
-        "claim_side": "Cross-source field record",
-        "recommended_next_check": "Check Nabatieh against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "claim_side": "Mixed reporting",
+        "recommended_next_check": "Check South Lebanon against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
         "source_lanes": [
-          "israeli-establishment",
           "lebanese-local"
         ],
-        "civilian_impact_flags": [
-          "evacuation",
-          "displacement"
+        "civilian_impact_flags": [],
+        "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+        "verification_status": "needs-location",
+        "verification_label": "Needs sharper place",
+        "verification_missing": [
+          "sharper place",
+          "wire or regional corroboration"
         ],
-        "what_is_missing": "Missing: a precise place, wire or regional corroboration."
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          35.2038,
-          33.2704
-        ]
-      },
-      "properties": {
-        "cluster_id": "9844e8c82ef0",
-        "headline": "Two Palestinians Martyred, 17 Injured in Israeli Strike on Southern Gaza Strip - وكالة الأنباء القطرية",
-        "signal_tags": [
-          "casualty",
-          "strike-claim"
-        ],
-        "confidence": "low",
-        "frameworks": [],
-        "district": "Tyre",
-        "analysis_short": "Tyre is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokera",
-        "published_at": "2026-05-25T14:12:08+00:00",
-        "match_confidence": 0.88,
-        "severity": "critical",
-        "location_precision": "exact",
-        "confirmation_status": "single-source",
-        "claim_side": "Mixed reporting",
-        "recommended_next_check": "Check Tyre against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-        "source_lanes": [
-          "gulf-official"
-        ],
-        "civilian_impact_flags": [
-          "casualties"
-        ],
-        "what_is_missing": "Missing: a second source, Lebanese local confirmation, wire or regional corroboration."
+        "map_marker_kind": "representative-area",
+        "map_precision_label": "Representative area",
+        "map_radius_meters": 36000,
+        "map_warning": "This is a representative center for a broader place mention. Do not read it as a street-level pin."
       }
     },
     {
@@ -125,32 +103,40 @@
         ]
       },
       "properties": {
-        "cluster_id": "dc30cf81211d",
-        "headline": "Netanyahu orders IDF to ‘intensify blows’ against Hezbollah amid surge in drone attacks",
+        "cluster_id": "f2539427cd23",
+        "headline": "Strike Beirut to stop Hezbollah’s drone threat - www.israelhayom.com",
         "signal_tags": [
-          "displacement",
           "rhetoric-shift",
           "strike-claim"
         ],
         "confidence": "high",
         "frameworks": [],
         "district": "Beirut",
-        "analysis_short": "Beirut is where the military story and the civilian story are crossing today. The item set is still source-bound, with Al-Monitor, Israel Hayom via Google News, The Times of Israel carrying the available record, so the d",
-        "published_at": "2026-05-26T11:14:25.885563+00:00",
+        "analysis_short": "Beirut is where the military story and the civilian story are crossing today. The item set is still source-bound, with Haaretz via Google News, Israel Hayom via Google News, Palestine Chronicle via Google News carrying t",
+        "published_at": "2026-05-25T19:48:54+00:00",
         "match_confidence": 0.88,
         "severity": "high",
         "location_precision": "exact",
         "confirmation_status": "corroborated",
-        "claim_side": "Regional and wire reporting",
+        "claim_side": "Israeli dissent or complication",
         "recommended_next_check": "Check Beirut against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
         "source_lanes": [
+          "israeli-dissent",
           "israeli-establishment",
-          "wires-regional"
+          "palestinian-record"
         ],
-        "civilian_impact_flags": [
-          "displacement"
+        "civilian_impact_flags": [],
+        "what_is_missing": "Missing: Lebanese local confirmation, wire or regional corroboration.",
+        "verification_status": "ready",
+        "verification_label": "Ready for brief",
+        "verification_missing": [
+          "Lebanese local record",
+          "wire or regional corroboration"
         ],
-        "what_is_missing": "Missing: Lebanese local confirmation."
+        "map_marker_kind": "pin",
+        "map_precision_label": "Named place pin",
+        "map_radius_meters": 2500,
+        "map_warning": "The place name was matched, but the claim still needs the source checks listed in the dossier."
       }
     },
     {
@@ -163,60 +149,38 @@
         ]
       },
       "properties": {
-        "cluster_id": "586329aab190",
-        "headline": "Israeli strikes hit south Lebanon, West Bekaa - Naharnet",
+        "cluster_id": "e3a92541cf9e",
+        "headline": "South Lebanon won't bend to Israeli invaders, with Roqayah Chamseddine",
         "signal_tags": [
-          "strike-claim"
+          "political-maneuver"
         ],
         "confidence": "medium",
         "frameworks": [],
         "district": "South Lebanon",
-        "analysis_short": "South Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Naharnet, National News Agency Lebanon via Google News carrying the available record, so the d",
-        "published_at": "2026-05-24T14:40:00+00:00",
-        "match_confidence": 0.52,
-        "severity": "high",
-        "location_precision": "district",
-        "confirmation_status": "partly-corroborated",
-        "claim_side": "Mixed reporting",
-        "recommended_next_check": "Check South Lebanon against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-        "source_lanes": [
-          "lebanese-local"
-        ],
-        "civilian_impact_flags": [],
-        "what_is_missing": "Missing: a precise place, wire or regional corroboration."
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          35.43,
-          33.275
-        ]
-      },
-      "properties": {
-        "cluster_id": "64465ac70576",
-        "headline": "18:43 What we know, in maps, about the 'buffer zone' Israel is claiming in south Lebanon",
-        "signal_tags": [
-          "political-maneuver"
-        ],
-        "confidence": "low",
-        "frameworks": [],
-        "district": "South Lebanon",
         "analysis_short": "South Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectaria",
-        "published_at": "2026-05-26T11:14:21.027097+00:00",
+        "published_at": "2026-05-26T18:10:13.081858+03:00",
         "match_confidence": 0.52,
         "severity": "moderate",
         "location_precision": "district",
-        "confirmation_status": "single-source",
-        "claim_side": "Mixed reporting",
-        "recommended_next_check": "Look for the same place and time in a Lebanese local source, an Israeli source, and a wire or regional source.",
+        "confirmation_status": "partly-corroborated",
+        "claim_side": "Analysis frame",
+        "recommended_next_check": "Check whether this remains one report or becomes a repeated pattern across separate source lanes.",
         "source_lanes": [
-          "lebanese-local"
+          "lebanese-local",
+          "video-analysis"
         ],
         "civilian_impact_flags": [],
-        "what_is_missing": "Missing: a second source, a precise place, wire or regional corroboration."
+        "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+        "verification_status": "needs-location",
+        "verification_label": "Needs sharper place",
+        "verification_missing": [
+          "sharper place",
+          "wire or regional corroboration"
+        ],
+        "map_marker_kind": "representative-area",
+        "map_precision_label": "Representative area",
+        "map_radius_meters": 36000,
+        "map_warning": "This is a representative center for a broader place mention. Do not read it as a street-level pin."
       }
     },
     {
@@ -249,42 +213,18 @@
           "israeli-establishment"
         ],
         "civilian_impact_flags": [],
-        "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration."
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          35.2038,
-          33.2704
-        ]
-      },
-      "properties": {
-        "cluster_id": "35e0f385afcb",
-        "headline": "Israel strikes Bekaa and Tyre as other raids kill 10 - Naharnet",
-        "signal_tags": [
-          "strike-claim"
+        "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration.",
+        "verification_status": "needs-source",
+        "verification_label": "Needs another source",
+        "verification_missing": [
+          "second source",
+          "Lebanese local record",
+          "wire or regional corroboration"
         ],
-        "confidence": "low",
-        "frameworks": [
-          "rentier_clientelist"
-        ],
-        "district": "Tyre",
-        "analysis_short": "Tyre is where the military story and the civilian story are crossing today. The item set is still source-bound, with Naharnet carrying the available record, so the dashboard treats the claim as a signal before it treats ",
-        "published_at": "2026-05-23T09:41:00+00:00",
-        "match_confidence": 0.88,
-        "severity": "moderate",
-        "location_precision": "exact",
-        "confirmation_status": "single-source",
-        "claim_side": "Mixed reporting",
-        "recommended_next_check": "Check Tyre against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-        "source_lanes": [
-          "lebanese-local"
-        ],
-        "civilian_impact_flags": [],
-        "what_is_missing": "Missing: a second source, wire or regional corroboration."
+        "map_marker_kind": "pin",
+        "map_precision_label": "Named place pin",
+        "map_radius_meters": 2500,
+        "map_warning": "The place name was matched, but the claim still needs the source checks listed in the dossier."
       }
     }
   ]

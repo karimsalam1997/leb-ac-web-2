@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { Fragment } from "react";
+import { ArticleRunningHeader } from "@/components/article-running-header";
 import { EditorialImage } from "@/components/editorial-image";
 import { SiteShell } from "@/components/site-shell";
 import {
@@ -92,170 +92,122 @@ export default async function EssayPage({
       <div className="reading-progress" aria-hidden="true">
         <span />
       </div>
+      <ArticleRunningHeader
+        issue="Issue 01"
+        category={getArticleKicker(essay.category)}
+        surname={essay.byline.split(" ").pop() ?? essay.byline}
+      />
       <article className="paper-frame article-page pt-5">
         <div className="article-reference-grid editorial-rule">
+          {/* LEFT COLUMN — marginalia: pulled-quote note, citation list,
+              and (when available) a small archival document figure. */}
+          <ArticleMarginalia
+            essay={essay}
+            citations={essay.notes}
+            marginaliaFigure={supportingImages[supportingImages.length - 1]}
+          />
+
+          {/* CENTER COLUMN — reading: kicker, title, standfirst, byline,
+              display Arabic line, body. */}
           <div className="min-w-0">
-            <div className="dense-meta mb-4">
-              {essay.category} / {essay.date} / {essay.readTime}
-            </div>
-            <h1 className="display-title max-w-4xl text-[4.15rem] leading-[0.95] md:text-[5.05rem]">
-              {essay.title}
-            </h1>
-            <p className="mt-4 max-w-3xl text-[1.35rem] leading-[1.38] text-[var(--ink-soft)] md:text-[1.55rem]">
-              {essay.dek}
-            </p>
+            {/* The on-page kicker is always the generic form ("ESSAY").
+                Editorial taxonomy ("Featured Essay") lives in the index
+                plate and the running header — printing it above the title
+                too made the header feel repetitive. */}
+            <div className="article-kicker">{getArticleKicker(essay.category)}</div>
+            <h1 className="article-display-title">{essay.title}</h1>
 
-            <div className="mt-5 flex items-center gap-4">
-              <div className="relative h-12 w-12 overflow-hidden rounded-full border border-[color:var(--paper-border)]">
-                <Image
-                  src="/brand/la-editors-mark.png"
-                  alt={essay.byline}
-                  fill
-                  sizes="48px"
-                  className="object-cover"
-                />
+            {essay.dek ? (
+              <p className="article-standfirst">{essay.dek}</p>
+            ) : null}
+
+            <div className="article-byline-block">
+              <span className="article-byline-name">{essay.byline}</span>
+              <span className="article-byline-dateline">
+                {essay.dateline ? `${essay.dateline} · ` : ""}
+                {essay.date}
+              </span>
+            </div>
+
+            {essay.arabicDisplayLine ? (
+              <div className="article-display-arabic arabic" dir="rtl">
+                {essay.arabicDisplayLine}
               </div>
-              <div className="text-xl">{essay.byline}</div>
+            ) : null}
+
+            <div className="body-copy article-lede-copy">
+              {leadParagraphs.map((paragraph, index) => (
+                <p key={`${essay.slug}-lead-${index}`}>{paragraph}</p>
+              ))}
             </div>
 
-            <div className="body-copy mt-7">
-              {leadParagraphs.map((paragraph, index) => {
-                const note = index === 1 ? essay.notes[0] : undefined;
-
-                return (
-                  <Fragment key={`${essay.slug}-lead-${index}`}>
-                    <p>
-                      {paragraph}
-                      {note ? <sup>{note.id}</sup> : null}
-                    </p>
-                    <InlineFootnote note={note} />
-                  </Fragment>
-                );
-              })}
-            </div>
-
-            <figure className={`article-lead-figure ${getImageShapeClass(leadImageAsset)}`}>
-              <Link href={articleImage} className="block" aria-label={`Open image for ${essay.title}`}>
-                <EditorialImage
-                  src={articleImage}
-                  alt={leadImageAsset?.alt ?? `${essay.title} lead image`}
-                  className="article-lead-image border border-[color:var(--paper-border)]"
-                  imageClassName={leadImageAsset?.imageClassName}
-                  imagePosition={leadImageAsset?.position}
-                  imageFit={leadImageAsset?.fit ?? "contain"}
-                  aspectRatio={leadImageAsset?.aspectRatio ?? "16 / 9"}
-                  priority
-                  sizes="(min-width: 1180px) 760px, 100vw"
-                />
-              </Link>
-              {leadImageAsset?.caption ? (
-                <figcaption className="caption mt-2">
-                  {leadImageAsset.caption}
-                </figcaption>
-              ) : null}
-            </figure>
-
-            <div className="article-section-mark">
+            <div className="article-section-mark-center" aria-hidden="true">
               <Image
                 src="/brand/la-witness-glyph.png"
                 alt=""
-                width={50}
-                height={54}
+                width={36}
+                height={40}
                 className="object-contain"
-                style={{ width: "50px", height: "54px" }}
+                style={{ width: "36px", height: "40px" }}
               />
             </div>
 
             <section className="article-continuation-section">
               <div className="article-continuation">
+                {(essay.bodyPullQuote ?? essay.pullQuote) ? (
+                  <aside className="article-body-pullquote" role="note">
+                    <p>{essay.bodyPullQuote ?? essay.pullQuote}</p>
+                  </aside>
+                ) : null}
                 {bodySections.map((section, sectionIndex) => (
-                  <section key={`${essay.slug}-section-${sectionIndex}`} className="article-body-section">
+                  <section
+                    key={`${essay.slug}-section-${sectionIndex}`}
+                    className="article-body-section"
+                  >
                     {section.heading ? (
-                      <h2 className="editorial-title mb-4 text-[2rem]">
+                      <h2 className="article-section-heading">
+                        <span className="article-section-heading-numeral">
+                          {toRoman(sectionIndex + 1)}.
+                        </span>
                         {section.heading}
                       </h2>
                     ) : null}
                     <div className="body-copy body-copy-continuation">
-                      {section.paragraphs.map((paragraph, paragraphIndex) => {
-                        const isLastBodyParagraph =
-                          sectionIndex === bodySections.length - 1 &&
-                          paragraphIndex === section.paragraphs.length - 1;
-                        const note = isLastBodyParagraph ? essay.notes.at(-1) : undefined;
-
-                        return (
-                          <Fragment
-                            key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}
-                          >
-                            <p>
-                              {paragraph}
-                              {note ? <sup>{note.id}</sup> : null}
-                            </p>
-                            <InlineFootnote note={note} />
-                          </Fragment>
-                        );
-                      })}
+                      {section.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p key={`${essay.slug}-body-${sectionIndex}-${paragraphIndex}`}>
+                          {paragraph}
+                        </p>
+                      ))}
                     </div>
-                    <ArticleInlineImage
-                      asset={supportingImages[sectionIndex]}
-                      essayTitle={essay.title}
-                    />
                   </section>
                 ))}
                 <div className="article-section-mark article-section-mark-end">
                   <Image
                     src="/brand/la-witness-glyph.png"
                     alt=""
-                    width={60}
-                    height={60}
+                    width={48}
+                    height={52}
                     aria-hidden="true"
                     className="object-contain"
-                    style={{ width: "60px", height: "60px" }}
+                    style={{ width: "48px", height: "52px" }}
                   />
                 </div>
               </div>
             </section>
+
+            <QuietNotes notes={essay.notes} />
           </div>
 
-          <aside className="article-notes-aside min-w-0">
-            <div className="article-notes">
-              <div className="editorial-kicker mb-5 text-[var(--foreground)]">Notes</div>
-              <ol className="notes-list">
-                {essay.notes.map((note) => (
-                  <li key={note.id}>
-                    <div className="dense-meta mb-2 text-[var(--accent)]">{note.id}</div>
-                    <p className="text-[0.94rem] leading-6 text-[var(--ink-soft)]">
-                      {renderNoteText(note.text)}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-              <Link href="#notes" className="read-link mt-4 !text-[1rem]">
-                See full notes <span className="link-arrow">-&gt;</span>
-              </Link>
-            </div>
-          </aside>
+          {/* RIGHT COLUMN — figures: photographs and documents that live
+              alongside the body, in the figure column on wide desktops. */}
+          <ArticleFigureColumn
+            essay={essay}
+            leadAsset={leadImageAsset}
+            leadImageSrc={articleImage}
+            supportingImages={supportingImages}
+          />
         </div>
       </article>
-
-      {essay.notes.length ? (
-        <section id="notes" className="paper-frame pt-7 article-full-notes">
-          <div className="editorial-rule grid gap-6 md:grid-cols-[0.28fr_1fr]">
-            <div>
-              <div className="editorial-kicker text-[var(--foreground)]">Full Notes</div>
-            </div>
-            <ol className="notes-list grid gap-4 md:grid-cols-2">
-              {essay.notes.map((note) => (
-                <li key={note.id}>
-                  <div className="dense-meta mb-2 text-[var(--accent)]">{note.id}</div>
-                  <p className="text-[0.94rem] leading-6 text-[var(--ink-soft)]">
-                    {renderNoteText(note.text)}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-      ) : null}
 
       <section className="paper-frame pt-7">
         <div className="related-reference-row">
@@ -283,11 +235,12 @@ export default async function EssayPage({
               </article>
             ))}
           <div>
-            <p className="text-[1rem] leading-5 text-[var(--ink-soft)]">
-              Join the conversation. Share a perspective. Challenge an idea.
+            <p className="text-[1rem] leading-6 text-[var(--ink-soft)]">
+              If this essay clarified something — or got something wrong —
+              write to us. The best letters become the next essay.
             </p>
             <Link href="/submit" className="mt-4 inline-flex border border-[color:var(--accent)] px-5 py-3 text-[var(--accent)]">
-              Respond with a letter <span className="link-arrow ml-3">-&gt;</span>
+              Write a letter <span className="link-arrow ml-3">-&gt;</span>
             </Link>
           </div>
         </div>
@@ -296,15 +249,166 @@ export default async function EssayPage({
   );
 }
 
-function InlineFootnote({ note }: { note?: Citation }) {
-  if (!note) {
+/**
+ * Normalise the editorial category for the on-page kicker.
+ * The data layer uses "Featured Essay" for the lead piece so the index can
+ * surface it; on the article page itself the kicker reads simply "ESSAY"
+ * (matching the reference). Other categories pass through untouched.
+ */
+function getArticleKicker(category: string): string {
+  if (category === "Featured Essay") {
+    return "Essay";
+  }
+  return category;
+}
+
+function toRoman(n: number): string {
+  const map: [number, string][] = [
+    [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+    [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
+    [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"],
+  ];
+  let result = "";
+  let remaining = n;
+  for (const [value, letter] of map) {
+    while (remaining >= value) {
+      result += letter;
+      remaining -= value;
+    }
+  }
+  return result;
+}
+
+function ArticleMarginalia({
+  essay,
+  citations,
+  marginaliaFigure,
+}: {
+  essay: { slug: string; marginaliaNote?: string; marginaliaNoteAttribution?: string };
+  citations: Citation[];
+  marginaliaFigure?: ArticleImageAsset;
+}) {
+  if (!citations.length && !essay.marginaliaNote && !marginaliaFigure) {
     return null;
   }
 
   return (
-    <details className="inline-footnote">
-      <summary>Note {note.id} ↓</summary>
-      <p>{renderNoteText(note.text)}</p>
+    <aside
+      className="article-marginalia"
+      aria-label="Marginalia and citations"
+    >
+      <div className="article-marginalia-kicker">Marginalia</div>
+
+      {essay.marginaliaNote ? (
+        <div className="article-marginalia-note">
+          {essay.marginaliaNote}
+          {essay.marginaliaNoteAttribution ? (
+            <span className="article-marginalia-note-attribution">
+              — {essay.marginaliaNoteAttribution}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+
+      {citations.length ? (
+        <ol className="article-marginalia-citations">
+          {citations.slice(0, 6).map((note, index) => (
+            <li key={note.id} className="article-marginalia-citation">
+              <span className="article-marginalia-citation-number">
+                {index + 1}
+              </span>
+              <span>{note.text}</span>
+            </li>
+          ))}
+        </ol>
+      ) : null}
+
+      {marginaliaFigure ? (
+        <figure className="article-marginalia-figure">
+          <Image
+            src={marginaliaFigure.src}
+            alt={marginaliaFigure.alt}
+            width={400}
+            height={520}
+            style={{ width: "100%", height: "auto" }}
+          />
+          {marginaliaFigure.caption ? (
+            <figcaption>{marginaliaFigure.caption}</figcaption>
+          ) : null}
+        </figure>
+      ) : null}
+    </aside>
+  );
+}
+
+function ArticleFigureColumn({
+  essay,
+  leadAsset,
+  leadImageSrc,
+  supportingImages,
+}: {
+  essay: { slug: string; title: string };
+  leadAsset?: ArticleImageAsset;
+  leadImageSrc: string;
+  supportingImages: ArticleImageAsset[];
+}) {
+  // Lead figure + the first 2 supporting images live in the figure column.
+  // The last supporting image (if any) was claimed by the marginalia column.
+  const figures: { src: string; alt: string; caption?: string }[] = [
+    {
+      src: leadImageSrc,
+      alt: leadAsset?.alt ?? `${essay.title} lead image`,
+      caption: leadAsset?.caption,
+    },
+    ...supportingImages.slice(0, -1).slice(0, 2).map((asset) => ({
+      src: asset.src,
+      alt: asset.alt,
+      caption: asset.caption,
+    })),
+  ];
+
+  if (!figures.length) return null;
+
+  return (
+    <aside
+      className="article-figure-column"
+      aria-label="Article figures"
+    >
+      {figures.map((figure, index) => (
+        <figure key={`${essay.slug}-figure-${index}`} className="article-figure">
+          <Image
+            src={figure.src}
+            alt={figure.alt}
+            width={520}
+            height={680}
+            sizes="(min-width: 1180px) 16rem, 100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+          {figure.caption ? (
+            <figcaption>{figure.caption}</figcaption>
+          ) : null}
+        </figure>
+      ))}
+    </aside>
+  );
+}
+
+function QuietNotes({ notes }: { notes: Citation[] }) {
+  if (!notes.length) {
+    return null;
+  }
+
+  return (
+    <details className="article-source-notes">
+      <summary>Notes and Sources</summary>
+      <ol className="notes-list">
+        {notes.map((note) => (
+          <li key={note.id}>
+            <span className="dense-meta text-[var(--accent)]">{note.id}</span>
+            <p>{renderNoteText(note.text)}</p>
+          </li>
+        ))}
+      </ol>
     </details>
   );
 }

@@ -2,6 +2,7 @@ const homeBase = "/home";
 const downtownRepairHero = "/editorial/downtown-repair-hero.jpg";
 const essayImageBase = "/essay-images";
 const sourcedImageBase = `${essayImageBase}/sourced`;
+const fractalSovereigntyBase = `${essayImageBase}/fractal-sovereignty`;
 const beirutParkBase = "/editorial/beirut-park";
 
 export type ArticleImageAsset = {
@@ -142,6 +143,32 @@ const articleImageSets: Record<string, ArticleImageAsset[]> = {
       position: "center",
       aspectRatio: "960 / 498",
       fit: "contain",
+    },
+  ],
+  "the-generator-republic": [
+    {
+      src: `${fractalSovereigntyBase}/generator-republic-street.jpg`,
+      alt: "A Beirut street locked in traffic under dense electrical wires",
+      caption:
+        "The essay begins with a generator because the generator teaches the whole system: a public failure becomes a private kingdom, then that kingdom learns to defend the failure that made it necessary.",
+      position: "center 52%",
+      aspectRatio: "3840 / 2161",
+    },
+    {
+      src: `${fractalSovereigntyBase}/generator-republic-household.jpg`,
+      alt: "A Lebanese family gathered around an older relative in a dim apartment room",
+      caption:
+        "The household is the strongest institution left. That is part of Lebanon's brilliance, and part of its trap: families can mobilize with astonishing loyalty while the public world outside them keeps shrinking.",
+      position: "center 48%",
+      aspectRatio: "3840 / 2560",
+    },
+    {
+      src: `${fractalSovereigntyBase}/generator-republic-2019-protest.jpg`,
+      alt: "Crowds filling Beirut streets with Lebanese flags during the 2019 uprising",
+      caption:
+        "October 2019 mattered because it briefly interrupted the pattern. Citizens appeared as citizens, not as clients of separate little sovereignties, which is exactly why the machine worked so hard to pull them back apart.",
+      position: "center 45%",
+      aspectRatio: "6000 / 4000",
     },
   ],
   "the-census-that-cannot-be-taken": [
@@ -304,6 +331,50 @@ const articleImageSets: Record<string, ArticleImageAsset[]> = {
       aspectRatio: "740 / 416",
     },
   ],
+  "the-goddess-who-won-t-stay-dead": [
+    {
+      src: `${sourcedImageBase}/mourning-our-lady-harissa.jpg`,
+      alt: "The statue of Our Lady of Lebanon in Harissa",
+      caption:
+        "Harissa is the right public face for the essay because it shows how the sacred feminine becomes geography in Lebanon: a woman on a mountain, watching the coast, turning protection into landscape.",
+      position: "center 48%",
+      aspectRatio: "5184 / 3456",
+    },
+    {
+      src: `${sourcedImageBase}/mourning-astarte-throne.jpg`,
+      alt: "A Phoenician goddess identified with Astarte seated on a throne",
+      caption:
+        "Astarte is not being smuggled into later religions as a secret identity. The point is subtler: the land keeps asking for a figure who protects, mourns, intercedes, and refuses to let grief disappear.",
+      imageClassName: "object-contain bg-[var(--paper)]",
+      position: "center 50%",
+      aspectRatio: "1573 / 2178",
+      fit: "contain",
+    },
+    {
+      src: `${sourcedImageBase}/mourning-ahiram-detail.jpg`,
+      alt: "Mourning figures carved on the Sarcophagus of Ahiram",
+      caption:
+        "The mourning figures on Ahiram's sarcophagus make the argument older than doctrine. Before Lebanon's modern communities had their current names, grief already had a public grammar.",
+      position: "center 50%",
+      aspectRatio: "2166 / 1008",
+    },
+    {
+      src: `${sourcedImageBase}/mourning-nahr-ibrahim.jpg`,
+      alt: "The Nahr Ibrahim river in Lebanon",
+      caption:
+        "The Adonis river lets myth and matter speak at once. Red sediment can explain the color, while the old story explains why people learned to read the land as wounded and returning.",
+      position: "center 48%",
+      aspectRatio: "960 / 1280",
+    },
+    {
+      src: `${sourcedImageBase}/mourning-khawla-shrine.jpg`,
+      alt: "The shrine of Sayyida Khawla in Baalbek",
+      caption:
+        "Sayyida Khawla's shrine belongs to another religious language, but the spatial grammar is familiar: visitation, feminine sacred presence, memory, mourning, and the refusal to leave suffering unattended.",
+      position: "center 48%",
+      aspectRatio: "740 / 416",
+    },
+  ],
   "downtown-without-a-city": [
     {
       src: `${sourcedImageBase}/downtown-souk-ayass-1970.jpg`,
@@ -397,6 +468,7 @@ articleImageSets["how-a-generator-owner-showed-why-lebanon-has-no-state"] =
 
 const generatedImageBySlug: Record<string, string> = {
   "the-city-that-could-not-repair-itself": downtownRepairHero,
+  "the-generator-republic": `${fractalSovereigntyBase}/generator-republic-street.jpg`,
   "the-cartel-in-the-costume-of-a-country": homeAssets.hero.src,
   "cartel-in-the-costume-of-a-country": homeAssets.hero.src,
   "the-mehtail-republic": homeAssets.departments.essays.src,
@@ -417,6 +489,8 @@ const generatedImageBySlug: Record<string, string> = {
   "the-dog-river-remembers": homeAssets.departments.notebook.src,
   "the-fracture-was-the-blueprint": homeAssets.edition[5].src,
   "stones-that-outlived-their-gods": homeAssets.departments.essays.src,
+  "the-goddess-who-won-t-stay-dead": `${sourcedImageBase}/mourning-our-lady-harissa.jpg`,
+  "the-goddess-who-wont-stay-dead": `${sourcedImageBase}/mourning-our-lady-harissa.jpg`,
   "the-land-that-mourns-in-one-language": homeAssets.departments.archive.src,
   "same-grief-for-three-thousand-years": homeAssets.departments.archive.src,
   "the-looted-coast": homeAssets.edition[5].src,

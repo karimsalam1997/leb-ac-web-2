@@ -21,23 +21,23 @@ export default function NotebookPage() {
         <div className="notebook-hero editorial-rule">
           <div>
             <h1 className="display-title text-[3.9rem] leading-none text-[var(--accent)]">
-              Notebook
+              The Notebook
             </h1>
             <p className="mt-3 max-w-md text-[1.25rem] leading-7">
-              Pages, fragments, observations, images, readings, and whatever belongs
-              in the notebook.
+              Fragments, observations, an image, a line from a reading — the
+              pieces that haven&apos;t yet become an essay. Some won&apos;t.
             </p>
             <div className="dense-meta mt-4">
-              {notebookEntries.length} ENTRIES / GROWING
+              {notebookEntries.length} entries / growing
             </div>
           </div>
           <div className="h-24 border-l border-[color:var(--line-strong)]" />
           <div className="text-right">
             <h2 className="arabic text-[3.6rem] leading-none text-[var(--accent)]">
-              دفتر الملاحظات
+              الدفتر
             </h2>
             <p className="arabic mt-3 text-[1.25rem] leading-7">
-              صفحات، شذرات، ملاحظات، صور، قراءات، وأي شيء يجد مكانه في الدفتر.
+              شذرات وملاحظات وصور وسطور من قراءات — قِطعٌ لم تصِر بعدُ مقالًا. وبعضُها لن يصير.
             </p>
           </div>
         </div>

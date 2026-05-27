@@ -8,7 +8,7 @@ import { getArticleImage } from "@/lib/visual-assets";
 export const metadata: Metadata = buildPageMetadata({
   title: "Essays",
   description:
-    "Long-form essays from Lebanese Academic on Lebanon, political economy, memory, identity, and public life.",
+    "The full register. Long essays on Lebanon — power, sectarianism, political economy, memory, and the architecture beneath the headlines.",
   path: "/essays",
   image: getArticleImage(essays[0]?.slug ?? "", 0),
 });

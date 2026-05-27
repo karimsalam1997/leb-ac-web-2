@@ -4,8 +4,13 @@ import type { Metadata } from "next";
 import type { Essay } from "@/lib/content";
 
 export const siteName = "Lebanese Academic";
+export const siteArabicName = "الأكاديمي اللبناني";
 export const siteDescription =
-  "A literary-political publication on Lebanon, memory, power, and public life.";
+  "The country, not the crisis. Long essays on Lebanon from underneath the headlines — power, memory, sect, and the architecture of a state that has been kept deliberately weak.";
+export const siteTagline = "The country, not the crisis.";
+export const siteArabicTagline = "البلد، لا الأزمة.";
+export const siteCredo = "Publishing writing that decodes power and preserves memory.";
+export const siteArabicCredo = "نُصدِر كتابةً تُفكّك السلطة وتصون الذاكرة.";
 export const siteAuthor = "Karim Salam";
 export const defaultOgImage = "/brand/la-primary-lockup.png";
 
@@ -58,6 +63,18 @@ export function toIsoDate(date: string) {
 
 function displayTitle(title: string, absoluteTitle = false) {
   return absoluteTitle || title === siteName ? title : `${title} / ${siteName}`;
+}
+
+function getEssaySeoTitle(essay: Essay) {
+  return essay.seoTitle || essay.title;
+}
+
+function getEssaySeoDescription(essay: Essay) {
+  return essay.seoDescription || essay.dek;
+}
+
+function getEssayKeywords(essay: Essay) {
+  return essay.seoKeywords?.length ? essay.seoKeywords : essay.tags;
 }
 
 export function buildPageMetadata({
@@ -117,34 +134,38 @@ export function buildEssayMetadata({
   const url = absoluteUrl(path);
   const imageUrl = absoluteUrl(image);
   const publishedTime = toIsoDate(essay.date);
+  const seoTitle = getEssaySeoTitle(essay);
+  const seoDescription = getEssaySeoDescription(essay);
+  const keywords = getEssayKeywords(essay);
 
   return {
-    title: essay.title,
-    description: essay.dek,
+    title: seoTitle,
+    description: seoDescription,
+    keywords,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: displayTitle(essay.title),
-      description: essay.dek,
+      title: displayTitle(seoTitle),
+      description: seoDescription,
       url,
       siteName,
       type: "article",
       publishedTime,
       modifiedTime: publishedTime,
       authors: [essay.byline],
-      tags: essay.tags,
+      tags: keywords,
       images: [
         {
           url: imageUrl,
-          alt: essay.title,
+          alt: seoTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: displayTitle(essay.title),
-      description: essay.dek,
+      title: displayTitle(seoTitle),
+      description: seoDescription,
       images: [imageUrl],
     },
   };
@@ -163,21 +184,43 @@ export function buildWebsiteJsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
+        "@type": ["Organization", "NewsMediaOrganization"],
         "@id": organizationId,
         name: siteName,
+        alternateName: siteArabicName,
         url: siteUrl,
-        logo: absoluteUrl("/brand/la-editors-mark.png"),
+        logo: {
+          "@type": "ImageObject",
+          url: absoluteUrl("/brand/la-editors-mark.png"),
+          caption: siteName,
+        },
         description: siteDescription,
+        slogan: siteTagline,
+        knowsLanguage: ["en", "ar"],
+        foundingDate: "2025",
+        founder: {
+          "@type": "Person",
+          name: siteAuthor,
+        },
       },
       {
         "@type": "WebSite",
         "@id": websiteId,
         url: siteUrl,
         name: siteName,
+        alternateName: siteArabicName,
         description: siteDescription,
+        inLanguage: ["en", "ar"],
         publisher: {
           "@id": organizationId,
+        },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${siteUrl}/essays?topic={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
         },
       },
     ],
@@ -199,13 +242,17 @@ export function buildEssayJsonLd({
   const imageUrls = images.length
     ? images.map((image) => absoluteUrl(image))
     : [absoluteUrl(defaultOgImage)];
+  const seoTitle = getEssaySeoTitle(essay);
+  const seoDescription = getEssaySeoDescription(essay);
+  const keywords = getEssayKeywords(essay);
 
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     mainEntityOfPage: pageUrl,
-    headline: essay.title,
-    description: essay.dek,
+    headline: seoTitle,
+    alternativeHeadline: essay.title === seoTitle ? undefined : essay.title,
+    description: seoDescription,
     image: imageUrls,
     datePublished: publishedDate,
     dateModified: publishedDate,
@@ -223,7 +270,7 @@ export function buildEssayJsonLd({
       },
     },
     articleSection: essay.category,
-    keywords: essay.tags,
+    keywords,
     isPartOf: {
       "@type": "WebSite",
       name: siteName,

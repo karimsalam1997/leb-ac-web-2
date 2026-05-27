@@ -8,7 +8,7 @@ import { LettersClient, type LetterOrigin } from "./letters-client";
 export const metadata: Metadata = buildPageMetadata({
   title: "Letters",
   description:
-    "Dispatches from Beirut, Lebanon, and the diaspora, gathered by Lebanese Academic.",
+    "Short, dated, located writing from Beirut, the South, the mountain, and the diaspora — the country in fragments, signed when the writer wishes.",
   path: "/letters",
   image: getLetterImage(letters[0]?.slug ?? "", 0),
 });
@@ -61,13 +61,14 @@ export default function LettersPage() {
           <div>
             <h1 className="display-title text-[4.85rem] leading-none">Letters</h1>
             <p className="mt-2 text-[1.35rem] leading-7 text-[var(--foreground)]">
-              Dispatches from Beirut and beyond. Short, dated, located.
+              From Beirut, the South, the mountain, and the places the country
+              followed. Short. Dated. Located. Signed when the writer wishes.
             </p>
           </div>
           <div className="text-right">
-            <h2 className="arabic text-[4rem] leading-none text-[var(--accent)]">رسائل</h2>
+            <h2 className="arabic text-[4rem] leading-none text-[var(--accent)]">الرسائل</h2>
             <p className="arabic mt-3 text-[1.25rem] leading-7">
-              رسائل من بيروت وما وراءها، قصيرة، مؤرخة، ومحددة المكان.
+              من بيروت، الجنوب، الجبل، والمدن التي تبعها البلد. قصيرة. مؤرّخة. محدّدة المكان.
             </p>
           </div>
         </div>

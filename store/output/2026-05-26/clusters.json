@@ -1,11 +1,11 @@
 [
   {
-    "id": "04a0f6f66381",
+    "id": "0a3b25f68ca2",
     "item_ids": [
       "9f562106230aee38",
       "3a0e3c8c1c841343",
-      "8bc2f8550d0b52fc",
-      "566e786bea18b7c9"
+      "aca262872e5b609d",
+      "28f26f2a45e8cbed"
     ],
     "headline": "US strikes on Iran amid negotiations; Israeli strikes killed over 34 people in Lebanon despite cease-fire:...",
     "frameworks": [],
@@ -22,7 +22,7 @@
       "political-maneuver",
       "strike-claim"
     ],
-    "published_at": "2026-05-26T11:14:21.027021Z",
+    "published_at": "2026-05-26T15:09:38.010244Z",
     "source_biases": [
       "Israeli mass-market Yedioth/Ynet lens, often close to mainstream public-security framing",
       "Lebanese, francophone-establishment, anti-Hezbollah lean, reliable on detail",
@@ -31,8 +31,8 @@
     "urls": [
       "https://today.lorientlejour.com/article/1508017/us-strikes-on-iran-amid-negotiations-israeli-strikes-killed-more-than-34-people-in-lebanon-despite-cease-fire-everything-you-need-to-know-this-tuesday.html",
       "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5aeWlwaWRubVdTVTMxN0tQOFkzanZkVU9aSm93TlJFZHhHS1pZd0pmQlowY2pKZVBUeV9mZEpFX3FmX2NLZEQwQTdmZWJPLWh3UWNsMml3?oc=5",
-      "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR0g0V3FWTjduX1dmVXkxb3VmdHBWVFEyN055SWdnMV8yeERJNVRLRUM5Z1dWVVdBR3pIVmNLeDVCaFMzS0JsQjNmOE0zUExJWDhma2x0RVRGNnE3b2lKQVdzZ1FtTnJLUERNdjBVNks4ZjFXNTI2YXdWVExpT0NlMHFvRWthaUdTMlhOdDhmNF9WMkFyNWdpZlRlb1o2MzI0bzE3SzdDeTM1akVsc3RMZXlzVU0?oc=5",
-      "https://news.google.com/rss/articles/CBMiwAFBVV95cUxON3Q5ejZidmM0akhtYlBySDRIM1V1bjNPUjZaUVVIMzgyVndXYjI2NTMwUnZwY2Q4U3k1bXphVG44QmhlYzJJNUs1SHhKTUswQnNmN1dieENXT3h1YXBldUdFRldyeTZXdDJXZnl5YUs5V3AxOGRHS1ZaRjNqbERzUkpOd3BRc29TY29aekMxSkdFU3lXR3hSem9yU3BhQ1RrN05CRlpSbGFNTzFqWkY3Ul96YmU0ODQtM2lDc3M1d2k?oc=5"
+      "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOZWF5ME1vS1lUQi1aS2Y5N1pmbU92Y0ZTRE9kV0prVXhBZ3ZwMFdtWWxhQVRmcmg2MUxHZlNpMTJhZmVkbkh1WFR0MW1UZW83LUlRTExmeUFfZXlPbmhXVnFxSHhhdW8xdENTblptZHVkZjB1QWdCSXZiV01La3RwUmZuU3JNMHVHd0pueFFiOElsdlN2NlNBek8tVDlORlVUNE9WdHpxN0pjd042NllCYXRwSUVXWmVvVERHYnhKY0NxaTBqaGx0dUJwaUVXaWxM?oc=5",
+      "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR0g0V3FWTjduX1dmVXkxb3VmdHBWVFEyN055SWdnMV8yeERJNVRLRUM5Z1dWVVdBR3pIVmNLeDVCaFMzS0JsQjNmOE0zUExJWDhma2x0RVRGNnE3b2lKQVdzZ1FtTnJLUERNdjBVNks4ZjFXNTI2YXdWVExpT0NlMHFvRWthaUdTMlhOdDhmNF9WMkFyNWdpZlRlb1o2MzI0bzE3SzdDeTM1akVsc3RMZXlzVU0?oc=5"
     ],
     "severity": "critical",
     "location_precision": "district",
@@ -51,8 +51,8 @@
     "where": "South Lebanon",
     "who_says_so": [
       "L'Orient Today: US strikes on Iran amid negotiations; Israeli strikes killed over 34 people in Lebanon despi",
-      "Qatar News Agency via Google News: Three Killed, Four Wounded in Israeli Airstrikes on Southern Lebanon - وكالة الأنباء القطرية",
-      "Qatar News Agency via Google News: Five Killed, Multiple Others Injured in Israeli Airstrike on Southern Lebanon - وكالة الأنبا",
+      "Qatar News Agency via Google News: 12 People Killed, 17 Others Injured in Two Israeli Airstrikes on Southern, Eastern Lebanon -",
+      "Qatar News Agency via Google News: Three Killed, Four Wounded in Israeli Airstrikes on Southern Lebanon - qna.org.qa",
       "Ynetnews via Google News: IDF soldier killed by Hezbollah drone near Lebanon border - ynetnews"
     ],
     "who_disputes_or_complicates": [
@@ -60,6 +60,37 @@
     ],
     "why_it_matters": "Lebanon matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise.",
     "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+    "map_marker_kind": "representative-area",
+    "map_precision_label": "Representative area",
+    "map_radius_meters": 36000,
+    "map_warning": "This is a representative center for a broader place mention. Do not read it as a street-level pin.",
+    "verification_status": "needs-location",
+    "verification": {
+      "status": "needs-location",
+      "label": "Needs sharper place",
+      "summary": "The source trail is usable, but the place is still too broad for a settled map read.",
+      "source_count": 3,
+      "source_lanes": [
+        "gulf-official",
+        "israeli-establishment",
+        "lebanese-local"
+      ],
+      "location_precision": "district",
+      "missing": [
+        "sharper place",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Check Lebanon against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "L'Orient Today: US strikes on Iran amid negotiations; Israeli strikes killed over 34 people in Lebanon despi",
+        "Qatar News Agency via Google News: 12 People Killed, 17 Others Injured in Two Israeli Airstrikes on Southern, Eastern Lebanon -",
+        "Qatar News Agency via Google News: Three Killed, Four Wounded in Israeli Airstrikes on Southern Lebanon - qna.org.qa",
+        "Ynetnews via Google News: IDF soldier killed by Hezbollah drone near Lebanon border - ynetnews"
+      ]
+    },
     "locations": [
       {
         "name": "South Lebanon",
@@ -84,97 +115,132 @@
     }
   },
   {
-    "id": "e5c8ecae52b0",
+    "id": "f4a83132ff1e",
     "item_ids": [
-      "d7d4df86d562addb",
-      "9e892b8a38a72645"
+      "25d017396708e0f3",
+      "5a5cbd39750fa161",
+      "c1b80301e30b9306",
+      "90f98b371b687a89"
     ],
-    "headline": "Israel orders forced evacuation of entire city of Nabatieh; Hezbollah says engaged in 'direct' fighting wi...",
+    "headline": "Hezbollah:  Scenes of the stages of reconnaissance and targeting by the Islamic Resistance of the newly es...",
     "frameworks": [],
-    "analysis": "Nabatieh is where the military story and the civilian story are crossing today. The item set is still source-bound, with Israel National News, L'Orient Today carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
-    "confidence": "medium",
+    "analysis": "Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Telegram @PalestineResist carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
+    "confidence": "low",
     "sources_span": [
-      "Israel National News",
-      "L'Orient Today"
+      "Telegram @PalestineResist"
     ],
-    "what_to_watch": "Watch whether Nabatieh is named again by opposing sources within the next 24 hours.",
+    "what_to_watch": "Watch whether Lebanon is named again by opposing sources within the next 24 hours.",
     "signal_tags": [
       "displacement",
-      "rhetoric-shift",
       "strike-claim"
     ],
-    "published_at": "2026-05-26T11:14:21.026817Z",
+    "published_at": "2026-05-25T16:04:26Z",
     "source_biases": [
-      "Israeli nationalist-right source, useful for maximalist political language",
-      "Lebanese, francophone-establishment, anti-Hezbollah lean, reliable on detail"
+      "Resistance-aligned Telegram relay; primary-source claim stream, not independent verification"
     ],
     "urls": [
-      "https://today.lorientlejour.com/article/1508029/despite-us-strikes-rubio-says-iran-deal-possible-soon-israeli-escalation-in-south-lebanon-live.html",
-      "https://www.israelnationalnews.com/flashes/686251"
+      "https://t.me/PalestineResist/96274",
+      "https://t.me/PalestineResist/96164",
+      "https://t.me/PalestineResist/96276",
+      "https://t.me/PalestineResist/96268"
     ],
     "severity": "critical",
-    "location_precision": "exact",
+    "location_precision": "unknown",
     "civilian_impact_flags": [
       "evacuation",
+      "roads",
       "displacement"
     ],
     "source_lanes": [
-      "israeli-establishment",
-      "lebanese-local"
+      "resistance-apparatus"
     ],
-    "claim_side": "Cross-source field record",
-    "confirmation_status": "partly-corroborated",
-    "recommended_next_check": "Check Nabatieh against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-    "what_happened": "A military claim or report is tied to Nabatieh. The desk treats it as partly corroborated until the same place and time appear across separate source lanes.",
-    "where": "Nabatieh",
+    "claim_side": "Resistance primary claim",
+    "confirmation_status": "single-source",
+    "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+    "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
+    "where": "Location unclear",
     "who_says_so": [
-      "L'Orient Today: Israel orders forced evacuation of entire city of Nabatieh; Hezbollah says engaged in 'direc",
-      "Israel National News: IDF issues evacuation warning for Nabatieh"
+      "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance's targeting of a gathering of \"israeli\" enemy",
+      "Telegram @PalestineResist: Hezbollah:  Scenes of the stages of reconnaissance and targeting by the Islamic Resistance o",
+      "Telegram @PalestineResist: Hezbollah:  Scenes of the Islamic Resistance targeting, through a series of operations, \"isr",
+      "Telegram @PalestineResist: Hezbollah:  Footage of the lowering of the flag of the usurping \"israeli\" enemy at the headq"
     ],
     "who_disputes_or_complicates": [
-      "The sources do not fully agree on meaning, even when they overlap on place or timing."
+      "No independent confirming source appears inside this cluster yet.",
+      "No matching Israeli record appears in this cluster."
     ],
-    "why_it_matters": "Nabatieh matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise.",
-    "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+    "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
+    "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-source-and-location",
+    "verification": {
+      "status": "needs-source-and-location",
+      "label": "Needs source and place",
+      "summary": "Location unclear is visible as a lead, but it still needs another source and a sharper place.",
+      "source_count": 1,
+      "source_lanes": [
+        "resistance-apparatus"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "second source",
+        "sharper place",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Find one independent source outside the current claim lane.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance's targeting of a gathering of \"israeli\" enemy",
+        "Telegram @PalestineResist: Hezbollah:  Scenes of the stages of reconnaissance and targeting by the Islamic Resistance o",
+        "Telegram @PalestineResist: Hezbollah:  Scenes of the Islamic Resistance targeting, through a series of operations, \"isr",
+        "Telegram @PalestineResist: Hezbollah:  Footage of the lowering of the flag of the usurping \"israeli\" enemy at the headq"
+      ]
+    },
     "locations": [
       {
-        "name": "Nabatieh",
-        "name_ar": "النبطية",
-        "district": "Nabatieh",
-        "caza": "Nabatieh",
-        "governorate": "Nabatieh",
-        "lat": 33.3772,
-        "lng": 35.4838,
-        "match_confidence": 0.88
+        "name": "Location unclear",
+        "name_ar": "",
+        "district": "Unlocated",
+        "caza": "Unlocated",
+        "governorate": "Unlocated",
+        "lat": 33.86,
+        "lng": 35.72,
+        "match_confidence": 0.2
       }
     ],
     "primary_location": {
-      "name": "Nabatieh",
-      "name_ar": "النبطية",
-      "district": "Nabatieh",
-      "caza": "Nabatieh",
-      "governorate": "Nabatieh",
-      "lat": 33.3772,
-      "lng": 35.4838,
-      "match_confidence": 0.88
+      "name": "Location unclear",
+      "name_ar": "",
+      "district": "Unlocated",
+      "caza": "Unlocated",
+      "governorate": "Unlocated",
+      "lat": 33.86,
+      "lng": 35.72,
+      "match_confidence": 0.2
     }
   },
   {
-    "id": "9844e8c82ef0",
+    "id": "a1319383d0ba",
     "item_ids": [
-      "404e4fd562999f26",
-      "945b95a74ebfe18c",
-      "b4513e86e5183287",
-      "acdb1bb00c4e1ebb"
+      "f894a900a9be7a3c",
+      "6968d4d94631baa6",
+      "a201cf357f81c942"
     ],
-    "headline": "Two Palestinians Martyred, 17 Injured in Israeli Strike on Southern Gaza Strip - وكالة الأنباء القطرية",
+    "headline": "Two Palestinians Martyred, 17 Injured in Israeli Strike on Southern Gaza Strip - qna.org.qa",
     "frameworks": [],
-    "analysis": "Tyre is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
+    "analysis": "Location unclear is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
     "confidence": "low",
     "sources_span": [
       "Qatar News Agency via Google News"
     ],
-    "what_to_watch": "Watch whether Tyre remains isolated or becomes part of a repeated pattern.",
+    "what_to_watch": "Watch whether Location unclear remains isolated or becomes part of a repeated pattern.",
     "signal_tags": [
       "casualty",
       "strike-claim"
@@ -186,11 +252,10 @@
     "urls": [
       "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNelZ1S0FHUlBRY0xxelRwdE9GVEw1dzA0bEhWQmZ4NFhTd3JSSVdPX05FZ2xqMTd4MmRIUURyNHBnQlV0NmNWTWhDd3ZHQldOeXdSZVhaY1h5NWdqQjMtdW1ScXBUeW5EZngzR2toV1VlamtfTDE0TzZkUUtwdUlHOU51WllEZDVmWjdHcUt6aFgtcHJmSWVHd2huZ0dkWUlfYkpkUHBKc0d4OHJVTW14a0VWckdWdzU1MXVULWxjUlQ1Zw?oc=5",
       "https://news.google.com/rss/articles/CBMirwFBVV95cUxOeldkSGtZdUgtMUV0bEJsU3ZZRGRZS09USFNMRFNHMkgtX2NteFUxNW1Ca1ptM2wxMWpTRnF6YlBOTDctS2FnRUJKOFFkT3VCWnBXandIVWRUWFJnRUtUaDhxOWlfWjBHdUpBalF4TjdZZUxXQnd3MUJCek5DYzNJS3FvRkV1ZDg0R0tNT0ZsbE1wWlA1dldhX25iTkNPLXBMcjAxQkczTWhEUGQ5VnlJ?oc=5",
-      "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQX0JCblhHLXhMLWJGRGZQRUFYWUtDaE1FTkpwWkFCbHNiZld1b21SZmVjaVVQLTZySmpiQ3hLcllLMFZxeDBKajc2TnJ1eHV6bzdBYjNGXzdqTnZTNFdXZG45TmdkWjYwQ1dIV2xqN0FCS0hKMWtVbTFBTVQ2RlU1SnZNMGF1MkhHQUF4dXR5SWZLRk1ZT1pJRHJES3pWbFhiWHY5blhuSnJhVVk?oc=5",
-      "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNSXVLNENNVm43aXVfcFN1cWVoeTQ2cS1zVGM3bW01WEpqYUdoUG0yMEFsVzhvd0Z2SjFDeGlqUjFuTy1tUHhDckJoczdjV2JQZzRxWkZWS2dLQUtVTzFmemJ4VF9NX0N3bmt4UVRaN0MtelgwNFc2Z0t5WkZqNlZfcl9UUlJ1d25Qd2JyLWdMNEk1dGZpU29PQTZQM2ZqSl9oWXg0cVhub1NHRWgwNVE4QVVPOWZDQTdHZ3RRZlVzRDNhZXJOSVRYcTBjQ2hfaDBONS1N?oc=5"
+      "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQX0JCblhHLXhMLWJGRGZQRUFYWUtDaE1FTkpwWkFCbHNiZld1b21SZmVjaVVQLTZySmpiQ3hLcllLMFZxeDBKajc2TnJ1eHV6bzdBYjNGXzdqTnZTNFdXZG45TmdkWjYwQ1dIV2xqN0FCS0hKMWtVbTFBTVQ2RlU1SnZNMGF1MkhHQUF4dXR5SWZLRk1ZT1pJRHJES3pWbFhiWHY5blhuSnJhVVk?oc=5"
     ],
     "severity": "critical",
-    "location_precision": "exact",
+    "location_precision": "unknown",
     "civilian_impact_flags": [
       "casualties"
     ],
@@ -199,97 +264,50 @@
     ],
     "claim_side": "Mixed reporting",
     "confirmation_status": "single-source",
-    "recommended_next_check": "Check Tyre against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-    "what_happened": "Casualty language appears in the reporting around Tyre. Numbers and identities need separate confirmation.",
-    "where": "Tyre",
-    "who_says_so": [
-      "Qatar News Agency via Google News: Two Palestinians Martyred, 17 Injured in Israeli Strike on Southern Gaza Strip - وكالة الأنب",
-      "Qatar News Agency via Google News: Five Palestinians Martyred in Israeli occupation Strike on Northern Gaza Strip - وكالة الأنب",
-      "Qatar News Agency via Google News: Four Palestinians Martyred in Israeli Drone Strikes across Gaza - وكالة الأنباء القطرية",
-      "Qatar News Agency via Google News: Palestinian Martyred in Israeli Drone Strike on Gaza Vehicle - وكالة الأنباء القطرية"
-    ],
-    "who_disputes_or_complicates": [
-      "No independent confirming source appears inside this cluster yet."
-    ],
-    "why_it_matters": "Tyre matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise.",
-    "what_is_missing": "Missing: a second source, Lebanese local confirmation, wire or regional corroboration.",
-    "locations": [
-      {
-        "name": "Tyre",
-        "name_ar": "صور",
-        "district": "Tyre",
-        "caza": "Tyre",
-        "governorate": "South Lebanon",
-        "lat": 33.2704,
-        "lng": 35.2038,
-        "match_confidence": 0.88
-      }
-    ],
-    "primary_location": {
-      "name": "Tyre",
-      "name_ar": "صور",
-      "district": "Tyre",
-      "caza": "Tyre",
-      "governorate": "South Lebanon",
-      "lat": 33.2704,
-      "lng": 35.2038,
-      "match_confidence": 0.88
-    }
-  },
-  {
-    "id": "badf052649ee",
-    "item_ids": [
-      "4184580f58350b16",
-      "9da9ade3916cf9d5",
-      "56c16cbfc616861e"
-    ],
-    "headline": "‘Most Difficult Day’: Israeli Soldiers Killed, Wounded amid Hezbollah Drone Attacks - Palestine Chronicle",
-    "frameworks": [],
-    "analysis": "Beirut is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
-    "confidence": "medium",
-    "sources_span": [
-      "Haaretz via Google News",
-      "Palestine Chronicle via Google News"
-    ],
-    "what_to_watch": "Watch whether Beirut remains isolated or becomes part of a repeated pattern.",
-    "signal_tags": [
-      "casualty",
-      "strike-claim"
-    ],
-    "published_at": "2026-05-25T12:35:23Z",
-    "source_biases": [
-      "Independent pro-Palestinian English outlet; useful for Palestinian frame and civil-society emphasis",
-      "Israeli liberal-left paper, useful for critical Israeli security reporting, often paywalled, routed through Google News"
-    ],
-    "urls": [
-      "https://news.google.com/rss/articles/CBMitgFBVV95cUxNQnl3WFFWRTIxcERQZnlYNHJTaGtUOFl4ZVBqbm84NjBEbzZ4eTVMVFgwZExsdHBVemlpdDFmaTlpT1V3U2RUMGpsSWdMRUVQWmlVZVFxVzUxV3BwRWFNWW5GX0xGX3pwSUs1YmJIZVhjaV9hUmdvV0hfcDF6TGZwczUwaVdNUGMwMDhaRzd1YmFKVmJJamtxTHU4NXV4UW9nMTUyUE8yWGNMc3VQMlpIUnJhdy1tZw?oc=5",
-      "https://news.google.com/rss/articles/CBMitAFBVV95cUxOeVZRd29rNDJiM21jYTlkLUczUnNhSXYyaE8zZ1A5TVVQWlZVbTlTeVRlWk5YRy1vNXBBMGVzNzFfVk10bDJCdF9vUWItNlZ6RngtQW5qNUhqNmFqR2VOQ3RoRDlHVXJYVXF6ajJjbzJFTndXaVFZTE1abkFQRXpEakZPekhkUE5yM2ZGM3JGQ3g5eUozanhoSHJFeDIxbWpWcnpiRlJaVzMtX0Z0QlNxLU5EVTc?oc=5",
-      "https://news.google.com/rss/articles/CBMilwJBVV95cUxNX2hPX3ptYnVXZmdmUGFGa0pKMFhUaWZhOUk4T21tSmg0bDhlU2x1MTJSVWY5UzdTUUp4VzVqMlRTMEFFaXJiNlY1SE85MTNLaHFfMWJXSXR4SkVBYmFMRHFfN0FJRHM2bnhKUEtIOVEtMEFiaXlpMnNpMkc4Q3FJeW0wLXFRZUpfTG5OTXR2T01MZHFNeEo1bVlGY0dYRGlWVG1jX2VBM2h1V3NmMXllLUxWc3lwOVFFY0N2M0VBRl9Dbm45YWZtYXZWWE95YkIxZndXd2o2eXZFZlJtUVQ4ejU1dHNlRi1ua0RrcmRwTUF3YUhZR1F6eTVrZlV6Sng4dWhLb0hZWURXOGFYR2dsNWxwbnZjYVk?oc=5"
-    ],
-    "severity": "critical",
-    "location_precision": "unknown",
-    "civilian_impact_flags": [
-      "casualties"
-    ],
-    "source_lanes": [
-      "israeli-dissent",
-      "palestinian-record"
-    ],
-    "claim_side": "Israeli dissent or complication",
-    "confirmation_status": "partly-corroborated",
     "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
     "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
     "where": "Location unclear",
     "who_says_so": [
-      "Palestine Chronicle via Google News: Israeli Soldier Killed as Hezbollah Drones Disrupt 70% of Occupation Operations - Palestine",
-      "Palestine Chronicle via Google News: ‘Most Difficult Day’: Israeli Soldiers Killed, Wounded amid Hezbollah Drone Attacks - Palest",
-      "Haaretz via Google News: IDF Soldier Killed by Explosive Drone in Northern Israel, Two Wounded - Haaretz"
+      "Qatar News Agency via Google News: Two Palestinians Martyred, 17 Injured in Israeli Strike on Southern Gaza Strip - qna.org.qa",
+      "Qatar News Agency via Google News: Four Palestinians Martyred in Israeli Drone Strikes across Gaza - qna.org.qa",
+      "Qatar News Agency via Google News: Palestinian Martyred in Israeli Drone Strike on Gaza Vehicle - qna.org.qa"
     ],
     "who_disputes_or_complicates": [
-      "Israeli dissent reporting complicates the official line."
+      "No independent confirming source appears inside this cluster yet."
     ],
     "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
-    "what_is_missing": "Missing: a precise place, Lebanese local confirmation, wire or regional corroboration.",
+    "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-source-and-location",
+    "verification": {
+      "status": "needs-source-and-location",
+      "label": "Needs source and place",
+      "summary": "Location unclear is visible as a lead, but it still needs another source and a sharper place.",
+      "source_count": 1,
+      "source_lanes": [
+        "gulf-official"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "second source",
+        "sharper place",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Find one independent source outside the current claim lane.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Qatar News Agency via Google News: Two Palestinians Martyred, 17 Injured in Israeli Strike on Southern Gaza Strip - qna.org.qa",
+        "Qatar News Agency via Google News: Four Palestinians Martyred in Israeli Drone Strikes across Gaza - qna.org.qa",
+        "Qatar News Agency via Google News: Palestinian Martyred in Israeli Drone Strike on Gaza Vehicle - qna.org.qa"
+      ]
+    },
     "locations": [
       {
         "name": "Location unclear",
@@ -314,137 +332,137 @@
     }
   },
   {
-    "id": "dc30cf81211d",
+    "id": "badf052649ee",
     "item_ids": [
-      "e9abd1061e24d1de",
-      "931125228146627f",
-      "2e9bf13bd6e23736",
-      "f1e412af851cd1c7"
+      "4184580f58350b16"
     ],
-    "headline": "Netanyahu orders IDF to ‘intensify blows’ against Hezbollah amid surge in drone attacks",
+    "headline": "‘Most Difficult Day’: Israeli Soldiers Killed, Wounded amid Hezbollah Drone Attacks - Palestine Chronicle",
     "frameworks": [],
-    "analysis": "Beirut is where the military story and the civilian story are crossing today. The item set is still source-bound, with Al-Monitor, Israel Hayom via Google News, The Times of Israel carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
-    "confidence": "high",
+    "analysis": "Beirut is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
+    "confidence": "low",
     "sources_span": [
-      "Al-Monitor",
-      "Israel Hayom via Google News",
-      "The Times of Israel",
-      "i24NEWS via Google News"
+      "Palestine Chronicle via Google News"
     ],
-    "what_to_watch": "Watch whether Beirut is named again by opposing sources within the next 24 hours.",
+    "what_to_watch": "Watch whether Beirut remains isolated or becomes part of a repeated pattern.",
     "signal_tags": [
-      "displacement",
-      "rhetoric-shift",
+      "casualty",
       "strike-claim"
     ],
-    "published_at": "2026-05-26T11:14:25.885563Z",
+    "published_at": "2026-05-24T22:06:15Z",
     "source_biases": [
-      "DC-based, analyst-heavy, broadly centrist regional coverage",
-      "Israeli international TV lens, often polished for foreign audiences",
-      "Israeli right-leaning, Netanyahu-friendly public line; useful for pro-government framing",
-      "Israeli, security-establishment perspective, strong on IDF/intel"
+      "Independent pro-Palestinian English outlet; useful for Palestinian frame and civil-society emphasis"
     ],
     "urls": [
-      "https://www.timesofisrael.com/netanyahu-orders-idf-to-intensify-blows-against-hezbollah-amid-surge-in-drone-attacks/",
-      "https://www.al-monitor.com/originals/2026/05/migrants-step-support-community-war-hit-beirut",
-      "https://news.google.com/rss/articles/CBMijgFBVV95cUxQVG9YMGM2Sm5GcExhMXEyYlRMZ1hCTFdwcFdZaUU4RUZNSHFEV2xBSml0MHk0VzJmdXFOX1o0T1ZmNi1DMC1XbnJOSThlTDRaTk94UzZkVzBFQ3pmaE9zMThubVFpajJGbEIxSi1LNnkyTTlyVllhbGVqTmFmbW1yUWl6ZlRWX29KbGYtZWd3?oc=5",
-      "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNSGRYWHBPTG1TV1h2SWhBeXZoUVBIdWRmbnVZM09hTnN6enVlNS1xamcxblJiaFZIdmhBM2trZ20xaDlHYnl3MWU0cWtrT2JkTTQtN01NLWV5TUJSQS05YkFwTXpJbXQ0LUlENU9IY25xSnVTQWVsOXFmYjloVnBJbE1zX0hzOUtjcjdoZE5kd1BjbTBmak9qVUVYVUJBWWtMSUZBOHFoUnpLQmtIaWYxaDh2amgxWTlWelNBMWpBRTMtUXpZRURGT19ZMzdyQ1dwX3dtaldnblpOTDhNeW5JdjRzRWw?oc=5"
+      "https://news.google.com/rss/articles/CBMitgFBVV95cUxNQnl3WFFWRTIxcERQZnlYNHJTaGtUOFl4ZVBqbm84NjBEbzZ4eTVMVFgwZExsdHBVemlpdDFmaTlpT1V3U2RUMGpsSWdMRUVQWmlVZVFxVzUxV3BwRWFNWW5GX0xGX3pwSUs1YmJIZVhjaV9hUmdvV0hfcDF6TGZwczUwaVdNUGMwMDhaRzd1YmFKVmJJamtxTHU4NXV4UW9nMTUyUE8yWGNMc3VQMlpIUnJhdy1tZw?oc=5"
     ],
-    "severity": "high",
-    "location_precision": "exact",
+    "severity": "critical",
+    "location_precision": "unknown",
     "civilian_impact_flags": [
-      "displacement"
+      "casualties"
     ],
     "source_lanes": [
-      "israeli-establishment",
-      "wires-regional"
+      "palestinian-record"
     ],
-    "claim_side": "Regional and wire reporting",
-    "confirmation_status": "corroborated",
-    "recommended_next_check": "Check Beirut against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-    "what_happened": "A military claim or report is tied to Beirut. The desk treats it as corroborated until the same place and time appear across separate source lanes.",
-    "where": "Beirut",
+    "claim_side": "Mixed reporting",
+    "confirmation_status": "single-source",
+    "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+    "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
+    "where": "Location unclear",
     "who_says_so": [
-      "Al-Monitor: Migrants step up to support community in war-hit Beirut",
-      "The Times of Israel: Netanyahu orders IDF to ‘intensify blows’ against Hezbollah amid surge in drone attacks",
-      "Israel Hayom via Google News: Strike Beirut to stop Hezbollah’s drone threat - www.israelhayom.com",
-      "i24NEWS via Google News: Israeli officials urge intensified strikes in Lebanon, attacks on Beirut buildings over dron"
+      "Palestine Chronicle via Google News: ‘Most Difficult Day’: Israeli Soldiers Killed, Wounded amid Hezbollah Drone Attacks - Palest"
     ],
     "who_disputes_or_complicates": [
-      "No Lebanese local confirmation appears in this cluster."
+      "No independent confirming source appears inside this cluster yet."
     ],
-    "why_it_matters": "Beirut matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise.",
-    "what_is_missing": "Missing: Lebanese local confirmation.",
+    "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
+    "what_is_missing": "Missing: a precise place, a second source, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-source-and-location",
+    "verification": {
+      "status": "needs-source-and-location",
+      "label": "Needs source and place",
+      "summary": "Location unclear is visible as a lead, but it still needs another source and a sharper place.",
+      "source_count": 1,
+      "source_lanes": [
+        "palestinian-record"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "second source",
+        "sharper place",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Find one independent source outside the current claim lane.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Palestine Chronicle via Google News: ‘Most Difficult Day’: Israeli Soldiers Killed, Wounded amid Hezbollah Drone Attacks - Palest"
+      ]
+    },
     "locations": [
       {
-        "name": "Beirut",
-        "name_ar": "بيروت",
-        "district": "Beirut",
-        "caza": "Beirut",
-        "governorate": "Beirut",
-        "lat": 33.8938,
-        "lng": 35.5018,
-        "match_confidence": 0.88
-      },
-      {
-        "name": "Tyre",
-        "name_ar": "صور",
-        "district": "Tyre",
-        "caza": "Tyre",
-        "governorate": "South Lebanon",
-        "lat": 33.2704,
-        "lng": 35.2038,
-        "match_confidence": 0.88
+        "name": "Location unclear",
+        "name_ar": "",
+        "district": "Unlocated",
+        "caza": "Unlocated",
+        "governorate": "Unlocated",
+        "lat": 33.86,
+        "lng": 35.72,
+        "match_confidence": 0.2
       }
     ],
     "primary_location": {
-      "name": "Beirut",
-      "name_ar": "بيروت",
-      "district": "Beirut",
-      "caza": "Beirut",
-      "governorate": "Beirut",
-      "lat": 33.8938,
-      "lng": 35.5018,
-      "match_confidence": 0.88
+      "name": "Location unclear",
+      "name_ar": "",
+      "district": "Unlocated",
+      "caza": "Unlocated",
+      "governorate": "Unlocated",
+      "lat": 33.86,
+      "lng": 35.72,
+      "match_confidence": 0.2
     }
   },
   {
-    "id": "561bad35898c",
+    "id": "b329e1f10409",
     "item_ids": [
-      "820b3f10f898085b",
-      "b1d7f9dcf1da4e32",
-      "4550b0a5b880456d",
-      "d9693ba18f43fc8e"
+      "7b1149fa4c04d27c",
+      "d9693ba18f43fc8e",
+      "22aa28232258fa47",
+      "d43d14470c5324e8"
     ],
-    "headline": "Israel steps up Lebanon strikes as Netanyahu escalates offensive",
-    "frameworks": [
-      "franchise_confessionalism",
-      "rentier_clientelist"
-    ],
-    "analysis": "Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Al-Monitor, Israel National News, L'Orient Today carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
+    "headline": "IDF intercepts several explosive drones launched at Israeli territory",
+    "frameworks": [],
+    "analysis": "Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Al-Manar English via Google News, Israel National News, L'Orient Today carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
     "confidence": "high",
     "sources_span": [
-      "Al-Monitor",
+      "Al-Manar English via Google News",
       "Israel National News",
-      "L'Orient Today"
+      "L'Orient Today",
+      "Reuters Middle East via Google News"
     ],
     "what_to_watch": "Watch whether Lebanon is named again by opposing sources within the next 24 hours.",
     "signal_tags": [
-      "political-maneuver",
       "rhetoric-shift",
       "strike-claim"
     ],
-    "published_at": "2026-05-26T11:14:25.885481Z",
+    "published_at": "2026-05-26T15:09:38.010220Z",
     "source_biases": [
-      "DC-based, analyst-heavy, broadly centrist regional coverage",
+      "Global wire service, source of record on official and diplomatic claims, routed through Google News because Reuters no longer exposes a stable public RSS feed",
       "Israeli nationalist-right source, useful for maximalist political language",
-      "Lebanese, francophone-establishment, anti-Hezbollah lean, reliable on detail"
+      "Lebanese, francophone-establishment, anti-Hezbollah lean, reliable on detail",
+      "Resistance-aligned English-language claim stream; use as a primary narrative source, not corroboration"
     ],
     "urls": [
-      "https://www.al-monitor.com/originals/2026/05/israel-steps-lebanon-strikes-netanyahu-escalates-offensive",
-      "https://www.israelnationalnews.com/flashes/686255",
-      "https://www.israelnationalnews.com/flashes/686250",
-      "https://today.lorientlejour.com/article/1508041/netanyahu-says-israel-will-intensify-lebanon-offensive-vows-to-crush-hezbollah.html"
+      "https://www.israelnationalnews.com/flashes/686265",
+      "https://today.lorientlejour.com/article/1508041/netanyahu-says-israel-will-intensify-lebanon-offensive-vows-to-crush-hezbollah.html",
+      "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQVW1RNmEtWVFQbjRfcUZRTGlVc3BQOFV2X1BqeVhpZ3hsY2lONThqa0RyRlZpUUQ3cUJSc0VSN0ttSmZHbWRzTHdNbG9Ia1pSNTJJcXB6b2UwSzM4Tm5GckkzTnhGb1hITlhjenRJbUZvdWkwMkJ2MTh3emlIeFFrM1l1bWNJR1ctTVNqT3pzQndpMnBYcEJfOFJMTzVoMnN4RTQtQlQxWEE?oc=5",
+      "https://news.google.com/rss/articles/CBMixgFBVV95cUxQMHZ6T3ItVElkd1cyWVlNX3VOM05DeUY3bEJGb3QwT1R0SGFQejVzUVI4Z19DZlhwYjNDQ0FVMlBlekEzMkhNYXNDY3lySzZzNUNPUy1uWWpkMl92NGhhNXFfUEViZXZMeDhMbTAxSTZPY3NvMTJ3c2t1cjc1THJxeTU2ZEl2VUtrSTNvbWdhSV9iVEllVXh2bHhKRmhmVW5JYndlemFyblU1bk14bUMzUjBJNVd5SzhXQzZSTy1UYTVIbnhLTnc?oc=5"
     ],
     "severity": "high",
     "location_precision": "unknown",
@@ -452,6 +470,7 @@
     "source_lanes": [
       "israeli-establishment",
       "lebanese-local",
+      "resistance-apparatus",
       "wires-regional"
     ],
     "claim_side": "Cross-source field record",
@@ -460,16 +479,47 @@
     "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
     "where": "Location unclear",
     "who_says_so": [
-      "Al-Monitor: Israel steps up Lebanon strikes as Netanyahu escalates offensive",
       "L'Orient Today: Netanyahu says Israel will 'intensify Lebanon offensive,' vows to 'crush' Hezbollah",
-      "Israel National News: Attacks continue: Several Hezbollah explosive drones fall in Israeli territory",
-      "Israel National News: Second time this morning: Hezbollah explosive drone falls in Israeli territory"
+      "Israel National News: IDF intercepts several explosive drones launched at Israeli territory",
+      "Al-Manar English via Google News: Excl. footage: Hezbollah strikes target Israeli command in S. Lebanon - english.almayadeen.n",
+      "Reuters Middle East via Google News: Israel will escalate strikes against Hezbollah in Lebanon, Netanyahu says - Reuters"
     ],
     "who_disputes_or_complicates": [
       "The sources do not fully agree on meaning, even when they overlap on place or timing."
     ],
     "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
     "what_is_missing": "Missing: a precise place.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-location",
+    "verification": {
+      "status": "needs-location",
+      "label": "Needs sharper place",
+      "summary": "The source trail is usable, but the place is still too broad for a settled map read.",
+      "source_count": 4,
+      "source_lanes": [
+        "israeli-establishment",
+        "lebanese-local",
+        "resistance-apparatus",
+        "wires-regional"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "sharper place"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "L'Orient Today: Netanyahu says Israel will 'intensify Lebanon offensive,' vows to 'crush' Hezbollah",
+        "Israel National News: IDF intercepts several explosive drones launched at Israeli territory",
+        "Al-Manar English via Google News: Excl. footage: Hezbollah strikes target Israeli command in S. Lebanon - english.almayadeen.n",
+        "Reuters Middle East via Google News: Israel will escalate strikes against Hezbollah in Lebanon, Netanyahu says - Reuters"
+      ]
+    },
     "locations": [
       {
         "name": "Location unclear",
@@ -494,12 +544,13 @@
     }
   },
   {
-    "id": "586329aab190",
+    "id": "46e5145cf669",
     "item_ids": [
+      "a3caf32e6b0167a4",
       "b06a9d39133e354d",
       "0c6dbbb15c3a4965"
     ],
-    "headline": "Israeli strikes hit south Lebanon, West Bekaa - Naharnet",
+    "headline": "Hezbollah targets troops in south Lebanon and north Israel - Naharnet",
     "frameworks": [],
     "analysis": "South Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Naharnet, National News Agency Lebanon via Google News carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
     "confidence": "medium",
@@ -511,12 +562,13 @@
     "signal_tags": [
       "strike-claim"
     ],
-    "published_at": "2026-05-24T14:40:00Z",
+    "published_at": "2026-05-26T07:46:00Z",
     "source_biases": [
       "Lebanese aggregator, broadly March-14 adjacent, routed through Google News because its RSS endpoint is unavailable",
       "Lebanese official state agency; primary record for ministries, cabinet, and official Lebanese statements, routed through Google News until a stable direct RSS endpoint is verified"
     ],
     "urls": [
+      "https://news.google.com/rss/articles/CBMiU0FVX3lxTE16bTZYRkp0MWI1YTM3RmVQQVVkb2trQUNpWDkyZEdxeTY4MWtYVUg2N2FmYS1wMU1GVlp0WXJHck1GMUp0SGZDcW1YLXVfTnlNWHhj?oc=5",
       "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOUEZER1M3QW52anVUSURxOF9lUGk2aTRyOUEyazljX2RUNks3bHNKUThRMHJUY2F5aWdxVjlKN3U3WHl0Uzk4amV0b1VUVHZuYXNUZnYteEpfZGFSNnBQOGhucGNrMHJVZVVQQnZqQkVISDRUWDlNajNlbnlsVEJYVzNQRTlZUE5XUXpr?oc=5",
       "https://news.google.com/rss/articles/CBMizAFBVV95cUxQQ0h3T1YtNlVmbU9IcDdSTlg0M1Z1aGlDYkc0b3kxcnp2UjRNOHBQel81VEsyUW5vRjR1ekxNd2d2emNEV3lUUDJyWDJfR1RaLTNISDVrei1FSXhqN0t4aDhJOV9rcVlNcExYUG1RX0R2TDBiRnl5U0J1TWZqdWxRUmh1TnZvYXhDMV9MSnRPQl8yam5aYjBXUnNBV2JEV3JZR2hsbEZKdnlCMTd4SHIzajhuV2toRTVmZXJLZHFzS0Y1bnVmU1hMeDFYS0I?oc=5"
     ],
@@ -532,6 +584,7 @@
     "what_happened": "A military claim or report is tied to South Lebanon. The desk treats it as partly corroborated until the same place and time appear across separate source lanes.",
     "where": "South Lebanon",
     "who_says_so": [
+      "Naharnet: Hezbollah targets troops in south Lebanon and north Israel - Naharnet",
       "Naharnet: Israeli strikes hit south Lebanon, West Bekaa - Naharnet",
       "National News Agency Lebanon via Google News: Security update: Israeli airstrikes, artillery shelling target south Lebanon earlier today -"
     ],
@@ -540,6 +593,34 @@
     ],
     "why_it_matters": "South Lebanon matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise.",
     "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+    "map_marker_kind": "representative-area",
+    "map_precision_label": "Representative area",
+    "map_radius_meters": 36000,
+    "map_warning": "This is a representative center for a broader place mention. Do not read it as a street-level pin.",
+    "verification_status": "needs-location",
+    "verification": {
+      "status": "needs-location",
+      "label": "Needs sharper place",
+      "summary": "The source trail is usable, but the place is still too broad for a settled map read.",
+      "source_count": 2,
+      "source_lanes": [
+        "lebanese-local"
+      ],
+      "location_precision": "district",
+      "missing": [
+        "sharper place",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Check South Lebanon against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Naharnet: Hezbollah targets troops in south Lebanon and north Israel - Naharnet",
+        "Naharnet: Israeli strikes hit south Lebanon, West Bekaa - Naharnet",
+        "National News Agency Lebanon via Google News: Security update: Israeli airstrikes, artillery shelling target south Lebanon earlier today -"
+      ]
+    },
     "locations": [
       {
         "name": "South Lebanon",
@@ -564,35 +645,343 @@
     }
   },
   {
-    "id": "90e78e287bf1",
+    "id": "f2539427cd23",
     "item_ids": [
-      "6aee991e31c441f8",
-      "403831d0fe6bd2e3",
-      "ac654aa3ac774a52"
+      "2e9bf13bd6e23736",
+      "f1e412af851cd1c7",
+      "a3132615a11c8245",
+      "cb82f88749ab50a2"
     ],
-    "headline": "Israeli Source: U.S.-Iran Deal Preserves Israeli Freedom of Action in Lebanon - Haaretz",
+    "headline": "Strike Beirut to stop Hezbollah’s drone threat - www.israelhayom.com",
     "frameworks": [],
-    "analysis": "Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
+    "analysis": "Beirut is where the military story and the civilian story are crossing today. The item set is still source-bound, with Haaretz via Google News, Israel Hayom via Google News, Palestine Chronicle via Google News carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
     "confidence": "high",
     "sources_span": [
       "Haaretz via Google News",
-      "MEED Lebanon",
-      "Middle East Eye"
+      "Israel Hayom via Google News",
+      "Palestine Chronicle via Google News",
+      "i24NEWS via Google News"
+    ],
+    "what_to_watch": "Watch whether Beirut is named again by opposing sources within the next 24 hours.",
+    "signal_tags": [
+      "rhetoric-shift",
+      "strike-claim"
+    ],
+    "published_at": "2026-05-25T19:48:54Z",
+    "source_biases": [
+      "Independent pro-Palestinian English outlet; useful for Palestinian frame and civil-society emphasis",
+      "Israeli international TV lens, often polished for foreign audiences",
+      "Israeli liberal-left paper, useful for critical Israeli security reporting, often paywalled, routed through Google News",
+      "Israeli right-leaning, Netanyahu-friendly public line; useful for pro-government framing"
+    ],
+    "urls": [
+      "https://news.google.com/rss/articles/CBMijgFBVV95cUxQVG9YMGM2Sm5GcExhMXEyYlRMZ1hCTFdwcFdZaUU4RUZNSHFEV2xBSml0MHk0VzJmdXFOX1o0T1ZmNi1DMC1XbnJOSThlTDRaTk94UzZkVzBFQ3pmaE9zMThubVFpajJGbEIxSi1LNnkyTTlyVllhbGVqTmFmbW1yUWl6ZlRWX29KbGYtZWd3?oc=5",
+      "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNSGRYWHBPTG1TV1h2SWhBeXZoUVBIdWRmbnVZM09hTnN6enVlNS1xamcxblJiaFZIdmhBM2trZ20xaDlHYnl3MWU0cWtrT2JkTTQtN01NLWV5TUJSQS05YkFwTXpJbXQ0LUlENU9IY25xSnVTQWVsOXFmYjloVnBJbE1zX0hzOUtjcjdoZE5kd1BjbTBmak9qVUVYVUJBWWtMSUZBOHFoUnpLQmtIaWYxaDh2amgxWTlWelNBMWpBRTMtUXpZRURGT19ZMzdyQ1dwX3dtaldnblpOTDhNeW5JdjRzRWw?oc=5",
+      "https://news.google.com/rss/articles/CBMinAJBVV95cUxNb1JSc1lHazRYaS1aZm1PSzdRVkVjWHFjbk1wTGpBNmN6aThZWHNwTVFVUUtKS0JJcE83QU1xdWZNSU5BSVZpdWhlM2UwVzJ0S0M5UG9hNk45d213MTNwdnlwN3MzMmVual9BVDNMUnE2RGpQaHA5RkZJVFVuUzlxMXlzU2FJTzVZSVVGWG9aTjBSZzZqUEpkV1REYzZLTUZUWk9VQklqUEMyT3pta1phRVpEbW9sbjZaNlJMbVNuOVJaUjFLTUhsQ21mLWphRktCbGlyc0lYVXdVOU94YXo2VFBOczJ0ZDFobTBULW1KOXRfdzhDNlRmOUxZMjNXd1pSY3lrR1A3WUM3WVFBUG5kdHdPLUh1RlBBME5vWQ?oc=5",
+      "https://news.google.com/rss/articles/CBMixAFBVV95cUxOdW44ZjJyME94ZnEwRl9GM3czNnp5Z0VYYW5JZkswS3VENlUwc1lpRkwzSjU2Mjd1WkFrRVBnekhXY0s1dkk4TnlBWTBxODY0dW12Sk8xX05feGxsUmlnbUVKaWRkU1VfY2dNUG5ZLTlpRElFcFYxaktyTzVVc2lMdHY5SkR4MENKUWRJMXMtUTNiTkJaTmZ6MXM0bnRPZVBBdTVCQUtWRFJ6S3hDdXlHWWJyR1ZYRU84Y1FGQ1dlaDlTWUhs?oc=5"
+    ],
+    "severity": "high",
+    "location_precision": "exact",
+    "civilian_impact_flags": [],
+    "source_lanes": [
+      "israeli-dissent",
+      "israeli-establishment",
+      "palestinian-record"
+    ],
+    "claim_side": "Israeli dissent or complication",
+    "confirmation_status": "corroborated",
+    "recommended_next_check": "Check Beirut against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+    "what_happened": "A military claim or report is tied to Beirut. The desk treats it as corroborated until the same place and time appear across separate source lanes.",
+    "where": "Beirut",
+    "who_says_so": [
+      "Palestine Chronicle via Google News: LIVE BLOG: Hezbollah Expands Operations as Israeli Losses Mount, Iran Signals Warning - Day",
+      "Israel Hayom via Google News: Strike Beirut to stop Hezbollah’s drone threat - www.israelhayom.com",
+      "i24NEWS via Google News: Israeli officials urge intensified strikes in Lebanon, attacks on Beirut buildings over dron",
+      "Haaretz via Google News: North Israeli mayors warn against U.S.-Iran Deal if Hezbollah remains intact - Haaretz"
+    ],
+    "who_disputes_or_complicates": [
+      "No Lebanese local confirmation appears in this cluster.",
+      "Israeli dissent reporting complicates the official line."
+    ],
+    "why_it_matters": "Beirut matters because it can change movement, safety checks, and whether a claim should be treated as live danger rather than background noise.",
+    "what_is_missing": "Missing: Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "pin",
+    "map_precision_label": "Named place pin",
+    "map_radius_meters": 2500,
+    "map_warning": "The place name was matched, but the claim still needs the source checks listed in the dossier.",
+    "verification_status": "ready",
+    "verification": {
+      "status": "ready",
+      "label": "Ready for brief",
+      "summary": "Beirut is specific and corroborated enough to lead the brief, with caveats still kept visible.",
+      "source_count": 4,
+      "source_lanes": [
+        "israeli-dissent",
+        "israeli-establishment",
+        "palestinian-record"
+      ],
+      "location_precision": "exact",
+      "missing": [
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Check Beirut against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it."
+      ],
+      "provenance": [
+        "Palestine Chronicle via Google News: LIVE BLOG: Hezbollah Expands Operations as Israeli Losses Mount, Iran Signals Warning - Day",
+        "Israel Hayom via Google News: Strike Beirut to stop Hezbollah’s drone threat - www.israelhayom.com",
+        "i24NEWS via Google News: Israeli officials urge intensified strikes in Lebanon, attacks on Beirut buildings over dron",
+        "Haaretz via Google News: North Israeli mayors warn against U.S.-Iran Deal if Hezbollah remains intact - Haaretz"
+      ]
+    },
+    "locations": [
+      {
+        "name": "Beirut",
+        "name_ar": "بيروت",
+        "district": "Beirut",
+        "caza": "Beirut",
+        "governorate": "Beirut",
+        "lat": 33.8938,
+        "lng": 35.5018,
+        "match_confidence": 0.88
+      }
+    ],
+    "primary_location": {
+      "name": "Beirut",
+      "name_ar": "بيروت",
+      "district": "Beirut",
+      "caza": "Beirut",
+      "governorate": "Beirut",
+      "lat": 33.8938,
+      "lng": 35.5018,
+      "match_confidence": 0.88
+    }
+  },
+  {
+    "id": "6c0c2dee075b",
+    "item_ids": [
+      "6ba432a4f58259a4"
+    ],
+    "headline": "Hezbollah:  Scenes from the Islamic Resistance's operation on 20/05/2026 targeting gatherings of soldiers...",
+    "frameworks": [],
+    "analysis": "Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
+    "confidence": "low",
+    "sources_span": [
+      "Telegram @PalestineResist"
+    ],
+    "what_to_watch": "Watch whether Lebanon remains isolated or becomes part of a repeated pattern.",
+    "signal_tags": [
+      "casualty",
+      "strike-claim"
+    ],
+    "published_at": "2026-05-23T18:43:13Z",
+    "source_biases": [
+      "Resistance-aligned Telegram relay; primary-source claim stream, not independent verification"
+    ],
+    "urls": [
+      "https://t.me/PalestineResist/96247"
+    ],
+    "severity": "high",
+    "location_precision": "unknown",
+    "civilian_impact_flags": [
+      "casualties",
+      "electricity"
+    ],
+    "source_lanes": [
+      "resistance-apparatus"
+    ],
+    "claim_side": "Resistance primary claim",
+    "confirmation_status": "single-source",
+    "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+    "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
+    "where": "Location unclear",
+    "who_says_so": [
+      "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance's operation on 20/05/2026 targeting gathering"
+    ],
+    "who_disputes_or_complicates": [
+      "No independent confirming source appears inside this cluster yet.",
+      "No matching Israeli record appears in this cluster."
+    ],
+    "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
+    "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-source-and-location",
+    "verification": {
+      "status": "needs-source-and-location",
+      "label": "Needs source and place",
+      "summary": "Location unclear is visible as a lead, but it still needs another source and a sharper place.",
+      "source_count": 1,
+      "source_lanes": [
+        "resistance-apparatus"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "second source",
+        "sharper place",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Find one independent source outside the current claim lane.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance's operation on 20/05/2026 targeting gathering"
+      ]
+    },
+    "locations": [
+      {
+        "name": "Location unclear",
+        "name_ar": "",
+        "district": "Unlocated",
+        "caza": "Unlocated",
+        "governorate": "Unlocated",
+        "lat": 33.86,
+        "lng": 35.72,
+        "match_confidence": 0.2
+      }
+    ],
+    "primary_location": {
+      "name": "Location unclear",
+      "name_ar": "",
+      "district": "Unlocated",
+      "caza": "Unlocated",
+      "governorate": "Unlocated",
+      "lat": 33.86,
+      "lng": 35.72,
+      "match_confidence": 0.2
+    }
+  },
+  {
+    "id": "e3a92541cf9e",
+    "item_ids": [
+      "de16801451c764c9",
+      "cd6602de548b7c8c"
+    ],
+    "headline": "South Lebanon won't bend to Israeli invaders, with Roqayah Chamseddine",
+    "frameworks": [],
+    "analysis": "South Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
+    "confidence": "medium",
+    "sources_span": [
+      "L'Orient Today",
+      "YouTube The Electronic Intifada"
+    ],
+    "what_to_watch": "Watch whether South Lebanon remains isolated or becomes part of a repeated pattern.",
+    "signal_tags": [
+      "political-maneuver"
+    ],
+    "published_at": "2026-05-26T18:10:13.081858+03:00",
+    "source_biases": [
+      "Lebanese, francophone-establishment, anti-Hezbollah lean, reliable on detail",
+      "Palestine-centered anti-Israeli analysis and reporting"
+    ],
+    "urls": [
+      "https://www.youtube.com/watch?v=mO7enj8KZ70",
+      "https://today.lorientlejour.com/article/1508042/israeli-army-continues-escalation-in-south-lebanon-and-mobilizes-reservists.html"
+    ],
+    "severity": "moderate",
+    "location_precision": "district",
+    "civilian_impact_flags": [],
+    "source_lanes": [
+      "lebanese-local",
+      "video-analysis"
+    ],
+    "claim_side": "Analysis frame",
+    "confirmation_status": "partly-corroborated",
+    "recommended_next_check": "Check whether this remains one report or becomes a repeated pattern across separate source lanes.",
+    "what_happened": "The cluster centers on South Lebanon won't bend to Israeli invaders, with Roqayah Chamseddine",
+    "where": "South Lebanon",
+    "who_says_so": [
+      "YouTube The Electronic Intifada: South Lebanon won't bend to Israeli invaders, with Roqayah Chamseddine",
+      "L'Orient Today: Israeli army continues escalation in south Lebanon and mobilizes reservists L'Orient Today s"
+    ],
+    "who_disputes_or_complicates": [
+      "The sources do not fully agree on meaning, even when they overlap on place or timing."
+    ],
+    "why_it_matters": "South Lebanon matters if it stops being an isolated item and begins repeating across towns, roads, or source lanes.",
+    "what_is_missing": "Missing: a precise place, wire or regional corroboration.",
+    "map_marker_kind": "representative-area",
+    "map_precision_label": "Representative area",
+    "map_radius_meters": 36000,
+    "map_warning": "This is a representative center for a broader place mention. Do not read it as a street-level pin.",
+    "verification_status": "needs-location",
+    "verification": {
+      "status": "needs-location",
+      "label": "Needs sharper place",
+      "summary": "The source trail is usable, but the place is still too broad for a settled map read.",
+      "source_count": 2,
+      "source_lanes": [
+        "lebanese-local",
+        "video-analysis"
+      ],
+      "location_precision": "district",
+      "missing": [
+        "sharper place",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Check whether this remains one report or becomes a repeated pattern across separate source lanes.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "YouTube The Electronic Intifada: South Lebanon won't bend to Israeli invaders, with Roqayah Chamseddine",
+        "L'Orient Today: Israeli army continues escalation in south Lebanon and mobilizes reservists L'Orient Today s"
+      ]
+    },
+    "locations": [
+      {
+        "name": "South Lebanon",
+        "name_ar": "جنوب لبنان",
+        "district": "South Lebanon",
+        "caza": "South Lebanon",
+        "governorate": "South Lebanon",
+        "lat": 33.275,
+        "lng": 35.43,
+        "match_confidence": 0.52
+      }
+    ],
+    "primary_location": {
+      "name": "South Lebanon",
+      "name_ar": "جنوب لبنان",
+      "district": "South Lebanon",
+      "caza": "South Lebanon",
+      "governorate": "South Lebanon",
+      "lat": 33.275,
+      "lng": 35.43,
+      "match_confidence": 0.52
+    }
+  },
+  {
+    "id": "f6fb91c7c912",
+    "item_ids": [
+      "b72aa84a1aaec494",
+      "6aee991e31c441f8"
+    ],
+    "headline": "Israel’s occupation of Gaza, Lebanon, Syria extends beyond what maps show",
+    "frameworks": [],
+    "analysis": "Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
+    "confidence": "medium",
+    "sources_span": [
+      "Al Jazeera (Middle East)",
+      "Haaretz via Google News"
     ],
     "what_to_watch": "Watch whether Lebanon remains isolated or becomes part of a repeated pattern.",
     "signal_tags": [
       "political-maneuver"
     ],
-    "published_at": "2026-05-26T11:14:29.304270Z",
+    "published_at": "2026-05-26T13:26:40Z",
     "source_biases": [
-      "Business and projects lens, strong for infrastructure, finance, and investment signals",
       "Israeli liberal-left paper, useful for critical Israeli security reporting, often paywalled, routed through Google News",
-      "Qatar-aligned, critical of Gulf monarchies and Israel, routed through Google News because the RSS endpoint is inconsistent"
+      "Qatari state-funded, sympathetic to Islamist/resistance framing"
     ],
     "urls": [
-      "https://news.google.com/rss/articles/CBMijAJBVV95cUxNZ1ZBNExmdWpUUzFjM1J2d0VoR2ZKbDFnYzBhSUhOX3BXMkp6YUtnVDZiaW5DSDZabjAwYzNvZ3J3dHNHeWVmdXNfaTFFREN2T1RuanhZZ0M2cVhEVDdKTnYwWEhENGpnQThHaUdJNGJ4Sk05SDZiQnpUWDYzaWVocHFRYUxycnpGaGs0UERSYml5ei13QU1JdWlQY1JRYzhjSUw5RTNFdGFhMFBHNEVrMUo5MVFLRkJrOTA0Zzk0YkVYb3BFRHRtaVhLLUdZV2JuM2tmY0FUTHpfbV94NG1xcUcwLXB0UmlpdVZIczJfdlc2QzEtY1lMRTRGOWZHZGduRHlqU3diVUpIODBM?oc=5",
-      "https://www.meed.com/total-eni-and-qatarenergy-sign-lebanon-gas-deal",
-      "https://news.google.com/rss/articles/CBMilwFBVV95cUxNQlhPOHJFYy1fbFNVb01XZU9uX1k4YlFOR1dnVHNTbEk1WVZTZnNLODlGYlpoX3hraF9HM2pwcENZMDlVN3Z5bDdWelMxTGxiQWNBZTEwNjV2NVpkWGNQX2FDUWtUVzlxTWtKNmhEY29UTWZSSEt4TnB6X2JDcEJVdlJxVS1JVXdPTjhKUzBwRlg4STlMczhr?oc=5"
+      "https://www.aljazeera.com/news/2026/5/26/israels-occupation-of-gaza-lebanon-syria-extends-beyond-what-maps-show?traffic_source=rss",
+      "https://news.google.com/rss/articles/CBMijAJBVV95cUxNZ1ZBNExmdWpUUzFjM1J2d0VoR2ZKbDFnYzBhSUhOX3BXMkp6YUtnVDZiaW5DSDZabjAwYzNvZ3J3dHNHeWVmdXNfaTFFREN2T1RuanhZZ0M2cVhEVDdKTnYwWEhENGpnQThHaUdJNGJ4Sk05SDZiQnpUWDYzaWVocHFRYUxycnpGaGs0UERSYml5ei13QU1JdWlQY1JRYzhjSUw5RTNFdGFhMFBHNEVrMUo5MVFLRkJrOTA0Zzk0YkVYb3BFRHRtaVhLLUdZV2JuM2tmY0FUTHpfbV94NG1xcUcwLXB0UmlpdVZIczJfdlc2QzEtY1lMRTRGOWZHZGduRHlqU3diVUpIODBM?oc=5"
     ],
     "severity": "moderate",
     "location_precision": "unknown",
@@ -602,20 +991,47 @@
       "wires-regional"
     ],
     "claim_side": "Israeli dissent or complication",
-    "confirmation_status": "corroborated",
+    "confirmation_status": "partly-corroborated",
     "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
     "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
     "where": "Location unclear",
     "who_says_so": [
-      "MEED Lebanon: TotalEnergies, Eni and QatarEnergy sign Lebanon gas deal",
-      "Haaretz via Google News: Israeli Source: U.S.-Iran Deal Preserves Israeli Freedom of Action in Lebanon - Haaretz",
-      "Middle East Eye: Lebanon’s talks with Israel test fragile relationship with Syria - Middle East Eye"
+      "Al Jazeera (Middle East): Israel’s occupation of Gaza, Lebanon, Syria extends beyond what maps show",
+      "Haaretz via Google News: Israeli Source: U.S.-Iran Deal Preserves Israeli Freedom of Action in Lebanon - Haaretz"
     ],
     "who_disputes_or_complicates": [
       "Israeli dissent reporting complicates the official line."
     ],
     "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
     "what_is_missing": "Missing: a precise place, Lebanese local confirmation.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-location",
+    "verification": {
+      "status": "needs-location",
+      "label": "Needs sharper place",
+      "summary": "The source trail is usable, but the place is still too broad for a settled map read.",
+      "source_count": 2,
+      "source_lanes": [
+        "israeli-dissent",
+        "wires-regional"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "sharper place",
+        "Lebanese local record"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Al Jazeera (Middle East): Israel’s occupation of Gaza, Lebanon, Syria extends beyond what maps show",
+        "Haaretz via Google News: Israeli Source: U.S.-Iran Deal Preserves Israeli Freedom of Action in Lebanon - Haaretz"
+      ]
+    },
     "locations": [
       {
         "name": "Location unclear",
@@ -637,147 +1053,6 @@
       "lat": 33.86,
       "lng": 35.72,
       "match_confidence": 0.2
-    }
-  },
-  {
-    "id": "288a69ead730",
-    "item_ids": [
-      "9cac35b2282247a9",
-      "53172ca3743adabf"
-    ],
-    "headline": "Trump demands Arab states normalize with Israel in exchange for Iran ceasefire: Report - PressTV",
-    "frameworks": [
-      "rentier_clientelist"
-    ],
-    "analysis": "Beirut is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
-    "confidence": "medium",
-    "sources_span": [
-      "Al-Monitor",
-      "Press TV via Google News"
-    ],
-    "what_to_watch": "Watch whether Beirut remains isolated or becomes part of a repeated pattern.",
-    "signal_tags": [
-      "political-maneuver"
-    ],
-    "published_at": "2026-05-26T11:14:25.885728Z",
-    "source_biases": [
-      "DC-based, analyst-heavy, broadly centrist regional coverage",
-      "Iranian state-owned English outlet; primary Iranian narrative and resistance-axis framing, not independent confirmation"
-    ],
-    "urls": [
-      "https://news.google.com/rss/articles/CBMikAFBVV95cUxNLU5Va1NWOWJvYXhEUWMtQ0NjX0pYSWR5WlRlRHdwVFpWN0tFX1A4eUJ5UGVUV3cwWU04S1JhZnlEb0EwcDRqWnRYQUxLcnU4bEc1QXkxMHVxWnJ0UzlKbjZwQ05LdUR5a2s4Nm5qX1JzdEM5MmlDYkx4MU9HLUN0dHlCMXh3UlMwMkRkV0dtNzI?oc=5",
-      "https://www.al-monitor.com/originals/2026/05/iran-hangs-another-protester-dozens-more-risk-execution-rights-groups"
-    ],
-    "severity": "moderate",
-    "location_precision": "unknown",
-    "civilian_impact_flags": [],
-    "source_lanes": [
-      "iranian-state",
-      "wires-regional"
-    ],
-    "claim_side": "Regional and wire reporting",
-    "confirmation_status": "partly-corroborated",
-    "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
-    "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
-    "where": "Location unclear",
-    "who_says_so": [
-      "Al-Monitor: Iran hangs another protester as dozens more risk execution: rights groups",
-      "Press TV via Google News: Trump demands Arab states normalize with Israel in exchange for Iran ceasefire: Report - Pre"
-    ],
-    "who_disputes_or_complicates": [
-      "The sources do not fully agree on meaning, even when they overlap on place or timing."
-    ],
-    "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
-    "what_is_missing": "Missing: a precise place, Lebanese local confirmation.",
-    "locations": [
-      {
-        "name": "Location unclear",
-        "name_ar": "",
-        "district": "Unlocated",
-        "caza": "Unlocated",
-        "governorate": "Unlocated",
-        "lat": 33.86,
-        "lng": 35.72,
-        "match_confidence": 0.2
-      }
-    ],
-    "primary_location": {
-      "name": "Location unclear",
-      "name_ar": "",
-      "district": "Unlocated",
-      "caza": "Unlocated",
-      "governorate": "Unlocated",
-      "lat": 33.86,
-      "lng": 35.72,
-      "match_confidence": 0.2
-    }
-  },
-  {
-    "id": "64465ac70576",
-    "item_ids": [
-      "98b9b5a4cbdec75c",
-      "cd6602de548b7c8c"
-    ],
-    "headline": "18:43 What we know, in maps, about the 'buffer zone' Israel is claiming in south Lebanon",
-    "frameworks": [],
-    "analysis": "South Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectarian brokerage, foreign pressure, and private survival systems.",
-    "confidence": "low",
-    "sources_span": [
-      "L'Orient Today"
-    ],
-    "what_to_watch": "Watch whether South Lebanon remains isolated or becomes part of a repeated pattern.",
-    "signal_tags": [
-      "political-maneuver"
-    ],
-    "published_at": "2026-05-26T11:14:21.027097Z",
-    "source_biases": [
-      "Lebanese, francophone-establishment, anti-Hezbollah lean, reliable on detail"
-    ],
-    "urls": [
-      "https://today.lorientlejour.com/article/1504502/what-we-know-in-maps-about-the-buffer-zone-israel-is-claiming-in-south-lebanon.html",
-      "https://today.lorientlejour.com/article/1508042/israeli-army-continues-escalation-in-south-lebanon-and-mobilizes-reservists.html"
-    ],
-    "severity": "moderate",
-    "location_precision": "district",
-    "civilian_impact_flags": [],
-    "source_lanes": [
-      "lebanese-local"
-    ],
-    "claim_side": "Mixed reporting",
-    "confirmation_status": "single-source",
-    "recommended_next_check": "Look for the same place and time in a Lebanese local source, an Israeli source, and a wire or regional source.",
-    "what_happened": "The cluster centers on 18:43 What we know, in maps, about the 'buffer zone' Israel is claiming in south Lebanon",
-    "where": "South Lebanon",
-    "who_says_so": [
-      "L'Orient Today: 18:43 What we know, in maps, about the 'buffer zone' Israel is claiming in south Lebanon",
-      "L'Orient Today: Israeli army continues escalation in south Lebanon and mobilizes reservists L'Orient Today s"
-    ],
-    "who_disputes_or_complicates": [
-      "No independent confirming source appears inside this cluster yet."
-    ],
-    "why_it_matters": "South Lebanon matters if it stops being an isolated item and begins repeating across towns, roads, or source lanes.",
-    "what_is_missing": "Missing: a second source, a precise place, wire or regional corroboration.",
-    "locations": [
-      {
-        "name": "South Lebanon",
-        "name_ar": "جنوب لبنان",
-        "district": "South Lebanon",
-        "caza": "South Lebanon",
-        "governorate": "South Lebanon",
-        "lat": 33.275,
-        "lng": 35.43,
-        "match_confidence": 0.52
-      }
-    ],
-    "primary_location": {
-      "name": "South Lebanon",
-      "name_ar": "جنوب لبنان",
-      "district": "South Lebanon",
-      "caza": "South Lebanon",
-      "governorate": "South Lebanon",
-      "lat": 33.275,
-      "lng": 35.43,
-      "match_confidence": 0.52
     }
   },
   {
@@ -823,6 +1098,33 @@
     ],
     "why_it_matters": "The statement matters because rhetoric often prepares the ground for later military, diplomatic, or media moves.",
     "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "pin",
+    "map_precision_label": "Named place pin",
+    "map_radius_meters": 2500,
+    "map_warning": "The place name was matched, but the claim still needs the source checks listed in the dossier.",
+    "verification_status": "needs-source",
+    "verification": {
+      "status": "needs-source",
+      "label": "Needs another source",
+      "summary": "Beirut has a place trail, but the record still rests on 1 source.",
+      "source_count": 1,
+      "source_lanes": [
+        "israeli-establishment"
+      ],
+      "location_precision": "exact",
+      "missing": [
+        "second source",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for the same place and time in a Lebanese local source, an Israeli source, and a wire or regional source.",
+        "Find one independent source outside the current claim lane."
+      ],
+      "provenance": [
+        "Ynetnews via Google News: Iran says talks pointless without end to Lebanon war as Israeli threats trigger Dahieh exodu"
+      ]
+    },
     "locations": [
       {
         "name": "Beirut",
@@ -857,70 +1159,209 @@
     }
   },
   {
-    "id": "35e0f385afcb",
+    "id": "dcaa209e7a85",
     "item_ids": [
-      "1c29f88af08aafa6"
+      "cec604b562e97193",
+      "c8e86f662be7d823"
     ],
-    "headline": "Israel strikes Bekaa and Tyre as other raids kill 10 - Naharnet",
-    "frameworks": [
-      "rentier_clientelist"
-    ],
-    "analysis": "Tyre is where the military story and the civilian story are crossing today. The item set is still source-bound, with Naharnet carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
+    "headline": "Hezbollah:  Scenes from the Islamic Resistance's operation on 14/05/2026 targeting an \"israeli\" enemy army...",
+    "frameworks": [],
+    "analysis": "Bint Jbeil is where the military story and the civilian story are crossing today. The item set is still source-bound, with Telegram @PalestineResist carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
     "confidence": "low",
     "sources_span": [
-      "Naharnet"
+      "Telegram @PalestineResist"
     ],
-    "what_to_watch": "Watch whether Tyre is named again by opposing sources within the next 24 hours.",
+    "what_to_watch": "Watch whether Bint Jbeil is named again by opposing sources within the next 24 hours.",
     "signal_tags": [
       "strike-claim"
     ],
-    "published_at": "2026-05-23T09:41:00Z",
+    "published_at": "2026-05-25T14:00:56Z",
     "source_biases": [
-      "Lebanese aggregator, broadly March-14 adjacent, routed through Google News because its RSS endpoint is unavailable"
+      "Resistance-aligned Telegram relay; primary-source claim stream, not independent verification"
     ],
     "urls": [
-      "https://news.google.com/rss/articles/CBMimwFBVV95cUxPTTQ5WVlqamx3V3lxOEFhN0Z3UHg3MWtCR1RJRHp4SkdNYjY3c3FSOXRJZmFKN3d0UFo0RHRndDV0UU1lS2NINWlTNXRDX2NKVkQtY3hoeTdPTE5SeW82Q0NfSzNjenBzU2gxUWZtaWxmQXZFZl9aM1VOZFBkWExjZUdldUFPZUd6b2RjVjV2Q3Z6STBzZEg3dDB0Yw?oc=5"
+      "https://t.me/PalestineResist/96273",
+      "https://t.me/PalestineResist/96217"
     ],
     "severity": "moderate",
-    "location_precision": "exact",
+    "location_precision": "unknown",
     "civilian_impact_flags": [],
     "source_lanes": [
-      "lebanese-local"
+      "resistance-apparatus"
     ],
-    "claim_side": "Mixed reporting",
+    "claim_side": "Resistance primary claim",
     "confirmation_status": "single-source",
-    "recommended_next_check": "Check Tyre against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
-    "what_happened": "A military claim or report is tied to Tyre. The desk treats it as single source until the same place and time appear across separate source lanes.",
-    "where": "Tyre",
+    "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+    "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
+    "where": "Location unclear",
     "who_says_so": [
-      "Naharnet: Israel strikes Bekaa and Tyre as other raids kill 10 - Naharnet"
+      "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance's operation on 14/05/2026 targeting an \"israe",
+      "Telegram @PalestineResist: Hezbollah:  Footage of the Islamic Resistance's operation targeting a Merkava tank belonging"
     ],
     "who_disputes_or_complicates": [
-      "No independent confirming source appears inside this cluster yet."
+      "No independent confirming source appears inside this cluster yet.",
+      "No matching Israeli record appears in this cluster."
     ],
-    "why_it_matters": "Tyre matters if it stops being an isolated item and begins repeating across towns, roads, or source lanes.",
-    "what_is_missing": "Missing: a second source, wire or regional corroboration.",
+    "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
+    "what_is_missing": "Missing: a precise place, a second source, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-source-and-location",
+    "verification": {
+      "status": "needs-source-and-location",
+      "label": "Needs source and place",
+      "summary": "Location unclear is visible as a lead, but it still needs another source and a sharper place.",
+      "source_count": 1,
+      "source_lanes": [
+        "resistance-apparatus"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "second source",
+        "sharper place",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Find one independent source outside the current claim lane.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance's operation on 14/05/2026 targeting an \"israe",
+        "Telegram @PalestineResist: Hezbollah:  Footage of the Islamic Resistance's operation targeting a Merkava tank belonging"
+      ]
+    },
     "locations": [
       {
-        "name": "Tyre",
-        "name_ar": "صور",
-        "district": "Tyre",
-        "caza": "Tyre",
-        "governorate": "South Lebanon",
-        "lat": 33.2704,
-        "lng": 35.2038,
-        "match_confidence": 0.88
+        "name": "Location unclear",
+        "name_ar": "",
+        "district": "Unlocated",
+        "caza": "Unlocated",
+        "governorate": "Unlocated",
+        "lat": 33.86,
+        "lng": 35.72,
+        "match_confidence": 0.2
       }
     ],
     "primary_location": {
-      "name": "Tyre",
-      "name_ar": "صور",
-      "district": "Tyre",
-      "caza": "Tyre",
-      "governorate": "South Lebanon",
-      "lat": 33.2704,
-      "lng": 35.2038,
-      "match_confidence": 0.88
+      "name": "Location unclear",
+      "name_ar": "",
+      "district": "Unlocated",
+      "caza": "Unlocated",
+      "governorate": "Unlocated",
+      "lat": 33.86,
+      "lng": 35.72,
+      "match_confidence": 0.2
+    }
+  },
+  {
+    "id": "c48e49b380f0",
+    "item_ids": [
+      "c0ada68017ffb93d",
+      "1f9825476255757f",
+      "d67a7b5e70c4a141",
+      "e8fe3c89f2ce6665"
+    ],
+    "headline": "Hezbollah:  Footage of the Islamic Resistance's operation targeting a soldier of the \"israeli\" enemy army...",
+    "frameworks": [],
+    "analysis": "Beirut is where the military story and the civilian story are crossing today. The item set is still source-bound, with Telegram @PalestineResist carrying the available record, so the dashboard treats the claim as a signal before it treats it as settled fact.",
+    "confidence": "low",
+    "sources_span": [
+      "Telegram @PalestineResist"
+    ],
+    "what_to_watch": "Watch whether Beirut is named again by opposing sources within the next 24 hours.",
+    "signal_tags": [
+      "strike-claim"
+    ],
+    "published_at": "2026-05-24T14:26:25Z",
+    "source_biases": [
+      "Resistance-aligned Telegram relay; primary-source claim stream, not independent verification"
+    ],
+    "urls": [
+      "https://t.me/PalestineResist/96261",
+      "https://t.me/PalestineResist/96248",
+      "https://t.me/PalestineResist/96172",
+      "https://t.me/PalestineResist/96242"
+    ],
+    "severity": "moderate",
+    "location_precision": "unknown",
+    "civilian_impact_flags": [],
+    "source_lanes": [
+      "resistance-apparatus"
+    ],
+    "claim_side": "Resistance primary claim",
+    "confirmation_status": "single-source",
+    "recommended_next_check": "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+    "what_happened": "A claim or report is circulating, but the place is not clear enough to pin.",
+    "where": "Location unclear",
+    "who_says_so": [
+      "Telegram @PalestineResist: Hezbollah:  Footage of the Islamic Resistance's operation targeting a soldier of the \"israel",
+      "Telegram @PalestineResist: Hezbollah:  Footage of the Islamic Resistance's operation targeting a \"HIMAT\" logistical veh",
+      "Telegram @PalestineResist: Hezbollah:  Scenes of the operation by the Islamic Resistance on 18/05/2026, targeting the v",
+      "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance operation on 19/05/2026 targeting an \"Iron Do"
+    ],
+    "who_disputes_or_complicates": [
+      "No independent confirming source appears inside this cluster yet.",
+      "No matching Israeli record appears in this cluster."
+    ],
+    "why_it_matters": "The item matters as a signal, not as a mapped event, until a source names the place clearly.",
+    "what_is_missing": "Missing: a precise place, a second source, Lebanese local confirmation, wire or regional corroboration.",
+    "map_marker_kind": "unmapped",
+    "map_precision_label": "Unmapped",
+    "map_radius_meters": 0,
+    "map_warning": "No precise place is available yet, so this cluster should not be read as a mapped event.",
+    "verification_status": "needs-source-and-location",
+    "verification": {
+      "status": "needs-source-and-location",
+      "label": "Needs source and place",
+      "summary": "Location unclear is visible as a lead, but it still needs another source and a sharper place.",
+      "source_count": 1,
+      "source_lanes": [
+        "resistance-apparatus"
+      ],
+      "location_precision": "unknown",
+      "missing": [
+        "second source",
+        "sharper place",
+        "Lebanese local record",
+        "wire or regional corroboration"
+      ],
+      "next_checks": [
+        "Look for a named place and time in Lebanese local reporting, an opposing source, and a wire or regional source before treating this as actionable.",
+        "Find one independent source outside the current claim lane.",
+        "Confirm the named place, district, and time before mapping the item as local."
+      ],
+      "provenance": [
+        "Telegram @PalestineResist: Hezbollah:  Footage of the Islamic Resistance's operation targeting a soldier of the \"israel",
+        "Telegram @PalestineResist: Hezbollah:  Footage of the Islamic Resistance's operation targeting a \"HIMAT\" logistical veh",
+        "Telegram @PalestineResist: Hezbollah:  Scenes of the operation by the Islamic Resistance on 18/05/2026, targeting the v",
+        "Telegram @PalestineResist: Hezbollah:  Scenes from the Islamic Resistance operation on 19/05/2026 targeting an \"Iron Do"
+      ]
+    },
+    "locations": [
+      {
+        "name": "Location unclear",
+        "name_ar": "",
+        "district": "Unlocated",
+        "caza": "Unlocated",
+        "governorate": "Unlocated",
+        "lat": 33.86,
+        "lng": 35.72,
+        "match_confidence": 0.2
+      }
+    ],
+    "primary_location": {
+      "name": "Location unclear",
+      "name_ar": "",
+      "district": "Unlocated",
+      "caza": "Unlocated",
+      "governorate": "Unlocated",
+      "lat": 33.86,
+      "lng": 35.72,
+      "match_confidence": 0.2
     }
   }
 ]

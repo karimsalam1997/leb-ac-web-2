@@ -1,0 +1,25 @@
+{
+  "name": "studio-lebanese-academic",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "build:essay-import": "node scripts/build-essay-import.mjs",
+    "import:essays": "npm run build:essay-import && sanity documents create imports/essays.json --replace"
+  },
+  "dependencies": {
+    "@sanity/vision": "5.26.0",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "sanity": "5.26.0",
+    "styled-components": "6.4.2"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.15",
+    "typescript": "5.9.3"
+  }
+}

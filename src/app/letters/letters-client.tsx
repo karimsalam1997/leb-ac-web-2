@@ -172,15 +172,27 @@ export function LettersClient({ letters }: { letters: FilterableLetter[] }) {
               <Mail size={25} strokeWidth={1.3} className="text-[var(--accent)]" />
               <div>
                 <h2 className="editorial-title text-[1.55rem] text-[var(--accent)]">
-                  Submit a Letter
+                  Write us a letter
                 </h2>
                 <p className="mt-2 text-[1rem] leading-5">
-                  Send a short dispatch, or receive the Sunday packet.
+                  Up to 800 words. Tell us where you wrote it from, and what
+                  you saw that the news didn&apos;t.
                 </p>
               </div>
             </div>
+            <Link href="/submit" className="read-link mt-4">
+              Open the submission form <span className="link-arrow">-&gt;</span>
+            </Link>
+          </div>
+
+          <div className="letters-newsletter-card airmail-box">
+            <div className="editorial-kicker">The weekly dispatch</div>
+            <p className="mt-3 text-[1rem] leading-6">
+              One email on Sundays — the new essay, the new letter, and a
+              paragraph on why. No promotions, no algorithm.
+            </p>
             <form
-              className="letters-subscribe-form"
+              className="letters-subscribe-form mt-4"
               aria-label="Subscribe to letters"
               onSubmit={(event) => event.preventDefault()}
             >
@@ -196,15 +208,12 @@ export function LettersClient({ letters }: { letters: FilterableLetter[] }) {
               />
               <button type="submit">Subscribe</button>
             </form>
-            <Link href="/submit" className="read-link mt-4">
-              Submit a letter <span className="link-arrow">-&gt;</span>
-            </Link>
           </div>
 
           <blockquote className="letters-testimonial">
             <p>
-              Letters are small acts of witness. They carry the everyday across
-              time, distance, and damage.
+              A letter is the unit of writing that survives the news cycle.
+              Short enough to read in one breath. Specific enough to remember.
             </p>
           </blockquote>
         </aside>

@@ -1,0 +1,189 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.2038,
+          33.2704
+        ]
+      },
+      "properties": {
+        "cluster_id": "f4a83132ff1e",
+        "headline": "Hezbollah:  Scenes of the stages of reconnaissance and targeting by the Islamic Resistance of the newly es...",
+        "signal_tags": [
+          "displacement",
+          "strike-claim"
+        ],
+        "confidence": "low",
+        "frameworks": [],
+        "district": "Tyre",
+        "analysis_short": "Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Telegram @PalestineResist carrying the available record, so the dashboard treats the claim as a sign",
+        "published_at": "2026-05-25T14:44:50+00:00",
+        "match_confidence": 0.88,
+        "severity": "critical",
+        "location_precision": "exact",
+        "confirmation_status": "single-source",
+        "claim_side": "Resistance primary claim",
+        "recommended_next_check": "Check Lebanon against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "source_lanes": [
+          "resistance-apparatus"
+        ],
+        "civilian_impact_flags": [
+          "evacuation",
+          "roads",
+          "displacement"
+        ],
+        "what_is_missing": "Missing: a second source, a precise place, Lebanese local confirmation, wire or regional corroboration."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.5018,
+          33.8938
+        ]
+      },
+      "properties": {
+        "cluster_id": "0b4ec66f6800",
+        "headline": "Israeli right-wing ministers urge Netanyahu to resume Beirut strikes to counter Hezbollah drone attacks -...",
+        "signal_tags": [
+          "political-maneuver",
+          "rhetoric-shift",
+          "strike-claim"
+        ],
+        "confidence": "high",
+        "frameworks": [
+          "franchise_confessionalism"
+        ],
+        "district": "Beirut",
+        "analysis_short": "Beirut is where the military story and the civilian story are crossing today. The item set is still source-bound, with Al-Monitor, Israel Hayom via Google News, Reuters Middle East via Google News carrying the available ",
+        "published_at": "2026-05-25T20:57:56.168980+00:00",
+        "match_confidence": 0.88,
+        "severity": "high",
+        "location_precision": "exact",
+        "confirmation_status": "corroborated",
+        "claim_side": "Regional and wire reporting",
+        "recommended_next_check": "Check Beirut against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "source_lanes": [
+          "israeli-establishment",
+          "wires-regional"
+        ],
+        "civilian_impact_flags": [],
+        "what_is_missing": "Missing: Lebanese local confirmation."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.2038,
+          33.2704
+        ]
+      },
+      "properties": {
+        "cluster_id": "2aade627d08f",
+        "headline": "IDF strikes over 70 Hezbollah infrastructure sites",
+        "signal_tags": [
+          "rhetoric-shift",
+          "strike-claim"
+        ],
+        "confidence": "medium",
+        "frameworks": [
+          "rentier_clientelist"
+        ],
+        "district": "Tyre",
+        "analysis_short": "Tyre is where the military story and the civilian story are crossing today. The item set is still source-bound, with Israel National News, Naharnet carrying the available record, so the dashboard treats the claim as a si",
+        "published_at": "2026-05-25T22:36:41+03:00",
+        "match_confidence": 0.88,
+        "severity": "high",
+        "location_precision": "exact",
+        "confirmation_status": "partly-corroborated",
+        "claim_side": "Cross-source field record",
+        "recommended_next_check": "Check Tyre against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "source_lanes": [
+          "israeli-establishment",
+          "lebanese-local"
+        ],
+        "civilian_impact_flags": [],
+        "what_is_missing": "Missing: wire or regional corroboration."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.43,
+          33.275
+        ]
+      },
+      "properties": {
+        "cluster_id": "2cd82d4b2e26",
+        "headline": "Hezbollah UAV hits Metula home amid wave of attacks, none hurt; ministers urge escalation",
+        "signal_tags": [
+          "political-maneuver",
+          "strike-claim"
+        ],
+        "confidence": "medium",
+        "frameworks": [
+          "franchise_confessionalism"
+        ],
+        "district": "South Lebanon",
+        "analysis_short": "South Lebanon is where the military story and the civilian story are crossing today. The item set is still source-bound, with Naharnet, The Times of Israel carrying the available record, so the dashboard treats the claim",
+        "published_at": "2026-05-25T12:04:41+00:00",
+        "match_confidence": 0.52,
+        "severity": "high",
+        "location_precision": "district",
+        "confirmation_status": "partly-corroborated",
+        "claim_side": "Cross-source field record",
+        "recommended_next_check": "Check South Lebanon against Lebanese local reporting, municipal or rescue updates, and one opposing-source record before acting on it.",
+        "source_lanes": [
+          "israeli-establishment",
+          "lebanese-local"
+        ],
+        "civilian_impact_flags": [],
+        "what_is_missing": "Missing: a precise place, wire or regional corroboration."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          35.43,
+          33.275
+        ]
+      },
+      "properties": {
+        "cluster_id": "1fdaff680960",
+        "headline": "South Lebanon won't bend to Israeli invaders, with Roqayah Chamseddine",
+        "signal_tags": [
+          "political-maneuver"
+        ],
+        "confidence": "medium",
+        "frameworks": [],
+        "district": "South Lebanon",
+        "analysis_short": "South Lebanon is the pressure point in this cluster. The strongest cautious reading is that these are separate reports, but the pattern matters because Lebanon's weak state makes every local event travel through sectaria",
+        "published_at": "2026-05-25T23:58:06.162950+03:00",
+        "match_confidence": 0.52,
+        "severity": "moderate",
+        "location_precision": "district",
+        "confirmation_status": "partly-corroborated",
+        "claim_side": "Analysis frame",
+        "recommended_next_check": "Check whether this remains one report or becomes a repeated pattern across separate source lanes.",
+        "source_lanes": [
+          "lebanese-local",
+          "video-analysis"
+        ],
+        "civilian_impact_flags": [],
+        "what_is_missing": "Missing: a precise place, wire or regional corroboration."
+      }
+    }
+  ]
+}

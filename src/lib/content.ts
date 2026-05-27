@@ -24,10 +24,20 @@ export type Essay = {
   excerpt: string;
   pullQuote: string;
   tags: string[];
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string[];
   relatedSlugs: string[];
   notes: Citation[];
   sections: EssaySection[];
   heroStyle?: "image" | "art";
+  // Editorial-page enhancements — optional per-essay fields the new
+  // three-column layout reads. Fall back gracefully when absent.
+  dateline?: string;
+  arabicDisplayLine?: string;
+  bodyPullQuote?: string;
+  marginaliaNote?: string;
+  marginaliaNoteAttribution?: string;
 };
 
 export type Letter = {
@@ -1093,6 +1103,12 @@ function parseLaunchContent() {
           .split(",")
           .map((tag) => tag.trim())
           .filter(Boolean),
+        seoTitle: extractField(block, "SEO title") || undefined,
+        seoDescription: extractField(block, "SEO description") || undefined,
+        seoKeywords: extractField(block, "SEO keywords")
+          .split(",")
+          .map((keyword) => keyword.trim())
+          .filter(Boolean),
         relatedSlugs: [],
         notes: extractNotes(block),
         sections,
@@ -1287,6 +1303,8 @@ const legacyEssaySlugRedirects: Record<string, string> = {
   "the-dog-river-keeps-the-minutes": "the-land-that-mourns-in-one-language",
   "the-fracture-was-the-blueprint": "the-seventeen-countries",
   "stones-that-outlived-their-gods": "the-land-that-mourns-in-one-language",
+  "the-goddess-who-won-t-stay-dead": "the-land-that-mourns-in-one-language",
+  "the-goddess-who-wont-stay-dead": "the-land-that-mourns-in-one-language",
   "the-looted-coast": "the-land-that-mourns-in-one-language",
   "cousins-across-a-river-that-shouldn-t-exist": "the-land-that-mourns-in-one-language",
   "every-letter-on-this-screen": "the-land-that-mourns-in-one-language",

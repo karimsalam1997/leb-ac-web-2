@@ -1,16 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Archive,
-  BookOpenText,
-  ChartNoAxesColumnIncreasing,
-  Landmark,
-  NotebookPen,
-  Plane,
-  Scale,
-  UsersRound,
-} from "lucide-react";
+import { Archive } from "lucide-react";
 import { EditorialImage } from "@/components/editorial-image";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { SiteShell } from "@/components/site-shell";
@@ -19,7 +10,7 @@ import { buildPageMetadata, siteDescription, siteName } from "@/lib/seo";
 import { getArticleImage, getArticleImages, homeAssets } from "@/lib/visual-assets";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: siteName,
+  title: `${siteName} — The country, not the crisis.`,
   description: siteDescription,
   path: "/",
   image: homeAssets.hero.src,
@@ -35,123 +26,87 @@ const latestEssays = essays.slice(1, 6);
 const moreEssays = essays.slice(6, 8);
 const recentLetters = letters.slice(0, 2);
 const leadNotebook = notebookEntries[0];
-const issueEditorPicks = essays
-  .filter((essay) => essay.slug !== heroEssay.slug && essay.slug !== beirutParkEssay.slug)
-  .slice(0, 3);
 
+const essayDeck =
+  "An independent publication on Lebanon — written from underneath the headlines, where the load-bearing walls actually are. Power. Memory. Sect. The architecture of a state kept deliberately weak.";
+
+const displayTitleLinesBySlug: Record<string, string[]> = {
+  "the-cartel-in-the-costume-of-a-country": [
+    "The Cartel",
+    "in the",
+    "Costume",
+    "of a",
+    "Country",
+  ],
+  "cartel-in-the-costume-of-a-country": [
+    "The Cartel",
+    "in the",
+    "Costume",
+    "of a",
+    "Country",
+  ],
+};
+
+// Typographic tiles — Roman numerals carry the section ordering in Fraunces
+// small caps. No icons; the topic name and Arabic translation do the work.
 const browseTopics = [
   {
     tag: "Power",
     label: "Power",
-    arabic: "السلطة",
-    icon: Landmark,
+    arabic: "السُّلطة",
+    numeral: "I",
     accent: "red",
   },
   {
     tag: "Political Economy",
     label: "Political Economy",
     arabic: "الاقتصاد السياسي",
-    icon: ChartNoAxesColumnIncreasing,
+    numeral: "II",
     accent: "blue",
   },
   {
     tag: "Society",
     label: "Society",
     arabic: "المجتمع",
-    icon: UsersRound,
+    numeral: "III",
     accent: "teal",
   },
   {
     tag: "Sovereignty",
     label: "Sovereignty",
     arabic: "السيادة",
-    icon: Scale,
+    numeral: "IV",
     accent: "red",
   },
   {
     tag: "Diaspora",
     label: "Diaspora",
-    arabic: "المغترب",
-    icon: Plane,
+    arabic: "المهجر",
+    numeral: "V",
     accent: "blue",
   },
   {
     tag: "Memory",
     label: "Memory",
     arabic: "الذاكرة",
-    icon: BookOpenText,
+    numeral: "VI",
     accent: "teal",
   },
 ];
 
-function getTopicCount(tag: string) {
-  return essays.filter((essay) => essay.tags.includes(tag)).length;
+function editorialTitleLines(title: string) {
+  const words = title.split(" ");
+  const lineLength = Math.ceil(words.length / 3);
+
+  return [
+    words.slice(0, lineLength).join(" "),
+    words.slice(lineLength, lineLength * 2).join(" "),
+    words.slice(lineLength * 2).join(" "),
+  ].filter(Boolean);
 }
 
-type FeatureImage = string | { src: string; alt?: string; position?: string };
-
-function HomeFeatureCard({
-  essay,
-  kicker,
-  image,
-  imagePosition,
-  headingLevel = "h2",
-  priority,
-  visualMode = "standard",
-}: {
-  essay: Essay;
-  kicker: string;
-  image?: FeatureImage;
-  imagePosition?: string;
-  headingLevel?: "h1" | "h2";
-  priority?: boolean;
-  visualMode?: "standard" | "background";
-}) {
-  const Heading = headingLevel;
-  const imageSrc = typeof image === "string" ? image : image?.src;
-  const imageAlt = typeof image === "string" ? essay.title : (image?.alt ?? essay.title);
-  const normalizedImagePosition =
-    typeof image === "string" ? imagePosition : (image?.position ?? imagePosition);
-
-  return (
-    <article
-      className="home-feature-card"
-      data-lead={headingLevel === "h1"}
-      data-visual={visualMode}
-    >
-      <div className="home-feature-image-link" aria-hidden={visualMode === "background"}>
-        <EditorialImage
-          src={imageSrc ?? getArticleImage(essay.slug, 0)}
-          alt={imageAlt}
-          className="home-feature-image"
-          imagePosition={normalizedImagePosition ?? "center 48%"}
-          priority={priority}
-          quality={92}
-          unoptimized
-          sizes="(min-width: 1280px) 34vw, (min-width: 768px) 48vw, 100vw"
-        />
-      </div>
-      <div className="home-feature-copy">
-        <div className="editorial-kicker">{kicker}</div>
-        <Heading className="display-title home-feature-title">
-          <Link href={`/essays/${essay.slug}`}>{essay.title}</Link>
-        </Heading>
-        <p>{essay.dek}</p>
-        <div className="home-feature-meta">
-          <Image src="/brand/la-editors-mark.png" alt="" width={36} height={36} />
-          <span>
-            <strong>{essay.byline}</strong>
-            <small>
-              {essay.date} / {essay.readTime}
-            </small>
-          </span>
-        </div>
-        <Link href={`/essays/${essay.slug}`} className="read-link">
-          Read essay <span className="link-arrow">-&gt;</span>
-        </Link>
-      </div>
-    </article>
-  );
+function getTopicCount(tag: string) {
+  return essays.filter((essay) => essay.tags.includes(tag)).length;
 }
 
 function EssayCard({
@@ -164,6 +119,7 @@ function EssayCard({
   variant?: "latest" | "more";
 }) {
   const imageAsset = homeAssets.edition[index % homeAssets.edition.length];
+  const articleLeadImage = getArticleImages(essay.slug)[0];
 
   return (
     <Link
@@ -173,10 +129,10 @@ function EssayCard({
       aria-label={`Read ${essay.title}`}
     >
       <EditorialImage
-        src={getArticleImage(essay.slug, index)}
+        src={getArticleImage(essay.slug, 0)}
         alt={essay.title}
         className="home-essay-card-image"
-        imagePosition={imageAsset.position}
+        imagePosition={articleLeadImage?.position ?? imageAsset.position}
         quality={90}
         sizes={
           variant === "more"
@@ -221,6 +177,8 @@ function SectionHeading({
 }
 
 export default function Home() {
+  const heroTitleLines =
+    displayTitleLinesBySlug[heroEssay.slug] ?? editorialTitleLines(heroEssay.title);
   const heroImage = getArticleImage(heroEssay.slug, 0);
   const beirutParkImages = getArticleImages(beirutParkEssay.slug);
   const beirutParkFeatureImage =
@@ -229,89 +187,112 @@ export default function Home() {
 
   return (
     <SiteShell activePath="/">
-      <section className="paper-frame home-front-section" aria-label="Featured essays">
-        <div className="home-front-grid">
-          <HomeFeatureCard
-            essay={beirutParkEssay}
-            kicker="Featured Essay"
-            image={beirutParkFeatureImage}
-            imagePosition={beirutParkFeatureImage?.position ?? "center 44%"}
-            headingLevel="h1"
-            visualMode="background"
-            priority
-          />
-
-          <HomeFeatureCard
-            essay={heroEssay}
-            kicker="Featured Essay"
-            image={heroImage}
-            imagePosition="center 48%"
-            priority
-          />
-
-          <aside id="about" className="home-issue-rail" aria-label="Issue 01">
-            <div className="home-issue-head">
-              <div>
-                <div className="editorial-kicker">Current Issue</div>
-                <h2>Issue 01</h2>
-                <p>May 2026 / Beirut</p>
-              </div>
-              <div className="home-issue-cover" aria-hidden="true">
-                <span>Lebanese Academic</span>
-                <strong>01</strong>
-                <em>May 2026</em>
-              </div>
-            </div>
-
-            <p className="home-issue-blurb">
-              The first register gathers every published essay on the site:
-              power, memory, sovereignty, culture, and the city.
-            </p>
-
-            <div className="home-issue-stats" aria-label="Issue contents">
+      <section className="paper-frame home-lead-section">
+        <div className="home-lead-grid">
+          <article className="home-lead-story">
+            <div className="editorial-kicker">Featured Essay</div>
+            <h1 className="display-title home-lead-title">
+              <Link href={`/essays/${heroEssay.slug}`}>
+                {heroTitleLines.map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </Link>
+            </h1>
+            <p className="home-lead-dek">{heroEssay.dek}</p>
+            <div className="home-lead-meta">
+              <Image
+                src="/brand/la-editors-mark.png"
+                alt=""
+                width={42}
+                height={42}
+              />
               <span>
-                <strong>{essays.length}</strong>
-                Essays
-              </span>
-              <span>
-                <strong>{letters.length}</strong>
-                Letters
-              </span>
-              <span>
-                <strong>{notebookEntries.length}</strong>
-                Notes
+                <strong>{heroEssay.byline}</strong>
+                <small>
+                  {heroEssay.date} / {heroEssay.readTime}
+                </small>
               </span>
             </div>
-
-            <Link href="/essays" className="home-issue-button">
-              View issue <span className="link-arrow">-&gt;</span>
+            <Link href={`/essays/${heroEssay.slug}`} className="read-link">
+              Read essay <span className="link-arrow">-&gt;</span>
             </Link>
+          </article>
 
-            <div className="home-editor-picks">
-              <div className="editorial-kicker">Editor&apos;s Picks</div>
-              {issueEditorPicks.map((essay) => (
-                <Link key={essay.slug} href={`/essays/${essay.slug}`}>
-                  <strong>{essay.title}</strong>
-                  <small>
-                    {essay.tags[0] ?? essay.category} / {essay.readTime}
-                  </small>
-                </Link>
-              ))}
-            </div>
-          </aside>
+          <Link href={`/essays/${heroEssay.slug}`} className="home-lead-image-link">
+            <EditorialImage
+              src={heroImage}
+              alt={heroEssay.title}
+              className="home-lead-image"
+              imagePosition="center 48%"
+              priority
+              quality={92}
+              sizes="(min-width: 1280px) 43vw, (min-width: 1024px) 48vw, 100vw"
+            />
+          </Link>
+        </div>
+
+        <Link
+          href={`/essays/${beirutParkEssay.slug}`}
+          className="home-park-feature"
+          aria-label={`Read ${beirutParkEssay.title}`}
+        >
+          <span className="home-park-feature-media">
+            <EditorialImage
+              src={beirutParkFeatureImage?.src}
+              alt={beirutParkFeatureImage?.alt ?? beirutParkEssay.title}
+              className="home-park-feature-image"
+              imagePosition={beirutParkFeatureImage?.position ?? "center 45%"}
+              quality={92}
+              sizes="(min-width: 1024px) 34vw, 100vw"
+            />
+          </span>
+          <span className="home-park-feature-copy">
+            <span className="editorial-kicker">Beirut Park</span>
+            <strong>{beirutParkEssay.title}</strong>
+            <span>{beirutParkEssay.dek}</span>
+            <em>
+              Read essay <span className="link-arrow">-&gt;</span>
+            </em>
+          </span>
+        </Link>
+
+        <div className="pattern-rule home-pattern-rule" aria-hidden="true" />
+      </section>
+
+      <section
+        id="about"
+        className="paper-frame home-mission-strip"
+        aria-label="About Lebanese Academic"
+      >
+        <div className="home-mission-grid">
+          <div className="home-mission-kicker">
+            <div className="editorial-kicker">About</div>
+            <div className="editorial-kicker arabic">عن المنشور</div>
+          </div>
+          <div className="home-mission-body">
+            <p className="home-mission-lead">{essayDeck}</p>
+            <p className="home-mission-coda">
+              <em>Academic</em>, here, doesn&rsquo;t mean the dry, footnoted
+              neutrality of the journal article. It means structural —
+              looking at Lebanon from underneath the headlines, where the
+              load-bearing walls actually are.
+            </p>
+            <p className="arabic home-mission-arabic">
+              «أكاديمي» هنا لا تعني الحياد الجاف للمقال الأكاديمي. تعني البنيوي — النظر إلى لبنان من تحت العناوين، حيث الجدران الحاملة فعلًا.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="paper-frame home-topic-section">
+      <section id="topics" className="paper-frame home-topic-section">
         <SectionHeading
-          title="Browse by Topic"
-          arabic="تصفح حسب الموضوع"
+          title="By Topic"
+          arabic="حسب المحور"
           href="/essays"
-          cta="Explore all topics"
+          cta="Open the full register"
         />
         <div className="home-topic-grid" aria-label="Browse essays by topic">
           {browseTopics.map((topic) => {
-            const Icon = topic.icon;
             const count = getTopicCount(topic.tag);
 
             return (
@@ -321,7 +302,9 @@ export default function Home() {
                 className="home-topic-tile"
                 data-accent={topic.accent}
               >
-                <Icon size={30} strokeWidth={1.7} aria-hidden="true" />
+                <span className="home-topic-numeral" aria-hidden="true">
+                  {topic.numeral}
+                </span>
                 <span>
                   <strong>{topic.label}</strong>
                   <small className="arabic">{topic.arabic}</small>
@@ -335,10 +318,9 @@ export default function Home() {
 
       <section className="paper-frame home-latest-section">
         <SectionHeading
-          title="Issue Contents"
-          arabic="محتويات العدد"
+          title="The Latest"
+          arabic="الأحدث"
           href="/essays"
-          cta="View full issue"
         />
         <div className="home-latest-grid">
           {latestEssays.map((essay, index) => (
@@ -350,14 +332,15 @@ export default function Home() {
       <section id="archive" className="paper-frame home-archive-section">
         <div className="home-archive-grid">
           <div className="home-archive-copy">
-            <div className="editorial-kicker">Archive / من الأرشيف</div>
-            <h2 className="editorial-title">A first issue, built for return.</h2>
+            <div className="editorial-kicker">The Archive / الأرشيف</div>
+            <h2 className="editorial-title">A register built for return, not for scrolling.</h2>
             <p>
-              Issue 01 is the current essay register, ordered like a publication
-              rather than an endless feed.
+              {essays.length} essays, ordered, named, and connected — so an idea you
+              read once can be found again, and the next essay you read knows what
+              the last one said.
             </p>
             <Link href="/essays" className="read-link">
-              View Issue 01 <span className="link-arrow">-&gt;</span>
+              Open the register <span className="link-arrow">-&gt;</span>
             </Link>
           </div>
 
@@ -384,8 +367,8 @@ export default function Home() {
 
       <section className="paper-frame home-more-section">
         <SectionHeading
-          title="More Essays"
-          arabic="المزيد من المقالات"
+          title="Also Read"
+          arabic="إقرأ أيضًا"
           href="/essays"
         />
         <div className="home-more-grid">
@@ -412,7 +395,13 @@ export default function Home() {
           </div>
           <div>
             <h2>Dispatches from a city that refuses to be a footnote.</h2>
-            <p>New essays, letters, and notebook entries. Once a week.</p>
+            <p>
+              One email. Once a week. The new essay, the new letter, and the one
+              paragraph that explains why we wrote them. No promotions.
+            </p>
+            <p className="arabic newsletter-arabic">
+              رسالة أسبوعية واحدة: المقال الجديد، الرسالة الجديدة، وفقرة واحدة تشرح لماذا.
+            </p>
           </div>
         </div>
         <NewsletterSignup />
@@ -422,9 +411,9 @@ export default function Home() {
         <Link href="/letters" className="home-correspondence-card">
           <span>
             <strong>Letters</strong>
-            <small className="arabic">رسائل</small>
+            <small className="arabic">الرسائل</small>
           </span>
-          <p>Short letters on what matters, from Beirut and beyond.</p>
+          <p>Short, dated, located. From Beirut and the places it followed.</p>
           <div className="home-correspondence-list">
             {recentLetters.map((letter) => (
               <span key={letter.slug}>
@@ -448,7 +437,7 @@ export default function Home() {
         <Link href="/notebook" className="home-correspondence-card">
           <span>
             <strong>Notebook</strong>
-            <small className="arabic">دفتر الملاحظات</small>
+            <small className="arabic">الدفتر</small>
           </span>
           <p>{leadNotebook?.excerpt ?? "Notes, fragments, and unfinished thoughts."}</p>
           <div className="home-correspondence-list">
@@ -457,7 +446,9 @@ export default function Home() {
               <small>{leadNotebook?.date ?? "Ongoing"}</small>
             </span>
           </div>
-          <NotebookPen size={120} strokeWidth={0.85} aria-hidden="true" />
+          <span className="home-correspondence-glyph" aria-hidden="true">
+            ⁂
+          </span>
           <em>
             Open notebook <span className="link-arrow">-&gt;</span>
           </em>

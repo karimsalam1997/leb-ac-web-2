@@ -3,19 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { AtSign, Mail, Menu, Send, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { MobileHeader } from "@/components/mobile-header";
 
+// Letters intentionally hidden from primary nav until /letters/[slug] ships.
+// The submission funnel ("Submit") and the inline letters card on the homepage
+// keep the section alive for readers without surfacing an empty mailbag.
 const navItems = [
-  { href: "/essays", label: "Essays", arabic: "مقالات" },
-  { href: "/letters", label: "Letters", arabic: "رسائل" },
-  { href: "/notebook", label: "Notebook", arabic: "دفتر الملاحظات" },
-  { href: "/#archive", label: "Archive", arabic: "الأرشيف" },
-  { href: "/submit", label: "Submit", arabic: "أرسل كتابة" },
+  { href: "/essays", label: "Essays", arabic: "المقالات" },
+  { href: "/signal-desk", label: "Signal Desk", arabic: "غرفة الإشارات" },
+  { href: "/#topics", label: "Topics", arabic: "المحاور" },
+  { href: "/notebook", label: "Notebook", arabic: "الدفتر" },
+  { href: "/about", label: "About", arabic: "عنّا" },
 ];
 
-const mastheadShrinkOffset = 92;
-const mastheadExpandOffset = 12;
+const mastheadShrinkOffset = 160;
+const mastheadExpandOffset = 32;
+const mastheadSettleDuration = 280;
 
 const focusableSelector = [
   "a[href]",
@@ -44,6 +48,7 @@ export function SiteShell({
 }) {
   const [isMastheadScrolled, setIsMastheadScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const mastheadFrameRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuCloseButtonRef = useRef<HTMLButtonElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
@@ -51,20 +56,75 @@ export function SiteShell({
 
   useEffect(() => {
     let animationFrame = 0;
+    let resizeAnimationFrame = 0;
+    let settleTimer = 0;
+    let isMastheadSettling = false;
+
+    const preserveScrollDuringMastheadResize = () => {
+      const mastheadFrame = mastheadFrameRef.current;
+      if (!mastheadFrame) {
+        return;
+      }
+
+      if (resizeAnimationFrame) {
+        window.cancelAnimationFrame(resizeAnimationFrame);
+      }
+
+      let lastHeight = mastheadFrame.getBoundingClientRect().height;
+      const startedAt = window.performance.now();
+
+      const preserveScroll = () => {
+        const nextHeight = mastheadFrame.getBoundingClientRect().height;
+        const heightDelta = lastHeight - nextHeight;
+
+        if (heightDelta > 0.1) {
+          window.scrollBy(0, heightDelta);
+        }
+
+        lastHeight = nextHeight;
+
+        if (window.performance.now() - startedAt < mastheadSettleDuration + 80) {
+          resizeAnimationFrame = window.requestAnimationFrame(preserveScroll);
+          return;
+        }
+
+        resizeAnimationFrame = 0;
+      };
+
+      resizeAnimationFrame = window.requestAnimationFrame(preserveScroll);
+    };
+
+    const setMastheadScrolledState = (nextIsScrolled: boolean) => {
+      preserveScrollDuringMastheadResize();
+      mastheadScrolledRef.current = nextIsScrolled;
+      setIsMastheadScrolled(nextIsScrolled);
+
+      isMastheadSettling = true;
+      if (settleTimer) {
+        window.clearTimeout(settleTimer);
+      }
+
+      settleTimer = window.setTimeout(() => {
+        isMastheadSettling = false;
+        updateMastheadState();
+      }, mastheadSettleDuration);
+    };
 
     const updateMastheadState = () => {
       animationFrame = 0;
+      if (isMastheadSettling) {
+        return;
+      }
+
       const scrollTop = window.scrollY;
 
       if (!mastheadScrolledRef.current && scrollTop > mastheadShrinkOffset) {
-        mastheadScrolledRef.current = true;
-        setIsMastheadScrolled(true);
+        setMastheadScrolledState(true);
         return;
       }
 
       if (mastheadScrolledRef.current && scrollTop < mastheadExpandOffset) {
-        mastheadScrolledRef.current = false;
-        setIsMastheadScrolled(false);
+        setMastheadScrolledState(false);
       }
     };
 
@@ -82,6 +142,14 @@ export function SiteShell({
     return () => {
       if (animationFrame) {
         window.cancelAnimationFrame(animationFrame);
+      }
+
+      if (resizeAnimationFrame) {
+        window.cancelAnimationFrame(resizeAnimationFrame);
+      }
+
+      if (settleTimer) {
+        window.clearTimeout(settleTimer);
       }
 
       window.removeEventListener("scroll", handleScroll);
@@ -186,18 +254,19 @@ export function SiteShell({
         <div className="rail-label">Lebanese Academic / الأكاديمي اللبناني</div>
       </div>
       <div className="right-rail">
-        <div className="rail-label">A record. A witness. A school.</div>
+        <div className="rail-label">The country, not the crisis.</div>
       </div>
       <div className="press-topline">
         <div className="paper-frame press-topline-inner">
-          <span>A record. A witness. A school.</span>
-          <span className="arabic">سجل · شهادة · مدرسة</span>
-          <span className="press-topline-right">Beirut — Levant — Diaspora</span>
-          <span className="arabic">بيروت — الشام — المغترب</span>
+          <span>The country, not the crisis.</span>
+          <span className="arabic">البلد، لا الأزمة.</span>
+          <span className="press-topline-right">Beirut · Levant · Diaspora</span>
+          <span className="arabic">بيروت · المشرق · المهجر</span>
         </div>
       </div>
 
       <header
+        ref={mastheadFrameRef}
         className="paper-frame masthead-frame desktop-site-header"
         data-scrolled={isMastheadScrolled}
       >
@@ -210,15 +279,12 @@ export function SiteShell({
 
           <div className="masthead-statement">
             <p>Publishing writing that decodes power and preserves memory.</p>
-            <p className="arabic">نشر الكتابة التي تفكك السلطة وتصون الذاكرة.</p>
+            <p className="arabic">نُصدِر كتابةً تُفكّك السلطة وتصون الذاكرة.</p>
           </div>
 
           <div className="site-actions">
             <Link href="/submit" className="header-submit-action">
               Submit
-            </Link>
-            <Link href="/letters" className="language-pill arabic">
-              عربي
             </Link>
             <button
               ref={menuButtonRef}
@@ -256,7 +322,7 @@ export function SiteShell({
               );
             })}
           </nav>
-          <div className="beirut-stamp">
+          <div className="beirut-stamp" title="Founded in the long shadow of 1975.">
             Beirut
             <span>1975</span>
           </div>
@@ -345,20 +411,35 @@ export function SiteShell({
               height={58}
             />
             <div>
-              <div>A record. A witness. A school.</div>
-              <div className="arabic">سجل · شهادة · مدرسة</div>
+              <div>The country, not the crisis.</div>
+              <div className="arabic">البلد، لا الأزمة.</div>
+              <div className="footer-anchor">
+                Founded in the long shadow of 1975.
+              </div>
             </div>
           </div>
           <nav className="footer-links" aria-label="Footer navigation">
             <Link href="/essays">Essays</Link>
+            <Link href="/signal-desk">Signal Desk</Link>
             <Link href="/submit">Submit</Link>
             <Link href="/letters">Letters</Link>
           </nav>
-          <div className="footer-social">
-            <AtSign size={19} strokeWidth={1.5} />
-            <Send size={18} strokeWidth={1.5} />
-            <Mail size={19} strokeWidth={1.5} />
-          </div>
+          <nav className="footer-social" aria-label="Off-site channels">
+            <a
+              href="https://instagram.com/lebaneseacademic"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Lebanese Academic on Instagram"
+            >
+              @lebaneseacademic
+            </a>
+            <a
+              href="mailto:editors@lebaneseacademic.com"
+              aria-label="Email the editors"
+            >
+              editors@lebaneseacademic.com
+            </a>
+          </nav>
           <div className="footer-credit">
             © 2026 Lebanese Academic
             <br />

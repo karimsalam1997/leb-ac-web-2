@@ -1,43 +1,42 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { BookOpen, Camera, Clock, Feather, Shield } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { SubmitForm } from "@/components/submit-form";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Submit a Letter",
+  title: "Submit",
   description:
-    "Submit a letter to Lebanese Academic from Lebanon, the diaspora, or wherever Lebanon has followed you.",
+    "Submit a letter or an essay to Lebanese Academic. We read everything. We publish the writing that decodes power and preserves memory.",
   path: "/submit",
   image: "/brand/la-primary-lockup.png",
 });
 
 const guidelines = [
   {
-    Icon: BookOpen,
-    title: "Write from your experience.",
-    text: "Personal, honest accounts matter most.",
+    numeral: "I",
+    title: "Write structurally, not topically.",
+    text: "Tell us what the load-bearing wall is, not just what's in the news. The piece should change how we see the thing it's about.",
   },
   {
-    Icon: Feather,
-    title: "No manifestos. No hate.",
-    text: "We welcome difference. We do not publish harm.",
+    numeral: "II",
+    title: "Write from where you stand.",
+    text: "A neighborhood, a profession, a memory, a fact you can verify. We trust located writing more than panoramic writing.",
   },
   {
-    Icon: Shield,
-    title: "Protect people's dignity.",
-    text: "Change names and details if needed.",
+    numeral: "III",
+    title: "No manifestos. No partisan ammunition.",
+    text: "We publish across sect and party. If your piece would make a partisan reader cheer rather than think, it's not for us.",
   },
   {
-    Icon: Camera,
-    title: "Images are welcome.",
-    text: "Photos, scans, letters, or small fragments of life.",
+    numeral: "IV",
+    title: "Protect people. Verify what you claim.",
+    text: "Change names where dignity requires. Source what is sourceable. We will ask.",
   },
   {
-    Icon: Clock,
-    title: "Keep it your own.",
-    text: "Unpublished work only, in your own words.",
+    numeral: "V",
+    title: "Send what an editor can read.",
+    text: "Letters: up to 800 words. Essays: 1,500–4,000 words. One file, one piece, your own words, not previously published.",
   },
 ];
 
@@ -49,13 +48,15 @@ export default function SubmitPage() {
           <aside className="submit-guidance">
             <div className="submit-intro">
               <h1 className="display-title text-[4.25rem] leading-none text-[var(--accent)]">
-                Submit a Letter
+                Send Us Writing
               </h1>
               <p className="mt-4 text-[1.35rem] leading-7">
-                Send a letter from wherever Lebanon has followed you.
+                A letter, an essay, a fragment that won&apos;t leave you alone. We
+                read everything. We publish what decodes power or preserves
+                memory — and what we couldn&apos;t write ourselves.
               </p>
-              <p className="arabic mt-4 text-right text-[1.8rem] leading-[1.35] text-[var(--accent)]">
-                أرسل رسالة من حيثما تبعك لبنان.
+              <p className="arabic mt-4 text-right text-[1.6rem] leading-[1.4] text-[var(--accent)]">
+                رسالةً، مقالًا، أو فكرةً لا تتركك. نقرأ كلّ ما يصلنا، ونَنشُر ما يُفكّك السلطة أو يَصون الذاكرة.
               </p>
             </div>
 
@@ -64,7 +65,9 @@ export default function SubmitPage() {
               <div className="space-y-5">
                 {guidelines.map((item) => (
                   <div key={item.title} className="submit-guideline">
-                    <item.Icon size={34} strokeWidth={1.25} />
+                    <span className="submit-guideline-numeral" aria-hidden="true">
+                      {item.numeral}
+                    </span>
                     <div>
                       <h2>{item.title}</h2>
                       <p>{item.text}</p>
@@ -74,12 +77,25 @@ export default function SubmitPage() {
               </div>
             </div>
 
+            <div className="submit-meta-block mt-8 border-t border-[color:var(--line)] pt-7">
+              <div className="editorial-kicker mb-3">What Happens Next</div>
+              <p className="text-[1rem] leading-6 text-[var(--ink-soft)]">
+                One editor reads every submission. We reply within two weeks,
+                even when we pass. If we want the piece, we&apos;ll send line edits
+                and ask one or two structural questions before publication.
+                Writers we publish are paid for essays. Letters are unpaid.
+              </p>
+              <p className="arabic mt-3 text-right text-[1rem] leading-7 text-[var(--ink-soft)]">
+                نُجيب على كلّ ما يصلنا خلال أسبوعين. الكاتبات والكتّاب يُدفع لهم على المقالات. الرسائلُ بلا أجر.
+              </p>
+            </div>
+
             <blockquote className="submit-quote">
               <div className="text-[4.5rem] leading-none text-[var(--accent)]">“</div>
-              <p>A letter is a small boat.</p>
-              <p>It carries one voice across water so others may know they are not alone.</p>
-              <p className="arabic mt-4 text-right text-[1.25rem] leading-7 text-[var(--accent)]">
-                تحمل صوتاً واحداً عبر الماء ليعرف غيره أنه ليس وحده.
+              <p>
+                Most writing on Lebanon repeats the news. We are looking for
+                the writing that does the opposite — that makes the news
+                make sense.
               </p>
             </blockquote>
           </aside>
@@ -87,15 +103,23 @@ export default function SubmitPage() {
           <div>
             <div className="submit-form-heading">
               <div className="editorial-kicker">Submissions</div>
-              <h2 className="editorial-title">Submit a Letter</h2>
-              <p>Start here. Guidelines and reassurance follow below on mobile.</p>
+              <h2 className="editorial-title">Send Us a Piece</h2>
+              <p>
+                Fill this in. The form takes about three minutes. Read the
+                guidelines on the left first if you haven&apos;t.
+              </p>
             </div>
             <SubmitForm />
             <div className="submit-reassurance">
-              <div className="text-[2rem] text-[var(--accent)]">♡</div>
+              <div className="submit-reassurance-glyph" aria-hidden="true">
+                ⁂
+              </div>
               <div>
-                <p className="font-medium">You do not need to write perfectly.</p>
-                <p>Send the letter as you would say it. We may lightly edit with care.</p>
+                <p className="font-medium">Write it the way you&apos;d tell it.</p>
+                <p>
+                  We edit for structure and clarity, not for voice. The piece
+                  should still sound like you when we&apos;re done.
+                </p>
               </div>
               <Image
                 src="/brand/la-editors-mark.png"

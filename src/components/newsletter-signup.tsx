@@ -57,11 +57,11 @@ export function NewsletterSignup() {
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="Enter your email"
+          placeholder="your@email.com"
         />
       </label>
       <button type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Sending" : "Subscribe"}
+        {status === "loading" ? "Sending…" : "Send me Sundays"}
       </button>
       {message ? (
         <p
