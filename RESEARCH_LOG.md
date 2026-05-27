@@ -476,3 +476,31 @@ Sources consulted:
 - [Schema.org Data and Datasets overview](https://schema.org/docs/data-and-datasets.html)
 - [Schema.org Dataset type](https://schema.org/Dataset)
 - [OpenLineage Dataset Type Facet](https://openlineage.io/docs/1.43.0/spec/facets/dataset-facets/type/)
+
+## Cycle 18, 2026-05-27, Map Quality
+
+Chosen dimension: Map Quality.
+
+Why this was chosen: after Cycle 17, Map Quality and UI/UX & Design remained at 7/10. UI work still needs browser rendering. The backend map gap is that each cluster now carries precision fields, but the run itself does not summarize whether the map is mostly exact pins, representative areas, or unmapped claims.
+
+Findings:
+
+- RFC 7946 defines GeoJSON FeatureCollections as lists of features, with attributes placed on features and room for extra members outside the core geometry semantics. Signal Desk already uses properties on individual event features; a compact API/run-health map coverage object can summarize the whole FeatureCollection without changing the point geometry.
+- ACLED's codebook treats geographic precision as a separate analytical field and records broader or representative locations differently from precise town-level events. Signal Desk already carries similar per-cluster precision, but operators need a whole-run count so a map with many representative areas is not mistaken for a precise field map.
+- Current GeoJSON tooling documentation continues to treat FeatureCollection plus feature properties as the interoperable core. That argues for keeping per-feature map caveats where they are, while placing aggregate map coverage in the surrounding API metadata and health record.
+- Humanitarian data-quality work around HDX and OpenStreetMap stresses completeness and distribution checks. For this project, the practical analogue is not an external quality API; it is a local count of mapped versus unmapped clusters and precision classes.
+
+Implementation decision:
+
+- Add a compact `MapCoverage` model to API metadata.
+- Build map coverage from generated clusters after geotagging.
+- Include total clusters, mapped clusters, unmapped clusters, counts by marker kind, counts by location precision, representative-area count, and maximum uncertainty radius.
+- Add the same map coverage object to `run-health.json`.
+- Do not change the GeoJSON point geometry, source coverage, brief prose, or frontend map rendering.
+
+Sources consulted:
+
+- [RFC 7946, The GeoJSON Format](https://www.rfc-editor.org/rfc/rfc7946)
+- [ACLED Codebook](https://acleddata.com/methodology/acled-codebook)
+- [GEOS GeoJSON documentation](https://libgeos.org/specifications/geojson/)
+- [HeiGIT, ohsome quality API country reports on HDX](https://heigit.org/introducing-ohsome-quality-api-country-reports-for-openstreetmap-data-quality-on-the-humanitarian-data-exchange-platform/)

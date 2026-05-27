@@ -943,3 +943,64 @@ Map Quality and UI/UX & Design are now the only 7/10 dimensions. The next real i
 ### One Thing Outside The Rubric
 
 The frontend TypeScript layer still does not model `meta.source_inventory`, so the dashboard cannot use the inventory without a dedicated frontend pass.
+
+## Cycle 18, 2026-05-27
+
+### Scores Before
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 7/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 8/10
+
+Lowest-scoring dimensions: Map Quality and UI/UX & Design.
+
+Chosen fix: Map Quality.
+
+Reason: the map already carried per-cluster precision fields, but the run did not summarize the whole map's reliability. A reader or operator had to inspect each cluster to know whether the map was mostly exact pins, representative areas, or unmapped claims.
+
+### What Changed
+
+- Added a `MapCoverage` model to API metadata.
+- Built map coverage from clusters after geotagging and verification.
+- Added total cluster count.
+- Added mapped and unmapped cluster counts.
+- Added representative-area count.
+- Added maximum map radius in meters.
+- Added counts by marker kind.
+- Added counts by location precision.
+- Added the same `map_coverage` object to run health.
+- Did not change GeoJSON geometry, map frontend rendering, source coverage, or brief language.
+
+### Scores After
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 8/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 8/10
+
+Map Quality improves because the API and run health now explain the overall map precision profile instead of leaving that to be inferred from individual events.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted map-coverage assertions passed for mapped versus unmapped clusters, representative-area count, maximum radius, marker-kind counts, and location-precision counts.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed with no public writes.
+- Dry-run health included `map_coverage.total_clusters: 2`, `mapped_clusters: 2`, `unmapped_clusters: 0`, `max_radius_meters: 2500`, `by_marker_kind.pin: 2`, and `by_location_precision.exact: 2`.
+- Dry-run source condition remained `fallback-only`, with 41 `dns-error` records, 2 fallback items, and no public copy.
+- No browser check was needed because this cycle changed backend API metadata and run-health output only.
+
+### Next Highest-Priority Improvement
+
+UI/UX & Design is now the only 7/10 dimension. The remaining useful work is frontend-facing: display source condition, source inventory, and map coverage in the dashboard, and wire the map to use `map_radius_meters`.
+
+### One Thing Outside The Rubric
+
+`map_coverage` describes geometric precision, not source freshness. A fallback-only run can still show exact fallback sample pins, so readers must pair map coverage with `source_condition`.

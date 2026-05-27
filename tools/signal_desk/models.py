@@ -210,6 +210,16 @@ class SourceInventory(BaseModel):
     configured_sources: list[str] = Field(default_factory=list)
 
 
+class MapCoverage(BaseModel):
+    total_clusters: int = 0
+    mapped_clusters: int = 0
+    unmapped_clusters: int = 0
+    representative_area_count: int = 0
+    max_radius_meters: int = 0
+    by_marker_kind: dict[str, int] = Field(default_factory=dict)
+    by_location_precision: dict[str, int] = Field(default_factory=dict)
+
+
 class ApiMeta(BaseModel):
     generated_at: datetime
     window_start: datetime
@@ -219,6 +229,7 @@ class ApiMeta(BaseModel):
     mode: str
     source_condition: SourceCondition = Field(default_factory=SourceCondition)
     source_inventory: SourceInventory = Field(default_factory=SourceInventory)
+    map_coverage: MapCoverage = Field(default_factory=MapCoverage)
     notes: list[str] = Field(default_factory=list)
 
 

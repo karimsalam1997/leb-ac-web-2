@@ -14,7 +14,7 @@ from tools.signal_desk.collectors import local_analysis, rss, telegram, youtube
 from tools.signal_desk.config import PUBLIC_DATA_DIR, STORE_DIR, load_feeds, load_framework_config, parse_since, resolve_project_path
 from tools.signal_desk.filter import filter_items
 from tools.signal_desk.geo import district_aggregates, events_geojson, geo_tag, write_fallback_districts
-from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceCondition, SourceHealth, SourceInventory
+from tools.signal_desk.models import ApiMeta, MapCoverage, SignalDeskApi, SourceCondition, SourceHealth, SourceInventory
 from tools.signal_desk.normalize import normalize
 from tools.signal_desk.source_lanes import build_ground_needs, build_source_lanes
 from tools.signal_desk.synthesize import synthesize_brief
@@ -71,6 +71,28 @@ def build_source_inventory(feeds: list[dict[str, object]]) -> SourceInventory:
         by_collection_mode=dict(sorted(collection_modes.items())),
         by_tier=dict(sorted(tiers.items())),
         configured_sources=[str(feed.get("name", "Unnamed source")) for feed in feeds],
+    )
+
+
+def build_map_coverage(clusters: list[object]) -> MapCoverage:
+    mapped_clusters = [
+        cluster
+        for cluster in clusters
+        if getattr(cluster, "primary_location", None) is not None
+        and getattr(cluster, "location_precision", "unknown") != "unknown"
+    ]
+    marker_counts = Counter(str(getattr(cluster, "map_marker_kind", "unmapped")) for cluster in clusters)
+    precision_counts = Counter(str(getattr(cluster, "location_precision", "unknown")) for cluster in clusters)
+    radii = [int(getattr(cluster, "map_radius_meters", 0) or 0) for cluster in clusters]
+
+    return MapCoverage(
+        total_clusters=len(clusters),
+        mapped_clusters=len(mapped_clusters),
+        unmapped_clusters=len(clusters) - len(mapped_clusters),
+        representative_area_count=marker_counts.get("representative-area", 0),
+        max_radius_meters=max(radii, default=0),
+        by_marker_kind=dict(sorted(marker_counts.items())),
+        by_location_precision=dict(sorted(precision_counts.items())),
     )
 
 
@@ -221,6 +243,7 @@ def main() -> None:
     framework_config = timed(stage_timings, "load-frameworks-config", load_framework_config)
     frameworks = timed(stage_timings, "load-frameworks", lambda: load_frameworks(framework_config))
     clusters = timed(stage_timings, "analyze-geo-verify", lambda: attach_verification_dossiers(geo_tag(analyze(scored, frameworks))))
+    map_coverage = build_map_coverage(clusters)
     source_count = len({item.source_id for item in raw_items})
     live_source_count = len({item.source_id for item in raw_items if is_live_source_item(item)})
     snapshot_source_count = len({item.source_id for item in raw_items if item.raw.get("rss_snapshot")})
@@ -246,6 +269,7 @@ def main() -> None:
             mode="rss-first-review",
             source_condition=source_condition,
             source_inventory=source_inventory,
+            map_coverage=map_coverage,
             notes=[
                 "Telegram live scraping remains review-first; local scraper JSONL can feed source leads without touching credentials.",
                 "Longer analysis files are loaded as context and kept separate from live reporting claims.",
@@ -297,6 +321,7 @@ def main() -> None:
         "live_source_count": live_source_count,
         "snapshot_source_count": snapshot_source_count,
         "source_inventory": source_inventory.model_dump(mode="json"),
+        "map_coverage": map_coverage.model_dump(mode="json"),
         "source_health": source_health_summary(source_health),
         "source_condition": source_condition.model_dump(mode="json"),
         "publication_guard": guard,
