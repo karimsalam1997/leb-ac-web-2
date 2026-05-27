@@ -1192,3 +1192,111 @@ Anti-AI Prose. Continue the cleanup pass across `longform-essays.md`, especially
 - A dedicated Issue 01 route could become the real issue cover later.
 - Very long essays need a reader-side table of contents.
 - The image shelf should be audited so sourced images carry more of the argument where possible.
+
+## Editorial Experience Cycle 02, 2026-05-27
+
+### Scores Before
+
+1. Editorial Voice: 7/10
+2. Anti-AI Prose: 5/10
+3. Issue 01 Packaging: 6/10
+4. Essay Structure: 7/10
+5. Homepage Clarity: 7/10
+6. Essay Reading Experience: 7/10
+7. Mobile Layout: 6/10
+8. Topic Filters: 7/10
+9. Visual Modernity: 7/10
+10. Art/Image Direction: 7/10
+11. Interaction/Motion: 6/10
+12. Research Depth: 7/10
+13. Unused Essay Opportunities: 5/10
+14. Technical Health: 5/10
+
+Lowest-scoring dimensions: Anti-AI Prose and Unused Essay Opportunities.
+
+Chosen fix: a focused voice cleanup of `The Park That Remembers`, paired with a research-opportunity pass.
+
+Reason: the previous cycle gave the issue a stronger public wrapper, but the canonical essay source still carried banned or generic habits. The Park essay was the cleanest high-value target because it was visible on the homepage and still used civic-design language that sounded too polished for Lebanese Academic.
+
+### Research Opportunity Pass
+
+Inspected `RESEARCH/`, `RESEARCH 2/`, `may-august-2025-lebanese-academic-social-science-chats.md`, `launch-content.md`, `editorial-angle-map.md`, and the current essay inventory in `longform-essays.md`.
+
+Added four future ideas to `site-archive/opportunities.md`:
+
+- `The Aquifer Republic`
+- `Same Body, Different Religion`
+- `The Country That Exports Its People`
+- `Baalbek Was Not a Ruin`
+
+The generator crackdown material is already largely covered by the live generator essay. The Canaanite and sacred-feminine material overlaps with `The Land That Mourns in One Language`, so the useful future angle is shared ritual mechanics rather than another straight mythology essay.
+
+### Prose Audit Before Rewriting
+
+- The Park metadata still used `Landscape`, which is banned in the project voice rules when it becomes abstract site language.
+- The old pull quote used a neat negative sequence: "Not a theme park. Not a museum. Not an escape from Beirut."
+- Several paragraphs leaned on tidy explanatory transitions: "This is where," "This matters," "This is what I mean."
+- The old ending explained the argument too cleanly instead of landing on a specific image.
+- The essay used civic-design phrases that could have belonged to a proposal deck rather than a Beirut essay.
+
+### What Changed
+
+- Rewrote the Park essay dek, topic tag, and pull quote in `longform-essays.md`.
+- Removed the targeted banned or AI-scented terms from the Park section, including `Landscape`, `key`, `This matters`, `This is where`, `not only`, and `not just`.
+- Replaced the generic design-proposal opening with a sharper first movement about Beirut's interrupted public space.
+- Tightened the Hobsbawm and invented-tradition passage so it sounds less like a lecture and more like an argument.
+- Reworked the closing so it ends on an old man, a child, water, and a public place rather than a neat slogan.
+- Logged archive-derived future essay ideas in `site-archive/opportunities.md`.
+
+### Scores After
+
+1. Editorial Voice: 7/10
+2. Anti-AI Prose: 6/10
+3. Issue 01 Packaging: 6/10
+4. Essay Structure: 7/10
+5. Homepage Clarity: 7/10
+6. Essay Reading Experience: 7/10
+7. Mobile Layout: 6/10
+8. Topic Filters: 7/10
+9. Visual Modernity: 7/10
+10. Art/Image Direction: 7/10
+11. Interaction/Motion: 6/10
+12. Research Depth: 7/10
+13. Unused Essay Opportunities: 6/10
+14. Technical Health: 5/10
+
+Anti-AI Prose improves because a homepage-visible essay now clears the targeted banned-term scan. Unused Essay Opportunities improves because the archive pass produced specific future essays with source file names and duplication notes.
+
+### Reversibility
+
+No new issue snapshot was required because this cycle did not change issue structure, essay order, titles across the issue, cover logic, or filter behavior. Cycle 01's issue snapshot remains the reversible record for issue packaging. The source changes are visible in Git.
+
+### Verification
+
+- Targeted Park-section banned-term scan passed with no matches for the terms cleaned in this cycle.
+- `npm run lint` passed.
+- `git diff --check` passed.
+- `npm run build` passed.
+- Built output contains the revised Park dek and closing line in `.next/server`.
+
+### Working Local Preview URL
+
+Working: `http://127.0.0.1:3001/essays`
+
+`http://127.0.0.1:3000/essays` returned 200, but that server belongs to `/private/tmp/leb-ac-web-origin-main`, not this worktree. Use port 3001 for this automation branch while that process is running.
+
+### Git Checkpoint
+
+The run began on `0540b4e`. During verification, `HEAD` moved to `907eef4` and the worktree became clean, which captured the implemented source changes. This note records that mid-run checkpoint instead of pretending the automation created it manually.
+
+A follow-up ledger commit was attempted with `git add AUDIT_LOG.md site-archive/cycle-history.md && git commit -m "Record Cycle 02 editorial cleanup"`, but it failed because the sandbox could not create `/Users/karimsalam/Documents/Leb Ac Web copy/.git/worktrees/Leb-Ac-Web-copy4/index.lock`. These two ledger files therefore remain modified in the worktree.
+
+### What Still Feels Weak
+
+- The full `longform-essays.md` file still contains many em dashes and banned constructions outside the Park essay.
+- The flagship Downtown essay should get a separate, slower voice pass because it is too large for a quick cleanup.
+- This exact worktree is currently available at `http://127.0.0.1:3001/essays`.
+
+### Next Recommended Target
+
+Continue Anti-AI Prose cleanup, starting with `The City That Could Not Repair Itself` and the short `Downtown Without a City` essay. Clean banned constructions first, then decide whether the flagship Downtown essay needs a structural edit.

@@ -75,3 +75,53 @@ Working: `http://127.0.0.1:3001/essays`
 ### Next Recommended Target
 
 Anti-AI Prose cleanup in `longform-essays.md`, continuing beyond the first Park essay pass into the Downtown sections and any remaining banned vocabulary or generic civic-design phrasing.
+
+## 2026-05-27, Cycle 02, Park Essay Verification And Archive Pass
+
+Starting commit: `907eef4` (`Refine Leb Ac Web copy voice guidance`)
+
+Ending ledger commit: this `Record Cycle 02 editorial cleanup` checkpoint.
+
+### What Changed
+
+- Verified and recorded the focused `The Park That Remembers` cleanup already captured in `907eef4`.
+- Added a dated research-opportunity entry to `site-archive/opportunities.md`.
+- Recorded four unused archive-derived ideas: `The Aquifer Republic`, `Same Body, Different Religion`, `The Country That Exports Its People`, and `Baalbek Was Not a Ruin`.
+- Added this cycle note and the matching `AUDIT_LOG.md` entry so the next run has a plain-English handoff.
+
+### Before
+
+The issue packaging was stronger after Cycle 01, but the next weakness was still voice. A homepage-visible essay had been tightened, yet the automation ledger did not fully separate that prose work from the issue-packaging checkpoint or record the new archive opportunities.
+
+### After
+
+The Park essay now clears the targeted banned-term scan used in this cycle, and the opportunity report gives the next editor concrete archive-derived essay paths instead of vague reminders to mine the research folder.
+
+### Files Changed
+
+- `longform-essays.md`
+- `site-archive/opportunities.md`
+- `AUDIT_LOG.md`
+- `site-archive/cycle-history.md`
+
+### Verification
+
+- Targeted Park-section banned-term scan passed.
+- `npm run lint` passed.
+- `git diff --check` passed.
+- `npm run build` passed.
+- Built output checks found the revised Park dek and closing line in `.next/server`.
+
+### Working Local Preview URL
+
+Working: `http://127.0.0.1:3001/essays`
+
+`http://127.0.0.1:3000/essays` returned 200, but `lsof` shows that server belongs to `/private/tmp/leb-ac-web-origin-main`. Use port 3001 for this automation branch while that process is running. Do not use port 3000 as proof unless the process owner is checked again.
+
+### Next Recommended Target
+
+Run a separate Anti-AI Prose pass on `The City That Could Not Repair Itself` and `Downtown Without a City`, beginning with em dashes, banned constructions, generic transitions, and any paragraph that could have been written from outside Beirut.
+
+### Handoff Note
+
+The site builds, and the exact-worktree preview is currently available on port 3001. The next automation should verify `HEAD`, verify preview-server ownership, then continue the longform cleanup.
