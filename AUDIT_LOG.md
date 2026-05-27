@@ -1136,7 +1136,9 @@ Reason: the site already had strong essays, good imagery, and a serious paper-li
 - Corrected the homepage archive copy from "eight launch essays" to 10 essays and renamed the CTA to "Open Issue 01."
 - Rebuilt the `/essays` header as an Issue 01 cover with a deck, issue stats, and a compact thematic spine.
 - Added filter context so the reader sees whether they are viewing the full issue or a topic-filtered slice.
+- Tightened the Park essay in `longform-essays.md`, including replacing the banned figurative "landscape" tag/phrasing and removing some over-neat public-space language.
 - Appended new future ideas to `site-archive/opportunities.md` without replacing the earlier opportunity list.
+- Added `site-archive/living-voice-lab.md` so future voice cycles do not treat the old house voice as law.
 - Added a narrow `src/lib/signal-desk.ts` type contract and local map type shims because tracked Signal Desk files blocked production typecheck before this cycle could be verified.
 
 ### Scores After
@@ -1167,7 +1169,7 @@ Issue 01 Packaging improves because the issue now has a public argument before t
 - Local preview is working at `http://127.0.0.1:3001/essays`.
 - `curl` checks confirmed the new Issue 01 deck on `/essays` and the updated homepage archive copy on `/`.
 - Process inspection confirmed port 3001 is served from `/Users/karimsalam/.codex/worktrees/c473/Leb Ac Web copy`.
-- Commit checkpoint pending after manual review.
+- Checkpoint commit: `907eef4` (`Refine Leb Ac Web copy voice guidance`).
 
 ### Reversibility
 
@@ -1183,7 +1185,7 @@ Issue 01 Packaging improves because the issue now has a public argument before t
 
 ### Next Recommended Target
 
-Anti-AI Prose. Run a focused cleanup pass across `longform-essays.md`, starting with the Park essay and the Downtown sections where banned vocabulary and generic civic-design phrasing are still visible.
+Anti-AI Prose. Continue the cleanup pass across `longform-essays.md`, especially the Downtown sections where banned vocabulary and generic civic-design phrasing are still visible.
 
 ### Newly Noticed Opportunities
 

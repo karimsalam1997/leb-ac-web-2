@@ -21,7 +21,7 @@ The permanent pre-automation baseline lives in `site-archive/automation-baseline
 
 Starting commit: `0540b4e` (`Add editorial automation archive baseline`)
 
-Ending commit: pending checkpoint commit.
+Checkpoint commit: `907eef4` (`Refine Leb Ac Web copy voice guidance`)
 
 ### What Changed
 
@@ -29,8 +29,10 @@ Ending commit: pending checkpoint commit.
 - Added an issue deck, issue stats, and a four-part spine naming Downtown Beirut, Sakiet el-Janzeer, 1932, and the Blue Line.
 - Added filter context so topic browsing reads as a filtered issue view.
 - Rewrote homepage mission/archive copy so it names the issue's real subjects and corrects the old "eight launch essays" line.
+- Tightened the Park essay in `longform-essays.md`, including replacing the banned figurative "landscape" tag/phrasing and removing some over-neat public-space language.
 - Saved a reversible issue snapshot before changing issue-facing copy.
 - Appended new ideas to `site-archive/opportunities.md`.
+- Added `site-archive/living-voice-lab.md` so future voice cycles do not treat the old house voice as law.
 - Added small Signal Desk type/map shims only because tracked dormant Signal Desk files blocked production typecheck.
 
 ### Before
@@ -44,12 +46,14 @@ The issue now opens with a short Beirut-located argument, issue stats, and a spi
 ### Files Changed
 
 - `src/app/page.tsx`
+- `longform-essays.md`
 - `src/app/essays/essay-index-client.tsx`
 - `src/app/globals.css`
 - `src/components/signal-desk/signal-desk-map.tsx`
 - `src/lib/signal-desk.ts`
 - `src/types/signal-desk-map-shims.d.ts`
 - `site-archive/opportunities.md`
+- `site-archive/living-voice-lab.md`
 - `site-archive/issue-snapshots/2026-05-27-cycle-01-before-issue-packaging.md`
 - `AUDIT_LOG.md`
 - `site-archive/cycle-history.md`
@@ -70,4 +74,4 @@ Working: `http://127.0.0.1:3001/essays`
 
 ### Next Recommended Target
 
-Anti-AI Prose cleanup in `longform-essays.md`, starting with banned vocabulary and generic civic-design phrasing.
+Anti-AI Prose cleanup in `longform-essays.md`, continuing beyond the first Park essay pass into the Downtown sections and any remaining banned vocabulary or generic civic-design phrasing.
