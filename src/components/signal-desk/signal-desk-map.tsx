@@ -67,7 +67,7 @@ export function SignalDeskMap({
       {districts.features.length ? (
         <GeoJSON
           data={districts as GeoJsonObject}
-          style={(feature) => {
+          style={(feature?: { properties?: { district?: unknown } }) => {
             const district = String(feature?.properties?.district ?? "");
             const count = counts.get(district) ?? 0;
             return {

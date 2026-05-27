@@ -1098,3 +1098,95 @@ UI/UX & Design remains the next priority. The route/data-loader state should be 
 ### One Thing Outside The Rubric
 
 Two `git status` commands hung in this sandbox, so targeted `git ls-files` and `git diff --name-only` checks were used instead. Repository hygiene should include checking whether a local Git integration or filesystem watcher is making full status calls stall.
+
+## Editorial Experience Cycle 01, 2026-05-27
+
+### Scores Before
+
+1. Editorial Voice: 7/10
+2. Anti-AI Prose: 6/10
+3. Issue 01 Packaging: 4/10
+4. Essay Structure: 7/10
+5. Homepage Clarity: 6/10
+6. Essay Reading Experience: 7/10
+7. Mobile Layout: 6/10
+8. Topic Filters: 6/10
+9. Visual Modernity: 7/10
+10. Art/Image Direction: 7/10
+11. Interaction/Motion: 6/10
+12. Technical Health: 5/10
+
+Lowest-scoring dimension: Issue 01 Packaging.
+
+Chosen fix: turn `/essays` from a plain index into an Issue 01 cover and table of contents.
+
+Reason: the site already had strong essays, good imagery, and a serious paper-like visual language, but the issue did not yet feel authored. The essays page said "Essays" and counted the archive, while the homepage still described the issue as "eight launch essays" even though the live issue contains 10 essays. That made the public surface feel like a list instead of a deliberate first issue.
+
+### Prose Audit Before Rewriting
+
+- Generic platform copy: "independent platform for long-form writing on Lebanon, power, memory, and identity" could belong to many literary-political sites.
+- False issue packaging: "eight launch essays" was factually stale and weakened trust.
+- Place-light framing: the essays page did not name Downtown Beirut, Sakiet el-Janzeer, the 1932 census, or the Blue Line before asking the reader to browse.
+- Over-neat archive language: "compact first register, built for return" had atmosphere, but not enough argument.
+
+### What Changed
+
+- Archived the pre-change Issue 01 state in `site-archive/issue-snapshots/2026-05-27-cycle-01-before-issue-packaging.md`.
+- Rewrote the homepage mission strip to start from Beirut in May 2026 and name the issue's real subjects.
+- Corrected the homepage archive copy from "eight launch essays" to 10 essays and renamed the CTA to "Open Issue 01."
+- Rebuilt the `/essays` header as an Issue 01 cover with a deck, issue stats, and a compact thematic spine.
+- Added filter context so the reader sees whether they are viewing the full issue or a topic-filtered slice.
+- Appended new future ideas to `site-archive/opportunities.md` without replacing the earlier opportunity list.
+- Added a narrow `src/lib/signal-desk.ts` type contract and local map type shims because tracked Signal Desk files blocked production typecheck before this cycle could be verified.
+
+### Scores After
+
+1. Editorial Voice: 7/10
+2. Anti-AI Prose: 6/10
+3. Issue 01 Packaging: 6/10
+4. Essay Structure: 7/10
+5. Homepage Clarity: 7/10
+6. Essay Reading Experience: 7/10
+7. Mobile Layout: 6/10
+8. Topic Filters: 7/10
+9. Visual Modernity: 7/10
+10. Art/Image Direction: 7/10
+11. Interaction/Motion: 6/10
+12. Technical Health: 6/10
+
+Issue 01 Packaging improves because the issue now has a public argument before the list begins. Homepage Clarity improves because the archive copy now matches the real essay count and gives the reader a route through the issue.
+
+### Verification
+
+- `npm ci --prefer-offline --ignore-scripts --no-audit` passed and restored local dependencies.
+- `npm run lint` passed.
+- `npm run build` passed.
+- `git diff --check` passed.
+- Built-output checks found the new homepage issue copy in `.next/server/app/index.rsc`.
+- Built-output checks found the new `/essays` issue deck and filter context in `.next/server/app/essays/page.js` and the client chunk.
+- Local preview is working at `http://127.0.0.1:3001/essays`.
+- `curl` checks confirmed the new Issue 01 deck on `/essays` and the updated homepage archive copy on `/`.
+- Process inspection confirmed port 3001 is served from `/Users/karimsalam/.codex/worktrees/c473/Leb Ac Web copy`.
+- Commit checkpoint pending after manual review.
+
+### Reversibility
+
+- Snapshot saved: `site-archive/issue-snapshots/2026-05-27-cycle-01-before-issue-packaging.md`.
+- The snapshot records the prior essay order, deks, homepage issue copy, essays index copy, and cover logic.
+
+### What Still Feels Weak
+
+- The longform source still contains banned or AI-scented words such as figurative "landscape," "unlock," and "leverage."
+- The local preview is available, but a visual browser screenshot pass was not completed in this checkpoint.
+- The mobile search icon is still inert.
+- Signal Desk map runtime dependencies are still not installed. The current public route set does not include Signal Desk, and the type shims only unblock typecheck for tracked dormant components.
+
+### Next Recommended Target
+
+Anti-AI Prose. Run a focused cleanup pass across `longform-essays.md`, starting with the Park essay and the Downtown sections where banned vocabulary and generic civic-design phrasing are still visible.
+
+### Newly Noticed Opportunities
+
+- A dedicated Issue 01 route could become the real issue cover later.
+- Very long essays need a reader-side table of contents.
+- The image shelf should be audited so sourced images carry more of the argument where possible.

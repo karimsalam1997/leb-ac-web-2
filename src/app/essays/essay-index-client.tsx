@@ -8,6 +8,28 @@ const PAGE_SIZE = 12;
 
 type SortMode = "newest" | "oldest" | "readTime";
 
+const issueDeck =
+  "Ten essays from Beirut, May 2026, on the bargain that keeps the Lebanese state visible enough to bill the citizen and too weak to protect him. The route begins in Downtown, passes through Sakiet el-Janzeer and the 1932 census, then reaches the Blue Line and the public park Beirut still deserves.";
+
+const issueSpine = [
+  {
+    place: "Downtown Beirut",
+    line: "Solidere, vacancy, repair",
+  },
+  {
+    place: "Sakiet el-Janzeer",
+    line: "generators, summonses, street power",
+  },
+  {
+    place: "1932",
+    line: "the count still governing the living",
+  },
+  {
+    place: "The Blue Line",
+    line: "rubble, occupation, return",
+  },
+];
+
 export type EssayIndexItem = {
   slug: string;
   title: string;
@@ -33,6 +55,14 @@ export function EssaysIndexClient({
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const topics = useMemo(() => getTopicsByFrequency(essays), [essays]);
+  const totalReadMinutes = useMemo(
+    () =>
+      essays.reduce(
+        (total, essay) => total + getReadMinutesForDisplay(essay.readTime),
+        0,
+      ),
+    [essays],
+  );
   const filteredEssays = useMemo(
     () =>
       activeTopic
@@ -56,6 +86,9 @@ export function EssaysIndexClient({
 
   const visibleEssays = sortedEssays.slice(0, visibleCount);
   const remainingCount = Math.max(sortedEssays.length - visibleEssays.length, 0);
+  const filterContext = activeTopic
+    ? `${filteredEssays.length} essays carrying ${activeTopic}`
+    : `${essays.length} essays in publication order`;
 
   function handleTopicClick(topic: string) {
     setActiveTopic((currentTopic) => (currentTopic === topic ? null : topic));
@@ -71,15 +104,42 @@ export function EssaysIndexClient({
     <>
       <section className="paper-frame pt-5">
         <header className="essays-index-header">
-          <h1 className="display-title essays-index-title">Essays</h1>
-          <div className="dense-meta essays-index-count">
-            {essays.length} Essays / Issue 01
+          <div className="essays-issue-copy">
+            <div className="editorial-kicker">Issue 01 / May 2026</div>
+            <h1 className="display-title essays-index-title">Issue 01</h1>
+            <p>{issueDeck}</p>
           </div>
+
+          <aside className="essays-issue-ledger" aria-label="Issue 01 summary">
+            <div className="dense-meta essays-index-count">Lebanese Academic</div>
+            <div className="essays-issue-stats">
+              <span>
+                <strong>{essays.length}</strong>
+                essays
+              </span>
+              <span>
+                <strong>{totalReadMinutes}</strong>
+                minutes
+              </span>
+            </div>
+            <div className="essays-issue-spine">
+              {issueSpine.map((item) => (
+                <span key={item.place}>
+                  <strong>{item.place}</strong>
+                  <small>{item.line}</small>
+                </span>
+              ))}
+            </div>
+          </aside>
         </header>
       </section>
 
       <section className="paper-frame essays-filter-frame">
         <div className="essays-filter-bar" aria-label="Essay filters">
+          <div className="essays-filter-context dense-meta">
+            <span>{activeTopic ? "Filtered issue" : "Full issue"}</span>
+            <span>{filterContext}</span>
+          </div>
           <div className="essay-topic-list" aria-label="Filter by topic">
             {topics.map(({ topic, count }) => {
               const isActive = activeTopic === topic;
@@ -126,7 +186,9 @@ export function EssaysIndexClient({
               />
             </Link>
             <div className="min-w-0">
-              <div className="editorial-kicker">Featured Essay</div>
+              <div className="editorial-kicker">
+                {activeTopic ? `First in ${activeTopic}` : "Issue Lead"}
+              </div>
               <h2 className="editorial-title mt-3 text-[3rem] leading-[1.03]">
                 <Link href={`/essays/${featuredEssay.slug}`}>
                   {featuredEssay.title}
@@ -243,6 +305,11 @@ function getDateValue(date: string) {
 function getReadMinutes(readTime: string) {
   const minutes = Number.parseInt(readTime, 10);
   return Number.isNaN(minutes) ? Number.MAX_SAFE_INTEGER : minutes;
+}
+
+function getReadMinutesForDisplay(readTime: string) {
+  const minutes = Number.parseInt(readTime, 10);
+  return Number.isNaN(minutes) ? 0 : minutes;
 }
 
 function toDateTime(date: string) {

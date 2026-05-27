@@ -37,7 +37,7 @@ const recentLetters = letters.slice(0, 2);
 const leadNotebook = notebookEntries[0];
 
 const essayDeck =
-  "Lebanese Academic is an independent platform for long-form writing on Lebanon, power, memory, and identity - against the idea that collapse is natural.";
+  "Lebanese Academic starts from Beirut in May 2026: the cartel state, the generator street, the census nobody will take, and the city still arguing with its ruins.";
 
 const displayTitleLinesBySlug: Record<string, string[]> = {
   "the-cartel-in-the-costume-of-a-country": [
@@ -322,13 +322,13 @@ export default function Home() {
         <div className="home-archive-grid">
           <div className="home-archive-copy">
             <div className="editorial-kicker">Archive / من الأرشيف</div>
-            <h2 className="editorial-title">A compact first register, built for return.</h2>
+            <h2 className="editorial-title">Issue 01 is a route through the machine.</h2>
             <p>
-              The archive is intentionally spare for now: eight launch essays, ordered
-              like a first issue rather than an endless feed.
+              Ten essays, from Downtown Beirut to Sakiet el-Janzeer, the 1932
+              census, the Blue Line, and the public rooms a damaged city still needs.
             </p>
             <Link href="/essays" className="read-link">
-              Open the essay register <span className="link-arrow">-&gt;</span>
+              Open Issue 01 <span className="link-arrow">-&gt;</span>
             </Link>
           </div>
 

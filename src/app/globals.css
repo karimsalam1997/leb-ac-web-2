@@ -4311,23 +4311,99 @@ body {
 
 .essays-index-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: clamp(1rem, 3vw, 2.4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 0.34fr);
+  align-items: stretch;
+  gap: clamp(1.35rem, 3vw, 3.4rem);
   border-bottom: 1px solid var(--line);
-  padding: 1.15rem 0 1rem;
+  padding: clamp(1.1rem, 3vw, 2.4rem) 0 clamp(1.2rem, 3vw, 2.2rem);
+}
+
+.essays-issue-copy {
+  display: grid;
+  align-content: end;
+  min-width: 0;
+}
+
+.essays-issue-copy p {
+  max-width: 760px;
+  margin-top: 0.75rem;
+  color: var(--ink-soft);
+  font-size: clamp(1.18rem, 2vw, 1.48rem);
+  line-height: 1.38;
 }
 
 .essays-index-title {
-  font-size: clamp(4rem, 8vw, 7rem);
+  font-size: clamp(4.2rem, 9vw, 8.8rem);
   font-weight: 900;
 }
 
 .essays-index-count {
-  justify-self: end;
-  padding-bottom: 0.58rem;
   color: var(--accent-dark);
-  text-align: right;
+  text-transform: uppercase;
+}
+
+.essays-issue-ledger {
+  display: grid;
+  align-content: stretch;
+  gap: 1.1rem;
+  border-left: 1px solid var(--line);
+  padding-left: clamp(1rem, 2vw, 1.45rem);
+}
+
+.essays-issue-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.essays-issue-stats span {
+  display: grid;
+  gap: 0.1rem;
+  border-top: 2px solid var(--foreground);
+  padding-top: 0.55rem;
+  color: var(--muted);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.essays-issue-stats strong {
+  color: var(--foreground);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(2.1rem, 4vw, 3.1rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.88;
+}
+
+.essays-issue-spine {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.essays-issue-spine span {
+  display: grid;
+  gap: 0.18rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.55rem;
+}
+
+.essays-issue-spine strong {
+  color: var(--foreground);
+  font-size: 1.05rem;
+  line-height: 1.05;
+}
+
+.essays-issue-spine small {
+  color: var(--muted);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
   text-transform: uppercase;
 }
 
@@ -4341,12 +4417,24 @@ body {
 
 .essays-filter-bar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(150px, 0.22fr) minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
   height: 56px;
   min-height: 56px;
   border-bottom: 1px solid var(--line);
+}
+
+.essays-filter-context {
+  display: grid;
+  gap: 0.08rem;
+  color: var(--accent-dark);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.essays-filter-context span + span {
+  color: var(--muted);
 }
 
 .essay-topic-list {
@@ -4695,19 +4783,34 @@ body {
     padding: 0.9rem 0 0.82rem;
   }
 
+  .essays-issue-copy p {
+    font-size: 1.12rem;
+    line-height: 1.36;
+  }
+
   .essays-index-title {
     font-size: clamp(4rem, 18vw, 5.4rem) !important;
   }
 
-  .essays-index-count {
-    justify-self: start;
-    padding-bottom: 0;
-    text-align: left;
+  .essays-issue-ledger {
+    gap: 0.85rem;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 0.9rem 0 0;
+  }
+
+  .essays-issue-spine {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem 0.85rem;
   }
 
   .essays-filter-bar {
     grid-template-columns: minmax(0, 1fr) 116px;
     gap: 0.75rem;
+  }
+
+  .essays-filter-context {
+    display: none;
   }
 
   .essay-topic-list {
