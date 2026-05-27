@@ -1045,3 +1045,56 @@ UI/UX & Design remains the next priority, but it should be done only after decid
 ### One Thing Outside The Rubric
 
 The frontend route/data-loader state is now the main repository hygiene issue for Signal Desk. Until it is resolved, backend automation can keep improving metadata, but the dashboard cannot safely surface it.
+
+## Cycle 20, 2026-05-27, Blocked
+
+### Scores Before
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 8/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 8/10
+
+Lowest-scoring dimension: UI/UX & Design.
+
+Chosen fix: UI/UX & Design.
+
+Reason: UI/UX is still the only remaining 7/10 dimension. Current research supports a compact dashboard trust surface that makes source condition, configured source inventory, and map coverage visible in plain language, with degraded or fallback-only runs treated as real warnings.
+
+### Blocker
+
+The improvement still touches the frontend Signal Desk surface. In this worktree, `src/app/signal-desk/page.tsx` and `src/lib/signal-desk.ts` are untracked, while the dashboard components are tracked. A safe automation commit cannot absorb pre-existing untracked frontend work, and a dashboard change committed without those route/data-loader files would be incomplete.
+
+### Safe Diagnostic Changes
+
+- Appended current UI/UX research to `RESEARCH_LOG.md`.
+- Confirmed the frontend tracking split with targeted `git ls-files` checks.
+- Did not change feeds, Arabic/source coverage, generated public data, backend pipeline code, or tracked UI components.
+
+### Scores After
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 8/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 8/10
+
+### Verification
+
+- `git ls-files --others --exclude-standard -- src/app/signal-desk src/lib/signal-desk.ts src/components/signal-desk` showed `src/app/signal-desk/page.tsx` and `src/lib/signal-desk.ts` as untracked.
+- `git ls-files -- src/app/signal-desk src/lib/signal-desk.ts src/components/signal-desk` showed only `src/components/signal-desk/signal-desk-dashboard.tsx` and `src/components/signal-desk/signal-desk-map.tsx` as tracked.
+- `git diff --name-only -- AUDIT_LOG.md RESEARCH_LOG.md tools/signal_desk src/components/signal-desk src/app/signal-desk src/lib/signal-desk.ts` was clean before this log-only cycle.
+- No lint, build, pipeline, or browser check was run because no source or frontend implementation was made.
+
+### Next Highest-Priority Improvement
+
+UI/UX & Design remains the next priority. The route/data-loader state should be resolved first, either by committing those files separately or confirming that the automation may include them.
+
+### One Thing Outside The Rubric
+
+Two `git status` commands hung in this sandbox, so targeted `git ls-files` and `git diff --name-only` checks were used instead. Repository hygiene should include checking whether a local Git integration or filesystem watcher is making full status calls stall.

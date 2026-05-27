@@ -504,3 +504,30 @@ Sources consulted:
 - [ACLED Codebook](https://acleddata.com/methodology/acled-codebook)
 - [GEOS GeoJSON documentation](https://libgeos.org/specifications/geojson/)
 - [HeiGIT, ohsome quality API country reports on HDX](https://heigit.org/introducing-ohsome-quality-api-country-reports-for-openstreetmap-data-quality-on-the-humanitarian-data-exchange-platform/)
+
+## Cycle 20, 2026-05-27, UI/UX & Design
+
+Chosen dimension: UI/UX & Design.
+
+Why this was chosen: after Cycle 19, UI/UX & Design remained the only 7/10 dimension. The backend already exposes source condition, source inventory, and map coverage, but the dashboard still needs a visible trust surface that tells the reader whether the run is live, degraded, fallback-only, or map-uncertain.
+
+Findings:
+
+- GOV.UK's warning-text guidance says warning treatment should be reserved for important information and should include fallback text for the warning icon. For Signal Desk, a fallback-only run should be treated as a visible warning, not as quiet helper copy.
+- The UK Government Data Quality Framework says data producers should communicate quality issues clearly, describe their impact on use, document metadata, and avoid assuming that users understand data-quality terminology. The dashboard should therefore translate `source_condition`, `source_inventory`, and `map_coverage` into plain reader language near the top of the page.
+- W3C's WCAG 2.2 guidance for status messages says status information carried by icons or visual changes must also be available through roles or properties. If the dashboard adds a live source-condition banner, it should not rely on color alone.
+- The Ministry of Justice Design System says information and warning alerts should be used sparingly, with warning alerts reserved for cases where information is missing, stale, or becoming urgent. Signal Desk should use a warning treatment only for degraded, fallback-only, or empty runs, and a quieter information treatment for healthy runs.
+
+Implementation decision:
+
+- The right UI change is a compact run-condition band above the clusters, with source condition, configured-source inventory, and map coverage shown in plain language.
+- The map should also surface representative-area and radius warnings that already exist in the API.
+- This cycle will not implement that change because the route and data-loader files for the Signal Desk surface are still untracked in this worktree. A safe automation commit should not absorb or depend on pre-existing untracked frontend files.
+- No Arabic source coverage, feed configuration, generated public data, or tracked UI files should be changed in this blocked cycle.
+
+Sources consulted:
+
+- [GOV.UK Design System, Warning text](https://design-system.service.gov.uk/components/warning-text/)
+- [UK Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework)
+- [W3C WCAG 2.2, Understanding Success Criterion 4.1.3: Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages)
+- [Ministry of Justice Design System, Alert](https://design-patterns.service.justice.gov.uk/components/alert/)
