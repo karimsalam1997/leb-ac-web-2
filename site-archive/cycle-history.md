@@ -125,3 +125,68 @@ Run a separate Anti-AI Prose pass on `The City That Could Not Repair Itself` and
 ### Handoff Note
 
 The site builds, and the exact-worktree preview is currently available on port 3001. The next automation should verify `HEAD`, verify preview-server ownership, then continue the longform cleanup.
+
+## 2026-05-27, Cycle 03, Flagship Downtown Voice Pass
+
+Starting commit: `03b7bf7` (`Record Cycle 02 editorial cleanup`)
+
+Ending commit: not created. The commit attempt for `Clean flagship Downtown prose` was blocked by Git metadata write permissions.
+
+### What Changed
+
+- Cleaned `The City That Could Not Repair Itself` in `longform-essays.md`.
+- Removed targeted AI-scented and banned constructions from the flagship essay: em dashes, `not only`, `not just`, `unlock`, figurative `landscape`, `This matters`, `This is why`, `The point is`, `The task is`, and `not X but Y` scaffolding.
+- Kept the essay's research, section order, and core argument intact.
+- Added Cycle 03 voice findings to `site-archive/living-voice-lab.md`.
+- Added three archive-derived opportunities to `site-archive/opportunities.md`.
+- Added an editorial research note to `RESEARCH_LOG.md`.
+- Added the matching `AUDIT_LOG.md` cycle note.
+
+### Before
+
+The issue packaging was clearer after Cycle 01, and the Park essay had been cleaned in Cycle 02. The flagship Downtown essay still sounded too guided in places, with assistant-style transitions and proposal language interrupting an otherwise strong argument.
+
+### After
+
+The flagship essay now reads more directly. It keeps the strong concession that Hariri built something, keeps the Naccache memorycide frame, and loses several of the visible writing crutches that made the prose feel machine-shaped.
+
+### Files Changed
+
+- `longform-essays.md`
+- `site-archive/living-voice-lab.md`
+- `site-archive/opportunities.md`
+- `RESEARCH_LOG.md`
+- `AUDIT_LOG.md`
+- `site-archive/cycle-history.md`
+
+### Verification
+
+- Targeted flagship-section construction scan passed.
+- `npm run lint` passed.
+- `npm run build` passed after the final prose/log patch.
+- `git diff --check` passed after the final log append.
+- Built-output text checks found the revised Downtown dek and closing line.
+
+### Commit Status
+
+Commit blocked after successful verification.
+
+Git failed while trying to create `/Users/karimsalam/Documents/Leb Ac Web copy/.git/worktrees/Leb-Ac-Web-copy4/index.lock` with `Operation not permitted`. A direct write test inside the same Git metadata folder also failed, so this is a sandbox/write-permission issue rather than a stale lock.
+
+The worktree remains dirty with the intended Cycle 03 files changed. Do not start Cycle 04 until these changes are either committed from an environment with write access to that Git worktree metadata folder or explicitly carried forward by the user.
+
+### Working Local Preview URL
+
+Preview status: unverified from this sandbox.
+
+`lsof` confirms a Node server is listening on `http://127.0.0.1:3001` from this exact worktree, but localhost connections from the current shell and Node REPL are blocked with `Operation not permitted` / `fetch failed`.
+
+Candidate manual URL: `http://127.0.0.1:3001/essays/the-city-that-could-not-repair-itself`
+
+### Next Recommended Target
+
+First resolve the Git metadata permission blocker and commit the verified Cycle 03 changes. Then run the same anti-AI construction pass on `Downtown Without a City`, and decide whether it should remain a standalone essay or become a shorter companion/gateway to the flagship Downtown piece.
+
+### Handoff Note
+
+Do not treat port 3001 as verified until a future run can actually connect to it. The process belongs to this worktree, but route access was blocked in this sandbox. Continue from the dirty Cycle 03 working tree, fix or bypass the Git metadata permission blocker, create the missing local commit, and only then start the `Downtown Without a City` pass.

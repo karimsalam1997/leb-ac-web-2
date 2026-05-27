@@ -531,3 +531,37 @@ Sources consulted:
 - [UK Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework)
 - [W3C WCAG 2.2, Understanding Success Criterion 4.1.3: Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages)
 - [Ministry of Justice Design System, Alert](https://design-patterns.service.justice.gov.uk/components/alert/)
+
+## Editorial Experience Cycle 03, 2026-05-27, Flagship Downtown Voice Pass
+
+Chosen dimension: Anti-AI Prose.
+
+Why this was chosen: Cycle 02 left the strongest handoff: the Park essay had been cleaned, but the flagship Downtown essay still carried assistant-shaped transitions, em dashes, banned constructions, and consultant vocabulary. Because this essay leads the issue and frames the site's politics of memory, small voice defects have an outsized effect on the whole site.
+
+Research files inspected:
+
+- `DRAFT-downtown-beirut-memorycide.md`
+- `launch-content.md`
+- `RESEARCH/analysing_lebanese_politics_structurally.md`
+- `RESEARCH/government_crackdown_on_generator_mafia.md`
+- `RESEARCH/sectarianism_as_lebanon's_central_problem.md`
+- `RESEARCH/magazine_article_topics_from_our_conversations.md`
+- `RESEARCH/lebanese_war_content_ideas_and_direction.md`
+- `RESEARCH/phoenician_myths.md`
+- `RESEARCH 2/BEIRUT_PARK_VIRAL_REPORT.md`
+- `RESEARCH 2/Beirut Park_ Philosophy Over Parametrics.docx`
+- `RESEARCH 2/CONSOLIDATION OF EVERYTHING TILL NOW.docx`
+- `may-august-2025-lebanese-academic-social-science-chats.md`
+
+Findings:
+
+- The older Downtown draft and `launch-content.md` already had the strongest simple frame: Solidere did not merely build a district; it changed who could belong in the center. The live flagship essay is stronger and more sourced, but its connective tissue had become too explanatory.
+- `RESEARCH/analysing_lebanese_politics_structurally.md` makes the Hariri/Solidere concession sharper: the project was physically real and ambitious, which is exactly why the extraction argument has to be more careful than a normal anti-corruption sermon.
+- The May-August chat archive repeatedly returns to the parking lot as an image of public life replaced by private movement. The live essay already uses this image, so it should be sharpened there rather than duplicated into a new Issue 01 essay.
+- The archive still contains a future essay path around private artifact collections and the missing Phoenician textual record. That belongs in `site-archive/opportunities.md`, not in this prose cleanup.
+
+Implementation decision:
+
+- Edit only `The City That Could Not Repair Itself` in `longform-essays.md`.
+- Remove targeted banned or AI-scented constructions from that essay section: em dashes, `not only`, `not just`, `unlock`, figurative `landscape`, `This matters`, `This is why`, and similar handrail transitions.
+- Preserve the essay's argument and research structure. This cycle is voice repair, not a structural rewrite or issue reorder.

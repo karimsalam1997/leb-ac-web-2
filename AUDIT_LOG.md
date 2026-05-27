@@ -1300,3 +1300,119 @@ A follow-up ledger commit was attempted with `git add AUDIT_LOG.md site-archive/
 ### Next Recommended Target
 
 Continue Anti-AI Prose cleanup, starting with `The City That Could Not Repair Itself` and the short `Downtown Without a City` essay. Clean banned constructions first, then decide whether the flagship Downtown essay needs a structural edit.
+
+## Editorial Experience Cycle 03, 2026-05-27
+
+### Scores Before
+
+1. Editorial Voice: 7/10
+2. Anti-AI Prose: 5/10
+3. Karim-Specific Voice Discovery: 6/10
+4. Issue 01 Packaging: 6/10
+5. Essay Structure: 7/10
+6. Homepage Clarity: 7/10
+7. Essay Reading Experience: 7/10
+8. Mobile Layout: 6/10
+9. Topic Filters: 7/10
+10. Visual Modernity: 7/10
+11. Art/Image Direction: 7/10
+12. Interaction/Motion: 6/10
+13. Research Depth: 7/10
+14. Unused Essay Opportunities: 6/10
+15. Technical Health: 5/10
+
+Lowest-scoring dimension: Anti-AI Prose.
+
+Chosen fix: targeted voice cleanup of `The City That Could Not Repair Itself`.
+
+Reason: the flagship Downtown essay carries the issue's whole argument about memory, property, repair, and public life. It was already strong in research and structure, but it still had too many machine-like hinges: em dashes, `not only`, `not just`, `This is why`, `This matters`, `unlock`, and thesis-guide phrasing that sounded too much like an assistant explaining the essay's own movement.
+
+### Research Opportunity Pass
+
+Inspected `RESEARCH/`, `RESEARCH 2/`, `DRAFT-downtown-beirut-memorycide.md`, `launch-content.md`, `may-august-2025-lebanese-academic-social-science-chats.md`, and the current inventory in `longform-essays.md`.
+
+Added three future ideas to `site-archive/opportunities.md`:
+
+- `The Reconstruction Trap`
+- `The Counter-Archive`
+- `The Parking Lot Beat The Plaza`
+
+The first is a future war/reconstruction essay rather than another Solidere history. The second needs careful sourcing before publication because it touches private artifact collections. The third should stay out of Issue 01 for now because the parking-lot image already appears inside the flagship Downtown essay.
+
+### Prose Audit Before Rewriting
+
+- The flagship Downtown essay still had em dashes and banned `not only` / `not just` structures.
+- Several transitions explained the argument too neatly: `This is why`, `This matters`, `What would it mean`, and `The point is`.
+- The word `unlock` made one passage sound like a development deck rather than a Lebanese Academic essay.
+- The conclusion still contained a generic `task is to` sentence.
+- The strongest living material was already present: the concession that Hariri built something, the vacancy/repair frame, the Naccache memorycide frame, and the parking-lot image.
+
+### What Changed
+
+- Rewrote the flagship essay dek to remove the `not simply` construction.
+- Cleaned the essay body for the targeted banned and AI-scented constructions.
+- Replaced proposal-deck language with plainer political language, including `turn land into cash` instead of `unlock land`.
+- Preserved the argument and section structure; this was a voice repair, not a structural rewrite.
+- Added Cycle 03 notes to `site-archive/living-voice-lab.md`.
+- Added the research findings to `RESEARCH_LOG.md` and `site-archive/opportunities.md`.
+
+### Scores After
+
+1. Editorial Voice: 8/10
+2. Anti-AI Prose: 6/10
+3. Karim-Specific Voice Discovery: 7/10
+4. Issue 01 Packaging: 6/10
+5. Essay Structure: 7/10
+6. Homepage Clarity: 7/10
+7. Essay Reading Experience: 7/10
+8. Mobile Layout: 6/10
+9. Topic Filters: 7/10
+10. Visual Modernity: 7/10
+11. Art/Image Direction: 7/10
+12. Interaction/Motion: 6/10
+13. Research Depth: 7/10
+14. Unused Essay Opportunities: 7/10
+15. Technical Health: 5/10
+
+Editorial Voice improves because the issue lead now sounds less guided and more authorial. Anti-AI Prose improves because the flagship essay clears the targeted construction scan. Unused Essay Opportunities improves because the archive pass produced three non-duplicative future essay paths. Technical Health does not improve because the local commit could not be created from this sandbox.
+
+### Reversibility
+
+No new issue snapshot was required because this cycle did not change issue order, issue title, essay order, cover logic, topic filters, or issue-facing structure. The prose changes are still visible in the working tree and can be inspected through Git diff, but no local commit checkpoint was created.
+
+### Verification
+
+- Targeted flagship-section scan passed for em dashes, `not only`, `not just`, `unlock`, figurative `landscape`, `This matters`, `This is why`, `The point is`, `The task is`, and `not X but Y` scaffolding.
+- `git diff --check` passed after the final log append.
+- `npm run lint` passed.
+- `npm run build` passed after the final prose/log patch.
+- Built-output check found the revised Downtown dek and closing line in `.next/server`.
+
+### Commit Status
+
+Commit blocked after successful verification.
+
+Attempted commit message: `Clean flagship Downtown prose`.
+
+Git failed while trying to create `/Users/karimsalam/Documents/Leb Ac Web copy/.git/worktrees/Leb-Ac-Web-copy4/index.lock` with `Operation not permitted`. No stale lock file was present, and a direct write test inside that Git worktree metadata folder also failed with `Operation not permitted`. This is a sandbox/write-permission blocker, not a prose or build failure.
+
+Per the automation rule, the relay stops here rather than beginning another cycle. Current worktree remains dirty with the six intended files changed: `AUDIT_LOG.md`, `RESEARCH_LOG.md`, `longform-essays.md`, `site-archive/cycle-history.md`, `site-archive/living-voice-lab.md`, and `site-archive/opportunities.md`.
+
+### Working Local Preview URL
+
+Preview status: unverified from this sandbox.
+
+`lsof` confirms a Node server is listening on `http://127.0.0.1:3001` from `/Users/karimsalam/.codex/worktrees/c473/Leb Ac Web copy`, but both shell `curl` and Node `fetch` are blocked from connecting to localhost with `Operation not permitted` / `fetch failed`. Do not record this as a verified working preview until the next run can access it.
+
+Candidate URL for manual inspection: `http://127.0.0.1:3001/essays/the-city-that-could-not-repair-itself`
+
+### What Still Feels Weak
+
+- The shorter `Downtown Without a City` essay still needs the same construction scan.
+- The full `longform-essays.md` file still contains em dashes and banned constructions outside the flagship Downtown and Park essays.
+- Local commit creation is blocked by Git metadata write permissions.
+- Browser/mobile visual verification remains blocked by localhost access in this sandbox.
+
+### Next Recommended Target
+
+First resolve the Git metadata permission blocker and commit the verified Cycle 03 changes. After that checkpoint exists, run the same anti-AI pass on `Downtown Without a City`, then decide whether the two Downtown essays should remain separate or whether the shorter one should become a gateway/companion rather than a partial duplicate.

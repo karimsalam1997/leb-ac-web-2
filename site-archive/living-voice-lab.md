@@ -65,3 +65,26 @@ Then record:
 Karim's voice is not clean confidence. It is pressure under thought.
 
 It can be angry, funny, suspicious, tender, and analytically sharp in the same movement. It does not need to prove that it is literary. It needs to sound like someone in Beirut refusing the pre-written sentence.
+
+## 2026-05-27, Cycle 03 Notes
+
+### Keep
+
+- `The riddle sits in the success itself.` This is better than a tidy transition because it lets the Downtown argument turn on the uncomfortable fact that Hariri built something real.
+- `A city occupied by residents complains. A city held as an asset can wait.` Keep this rhythm. It is simple, specific, and strong without becoming a slogan pasted on top of the essay.
+- `The old city is gone. It will not return.` This kind of blunt correction sounds closer to Karim than a graceful explanatory ending.
+
+### Kill
+
+- `This is why`, `This matters`, `not only`, and `not just` were acting like assistant handrails in the flagship Downtown essay. They made the essay explain its own movement too neatly.
+- Em dashes were letting sentences stage a dramatic second thought instead of choosing a cleaner rhythm. The flagship essay should breathe through periods, commas, and short verdicts.
+- Proposal-deck verbs like `unlock` make the essay sound like a consultant selling a district instead of a writer describing Beirut's public wound.
+
+### Try
+
+- In future Downtown edits, start from a walkable object first: a dark apartment, a broken pavement, the Roman Baths, the Egg, a shopfront, a parking ramp, a bench. Then let the system appear.
+- Use concession when it has teeth. `Hariri built something` works because it gives the opponent the strongest point before cutting through the model.
+
+### Rejected
+
+- Do not make every correction more lyrical. Some of the better fixes are colder and plainer: `Some life has returned.` `It will not return.` The site should not become ornate to prove it is human.
