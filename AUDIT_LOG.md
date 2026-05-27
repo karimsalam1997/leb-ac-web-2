@@ -883,3 +883,63 @@ Map Quality and UI/UX remain at 7/10, but the next pass should only wire `map_ra
 ### One Thing Outside The Rubric
 
 HTML-index items still use collection time as `published_at` because the collector does not yet parse nearby date text from official pages. That is acceptable for source leads, but future official-page work should preserve page dates when the markup exposes them clearly.
+
+## Cycle 17, 2026-05-27
+
+### Scores Before
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 7/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 7/10
+
+Lowest-scoring dimensions: Map Quality, UI/UX & Design, and Information Architecture.
+
+Chosen fix: Information Architecture.
+
+Reason: the configured source shelf is part of the product's meaning, but it was only visible by opening `feeds.yaml`. Source health says what happened during one run. It does not say what the platform is configured to watch. That matters most in degraded runs, because DNS failure should not hide the intended coverage map.
+
+### What Changed
+
+- Added a `SourceInventory` model to API metadata.
+- Built source inventory from the configured feed list, not from returned items.
+- Added total configured sources.
+- Added counts by language.
+- Added counts by collection mode.
+- Added counts by tier.
+- Added the configured source-name list.
+- Added the same `source_inventory` object to run health.
+- Kept source health, source condition, source lanes, public copy rules, and feed coverage unchanged.
+
+### Scores After
+
+1. Signal Quality: 8/10
+2. Source Coverage: 8/10
+3. Map Quality: 7/10
+4. Brief Quality: 8/10
+5. UI/UX & Design: 7/10
+6. Pipeline Robustness: 8/10
+7. Information Architecture: 8/10
+
+Information Architecture improves because the API and health record now separate three things: configured source inventory, observed source health, and run-level source condition.
+
+### Verification
+
+- `python3 -m py_compile tools/signal_desk/models.py tools/signal_desk/run.py` passed.
+- `python3 -m compileall -q tools/signal_desk` passed.
+- Targeted inventory assertions passed: 41 configured sources, 9 Arabic, 30 English, 2 Hebrew, 3 HTML-index sources, 38 RSS/default sources, and both new official sources present.
+- `python3 -m tools.signal_desk.run --only-rss --since 7d --dry-run` passed with no public writes.
+- Dry-run health included `source_inventory.total_configured: 41`, `by_language.ar: 9`, `by_collection_mode.html_index: 3`, and `by_tier.tier-1: 28`.
+- Dry-run source condition remained honest: `fallback-only`, `live_ok: 0`, 41 `dns-error` records, 2 fallback items, and no public copy.
+- No browser check was needed because this cycle changed backend API metadata and run-health output only.
+
+### Next Highest-Priority Improvement
+
+Map Quality and UI/UX & Design are now the only 7/10 dimensions. The next real improvement is frontend-facing: render map-radius uncertainty from `map_radius_meters`, or display `source_condition` / `source_inventory` in the dashboard.
+
+### One Thing Outside The Rubric
+
+The frontend TypeScript layer still does not model `meta.source_inventory`, so the dashboard cannot use the inventory without a dedicated frontend pass.

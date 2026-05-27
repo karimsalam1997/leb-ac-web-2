@@ -11,10 +11,10 @@ from typing import Callable, TypeVar
 
 from tools.signal_desk.analyze import analyze, load_frameworks
 from tools.signal_desk.collectors import local_analysis, rss, telegram, youtube
-from tools.signal_desk.config import PUBLIC_DATA_DIR, STORE_DIR, load_framework_config, parse_since, resolve_project_path
+from tools.signal_desk.config import PUBLIC_DATA_DIR, STORE_DIR, load_feeds, load_framework_config, parse_since, resolve_project_path
 from tools.signal_desk.filter import filter_items
 from tools.signal_desk.geo import district_aggregates, events_geojson, geo_tag, write_fallback_districts
-from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceCondition, SourceHealth
+from tools.signal_desk.models import ApiMeta, SignalDeskApi, SourceCondition, SourceHealth, SourceInventory
 from tools.signal_desk.normalize import normalize
 from tools.signal_desk.source_lanes import build_ground_needs, build_source_lanes
 from tools.signal_desk.synthesize import synthesize_brief
@@ -58,6 +58,20 @@ def source_health_summary(source_health: list[SourceHealth]) -> dict[str, object
         "items_returned": sum(status.item_count for status in source_health),
         "error_kind_counts": dict(sorted(error_kind_counts.items())),
     }
+
+
+def build_source_inventory(feeds: list[dict[str, object]]) -> SourceInventory:
+    languages = Counter(str(feed.get("lang", "unknown")) for feed in feeds)
+    collection_modes = Counter(str(feed.get("kind", "rss")) for feed in feeds)
+    tiers = Counter(f"tier-{feed.get('tier', 'unknown')}" for feed in feeds)
+
+    return SourceInventory(
+        total_configured=len(feeds),
+        by_language=dict(sorted(languages.items())),
+        by_collection_mode=dict(sorted(collection_modes.items())),
+        by_tier=dict(sorted(tiers.items())),
+        configured_sources=[str(feed.get("name", "Unnamed source")) for feed in feeds],
+    )
 
 
 def is_live_source_item(item: object) -> bool:
@@ -184,6 +198,8 @@ def main() -> None:
     generated_at = datetime.now(timezone.utc)
     run_dir = STORE_DIR / generated_at.strftime("%Y-%m-%d")
     stage_timings: dict[str, float] = {}
+    configured_feeds = timed(stage_timings, "load-source-inventory", load_feeds)
+    source_inventory = build_source_inventory(configured_feeds)
 
     raw_items, source_health = timed(
         stage_timings,
@@ -229,6 +245,7 @@ def main() -> None:
             located_cluster_count=len([cluster for cluster in clusters if cluster.primary_location and cluster.location_precision != "unknown"]),
             mode="rss-first-review",
             source_condition=source_condition,
+            source_inventory=source_inventory,
             notes=[
                 "Telegram live scraping remains review-first; local scraper JSONL can feed source leads without touching credentials.",
                 "Longer analysis files are loaded as context and kept separate from live reporting claims.",
@@ -279,6 +296,7 @@ def main() -> None:
         "source_count": source_count,
         "live_source_count": live_source_count,
         "snapshot_source_count": snapshot_source_count,
+        "source_inventory": source_inventory.model_dump(mode="json"),
         "source_health": source_health_summary(source_health),
         "source_condition": source_condition.model_dump(mode="json"),
         "publication_guard": guard,

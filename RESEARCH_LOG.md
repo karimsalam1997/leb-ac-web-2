@@ -447,3 +447,32 @@ Sources consulted:
 - [UNIFIL News page](https://unifil.unmissions.org/news)
 - [UNIFIL article: training activities with LAF](https://unifil.unmissions.org/unifil-steps-training-activities-laf)
 - [Lebanese Army official homepage](https://www.lebarmy.gov.lb/)
+
+## Cycle 17, 2026-05-27, Information Architecture
+
+Chosen dimension: Information Architecture.
+
+Why this was chosen: after Cycle 16, Map Quality, UI/UX & Design, and Information Architecture remained at 7/10. Map and UI changes still need a browser-rendered dashboard check. The backend IA gap is now sharper: the pipeline has a wider source shelf, but the API and run-health output do not tell an operator what the configured shelf actually contains by language, collection mode, or tier.
+
+Findings:
+
+- W3C DCAT treats catalogs as first-class metadata objects: a catalog lists datasets, and datasets expose distributions. Signal Desk does not need RDF, but it does need the same architectural idea: the generated product should carry a compact catalog of configured source inputs, not only the items that happened to return during one run.
+- Schema.org's Dataset/DataCatalog guidance distinguishes the data itself from metadata about a collection of data. Signal Desk's clusters are the data product; the source shelf is the surrounding collection metadata. Hiding that shelf in YAML forces the reader to inspect code to understand coverage.
+- The Schema.org Dataset type includes provider and catalog relationships. For Signal Desk, the practical equivalent is exposing configured source names and source grouping counts beside the run metadata.
+- OpenLineage dataset facets attach small pieces of metadata to inputs and outputs. The useful lesson here is to attach lightweight source-inventory metadata to the API/run record instead of building a separate documentation page.
+- The run already records live source health, but health is not the same as inventory. A DNS-blocked run should still say how many configured sources exist, which languages they cover, and how many use RSS versus HTML-index collection.
+
+Implementation decision:
+
+- Add a compact `SourceInventory` model to API metadata.
+- Build inventory from the configured feed list, not from returned items.
+- Include total configured sources, counts by language, counts by collection mode, counts by tier, and configured source names.
+- Add the same inventory object to `run-health.json`.
+- Keep source-health and source-condition behavior unchanged.
+
+Sources consulted:
+
+- [W3C DCAT Version 3](https://w3c.github.io/dxwg/dcat/)
+- [Schema.org Data and Datasets overview](https://schema.org/docs/data-and-datasets.html)
+- [Schema.org Dataset type](https://schema.org/Dataset)
+- [OpenLineage Dataset Type Facet](https://openlineage.io/docs/1.43.0/spec/facets/dataset-facets/type/)

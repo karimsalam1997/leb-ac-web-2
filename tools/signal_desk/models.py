@@ -202,6 +202,14 @@ class SourceCondition(BaseModel):
     error_kind_counts: dict[str, int] = Field(default_factory=dict)
 
 
+class SourceInventory(BaseModel):
+    total_configured: int = 0
+    by_language: dict[str, int] = Field(default_factory=dict)
+    by_collection_mode: dict[str, int] = Field(default_factory=dict)
+    by_tier: dict[str, int] = Field(default_factory=dict)
+    configured_sources: list[str] = Field(default_factory=list)
+
+
 class ApiMeta(BaseModel):
     generated_at: datetime
     window_start: datetime
@@ -210,6 +218,7 @@ class ApiMeta(BaseModel):
     located_cluster_count: int
     mode: str
     source_condition: SourceCondition = Field(default_factory=SourceCondition)
+    source_inventory: SourceInventory = Field(default_factory=SourceInventory)
     notes: list[str] = Field(default_factory=list)
 
 
