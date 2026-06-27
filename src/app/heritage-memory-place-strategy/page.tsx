@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SiteShell } from "@/components/site-shell";
 import { buildPageMetadata } from "@/lib/seo";
 
-const proofSections = [
+const sections = [
   {
     eyebrow: "Method",
     title: "Identity Capital Index",
@@ -50,7 +50,7 @@ const proofSections = [
     image: "/editorial/generated-archive/faqra-stones.jpg",
     alt: "Ancient stone remains in the Lebanese mountains.",
     body:
-      "In AlUla, Diriyah, Abu Dhabi, and the Saudi giga-projects after Vision 2030, archaeology is not a decorative department. It is part of how a state explains itself, attracts visitors, reassures investors, and moves from resource wealth into civilizational language. That is why heritage business development has to speak to tourism authorities, developers, ministries, planners, curators, and engineers at the same time.",
+      "In AlUla, Diriyah, Abu Dhabi, and the Saudi giga-projects after Vision 2030, archaeology is not a decorative department. It is part of how a state explains itself, attracts visitors, reassures investors, and moves from resource wealth into civilizational language. Heritage business development has to speak to tourism authorities, developers, ministries, planners, curators, and engineers at the same time.",
     notes: [
       "AlUla and Diriyah understood as heritage, tourism, identity, and state strategy.",
       "Gulf clients often buy meaning, legitimacy, visitor economy, and method at the same time.",
@@ -142,7 +142,7 @@ export default function HeritageMemoryPlaceStrategyPage() {
         </section>
 
         <section className="heritage-proof-sections">
-          {proofSections.map((section, index) => (
+          {sections.map((section, index) => (
             <article key={section.title} className="heritage-proof-section">
               <div className="heritage-proof-section-media">
                 <Image
@@ -185,6 +185,254 @@ export default function HeritageMemoryPlaceStrategyPage() {
           </Link>
         </section>
       </main>
+      <style>{`
+        .heritage-proof-page {
+          width: min(100%, 100vw);
+          overflow-x: hidden;
+        }
+
+        .heritage-proof-hero {
+          position: relative;
+          min-height: min(760px, calc(100vh - 4rem));
+          display: flex;
+          align-items: end;
+          margin-top: clamp(1rem, 2vw, 2rem);
+          isolation: isolate;
+          color: #fff9f5;
+        }
+
+        .heritage-proof-hero-image {
+          object-fit: cover;
+          z-index: -2;
+        }
+
+        .heritage-proof-hero-scrim {
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background:
+            linear-gradient(180deg, rgba(12, 12, 12, 0.2), rgba(12, 12, 12, 0.72)),
+            linear-gradient(90deg, rgba(12, 12, 12, 0.72), rgba(12, 12, 12, 0.24));
+        }
+
+        .heritage-proof-hero-content,
+        .heritage-proof-summary,
+        .heritage-proof-closing,
+        .heritage-proof-metrics {
+          width: min(1120px, calc(100vw - 40px));
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .heritage-proof-hero-content {
+          padding: clamp(2rem, 6vw, 5rem) 0;
+        }
+
+        .heritage-proof-hero-content h1,
+        .heritage-proof-summary h2,
+        .heritage-proof-closing h2,
+        .heritage-proof-section-copy h2 {
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-weight: 630;
+          letter-spacing: 0;
+        }
+
+        .heritage-proof-hero-content h1 {
+          max-width: 820px;
+          margin: 0.35rem 0 0;
+          font-size: clamp(4rem, 12vw, 10.5rem);
+          line-height: 0.84;
+        }
+
+        .heritage-proof-hero-content p {
+          max-width: 710px;
+          margin: clamp(1rem, 2.4vw, 1.7rem) 0 0;
+          font-size: clamp(1.08rem, 1.6vw, 1.35rem);
+          line-height: 1.32;
+        }
+
+        .heritage-proof-summary,
+        .heritage-proof-closing {
+          display: grid;
+          grid-template-columns: minmax(220px, 0.42fr) minmax(0, 0.9fr);
+          gap: clamp(1.4rem, 4vw, 4rem);
+          margin-top: clamp(2rem, 5vw, 4.5rem);
+          margin-bottom: clamp(2rem, 5vw, 4.5rem);
+          padding: clamp(1.2rem, 3vw, 2.2rem) 0;
+          border-top: 1px solid var(--line-strong);
+          border-bottom: 1px solid var(--line);
+        }
+
+        .heritage-proof-summary h2,
+        .heritage-proof-closing h2 {
+          margin: 0.35rem 0 0;
+          font-size: clamp(2.1rem, 4.8vw, 4.9rem);
+          line-height: 0.94;
+        }
+
+        .heritage-proof-summary p,
+        .heritage-proof-closing p {
+          margin: 0;
+          color: var(--foreground);
+          font-size: clamp(1.14rem, 1.7vw, 1.45rem);
+          line-height: 1.42;
+        }
+
+        .heritage-proof-metrics {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 1px;
+          margin-bottom: clamp(2.4rem, 5vw, 5rem);
+          border: 1px solid var(--line);
+          background: var(--line);
+        }
+
+        .heritage-proof-metrics div {
+          min-height: 180px;
+          padding: clamp(1rem, 2.2vw, 1.5rem);
+          background: rgba(255, 249, 245, 0.72);
+        }
+
+        .heritage-proof-metrics span {
+          display: block;
+          color: var(--accent-dark);
+          font-family: var(--font-fraunces), Georgia, serif;
+          font-size: clamp(2.8rem, 5vw, 5.2rem);
+          font-weight: 650;
+          line-height: 0.9;
+          letter-spacing: 0;
+        }
+
+        .heritage-proof-metrics p {
+          margin: 0.85rem 0 0;
+          color: var(--ink-soft);
+          font-size: 0.98rem;
+          line-height: 1.32;
+        }
+
+        .heritage-proof-sections {
+          width: min(1200px, calc(100vw - 40px));
+          margin: 0 auto;
+        }
+
+        .heritage-proof-section {
+          display: grid;
+          grid-template-columns: minmax(0, 0.84fr) minmax(0, 1fr);
+          gap: clamp(1.2rem, 4vw, 4rem);
+          align-items: center;
+          padding: clamp(2rem, 5vw, 4.8rem) 0;
+          border-top: 1px solid var(--line);
+        }
+
+        .heritage-proof-section:nth-child(even) {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
+        }
+
+        .heritage-proof-section:nth-child(even) .heritage-proof-section-media {
+          order: 2;
+        }
+
+        .heritage-proof-section-media img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1.26;
+          object-fit: cover;
+          border: 1px solid var(--paper-border);
+        }
+
+        .heritage-proof-section-copy h2 {
+          max-width: 690px;
+          margin: 0.35rem 0 0;
+          color: var(--foreground);
+          font-size: clamp(2.4rem, 5.8vw, 6.2rem);
+          line-height: 0.94;
+        }
+
+        .heritage-proof-section-copy p {
+          max-width: 720px;
+          margin: clamp(1rem, 2vw, 1.4rem) 0 0;
+          color: var(--foreground);
+          font-size: clamp(1.08rem, 1.5vw, 1.28rem);
+          line-height: 1.44;
+        }
+
+        .heritage-proof-section-copy ul {
+          display: grid;
+          gap: 0.55rem;
+          max-width: 700px;
+          margin: clamp(1rem, 2vw, 1.4rem) 0 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        .heritage-proof-section-copy li {
+          position: relative;
+          padding-left: 1.1rem;
+          color: var(--ink-soft);
+          font-size: 0.98rem;
+          line-height: 1.36;
+        }
+
+        .heritage-proof-section-copy li::before {
+          content: "";
+          position: absolute;
+          top: 0.62em;
+          left: 0;
+          width: 0.42rem;
+          height: 0.42rem;
+          background: var(--accent);
+        }
+
+        .heritage-proof-closing {
+          align-items: start;
+          margin-bottom: clamp(3rem, 7vw, 6rem);
+        }
+
+        .heritage-proof-closing .read-link {
+          grid-column: 2;
+          width: fit-content;
+        }
+
+        @media (max-width: 900px) {
+          .heritage-proof-summary,
+          .heritage-proof-closing,
+          .heritage-proof-section,
+          .heritage-proof-section:nth-child(even) {
+            grid-template-columns: 1fr;
+          }
+
+          .heritage-proof-section:nth-child(even) .heritage-proof-section-media {
+            order: 0;
+          }
+
+          .heritage-proof-metrics {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .heritage-proof-closing .read-link {
+            grid-column: auto;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .heritage-proof-hero {
+            min-height: 680px;
+          }
+
+          .heritage-proof-hero-content,
+          .heritage-proof-summary,
+          .heritage-proof-closing,
+          .heritage-proof-metrics,
+          .heritage-proof-sections {
+            width: min(100% - 24px, 1120px);
+          }
+
+          .heritage-proof-metrics {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
     </SiteShell>
   );
 }
+
