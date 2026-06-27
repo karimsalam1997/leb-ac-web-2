@@ -57,6 +57,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: absoluteUrl("/heritage-memory-place-strategy"),
+      lastModified: staticLastModified,
+      changeFrequency: "monthly",
+      priority: 0.72,
+    },
+    {
       url: absoluteUrl("/submit"),
       lastModified: staticLastModified,
       changeFrequency: "yearly",
