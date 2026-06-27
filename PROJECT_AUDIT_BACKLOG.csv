@@ -1,0 +1,41 @@
+id,area,priority,impact,effort,risk,status,recommendation,evidence
+1,Technical plumbing,Do now,High,Low,Low,Done,Exclude node_modules.offloaded-* from tsconfig and ESLint checks,npm run build now passes after TypeScript boundary fix
+2,Technical plumbing,Do now,High,Low,Low,Done,Narrow npm run lint to app source or add ignores for generated/archive folders,npm run lint now finishes cleanly
+3,Signal Desk,Do now,High,Low,Medium,Done,Refresh public Signal Desk data through the guarded command or label it stale,Dry run guard passed and public data refreshed on 2026-06-26
+4,Project operations,Do now,High,Low,Low,Done,Replace README with a plain-English operator guide,README is now a Lebanese Academic operator guide
+5,Git hygiene,Do now,High,Low,Low,Open,Document dirty state and decide what belongs in repo before staging anything,Branch is ahead 1 behind 3 with modified AGENTS and transcript metadata
+6,Repo boundary,Do now,High,Medium,Medium,Open,Move or ignore bulky generated/archive folders that are not publication source,About 35,021 untracked files; offloaded node_modules contributes about 34,666
+7,Content source,Do now,High,Medium,Low,Done,Create a live content manifest for essays letters notebook and drafts,PROJECT_CONTENT_MANIFEST.md and csv now separate live draft archive and generated buckets
+8,Editorial,Do now,High,Medium,Low,Open,Merge the two generator essays into one stronger piece,longform-essays.md contains The Generator Republic and How a Generator Owner Showed Why Lebanon Has No State
+9,Editorial,Do now,High,Medium,Low,Open,Decide whether the Fatima mourning material is one essay or two distinct registers,Prior audit and current corpus show Land That Mourns and Goddess/Mourning overlap
+10,Editorial,Do now,High,Medium,Low,Open,Split the Downtown flagship into urban-political economy and archaeology memorycide pieces,The City That Could Not Repair Itself is 30 minutes with several internal essays
+11,Product,Do next,High,Medium,Low,Done,Build real letters detail pages or stop saying Open page,/letters/[slug] now exists and list links use real pages
+12,Product,Do next,High,Medium,Low,Done,Build real notebook detail pages or rename links to Expand,/notebook/[slug] now exists and notebook links use real pages
+13,Product,Do next,Medium,Medium,Low,Done,Build /topics or remove Topics from primary nav,/topics now exists and primary nav points to it
+14,Product,Do next,Medium,Low,Low,Done,Add custom not-found page,src/app/not-found.tsx now exists
+15,Forms,Do next,Medium,Medium,Medium,Open,Create durable submission queue beyond email,Submit route emails via Resend only
+16,Newsletter,Do next,Medium,Medium,Medium,Open,Move newsletter signups to a real list or database,Newsletter route emails signup to owner instead of storing subscriber state
+17,Archive,Do next,High,Medium,Low,Open,Create stable archive classification: source body, metadata, generated output, render check, script,Source folders and generated deliverables are mixed under RESEARCH and output
+18,Archive,Do next,High,Medium,Low,Open,Keep transcript-body shelves separate from metadata-only indexes,Memory and archive inventories warn against counting indexes as transcripts
+19,Images,Do next,Medium,Medium,Low,Open,Create one image inventory with status source credit crop and live usage,133 image files across public/editorial public/essay-images and Essay Images
+20,Images,Do next,Medium,Medium,Low,Open,Expose credits for sourced images on article pages,credits.json exists but credit visibility needs audit in UI
+21,SEO,Do next,Medium,Medium,Low,Partial,Add RSS feed and confirm sitemap includes future dynamic letter/notebook/topic pages,Sitemap now includes topics letters and notebook detail pages; RSS remains future work
+22,Accessibility,Do next,Medium,Medium,Low,Open,Run browser accessibility pass after build boundary is fixed,Static inspection shows labels and focus work but no browser pass completed
+23,Signal Desk,Do next,High,Medium,Medium,Partial,Add run-health history and visible last-refreshed status,Dashboard now exposes current source health but historical run-health remains future work
+24,Signal Desk,Do next,Medium,Medium,Medium,Partial,Make map uncertainty visible in UI using existing precision fields,Dashboard now exposes map coverage and unplaced counts while deeper map UI review remains
+25,Signal Desk,Do next,Medium,Medium,Medium,Open,Review source lanes for imbalance and Arabic coverage,Healthy dry run had 23 Israeli-establishment items and 9 Lebanese-local items
+26,Sanity,Later,Medium,Medium,Medium,Open,Decide if Sanity is future CMS or legacy experiment,Sanity client and studio exist but live essays are markdown-backed
+27,AGENTS,Do next,High,Low,Low,Open,Shorten AGENTS into enforceable sections with fewer duplicated rules,AGENTS has strong voice discipline but is long and partly imported
+28,AGENTS,Do next,High,Low,Low,Open,Add a clear do-not-touch-without-permission section for archives and git,User is not a coder and needs safety rules in plain English
+29,Chat memory,Do next,High,Medium,Low,Open,Index local chats into voice gold essay seeds source trails product decisions and noise,Reachable corpus includes 932 Claude and 2124 GPT conversations plus curated exports
+30,Chat memory,Do next,Medium,Medium,Low,Open,Turn repeated voice lessons into a local checklist or skill,Existing voice system is strong but not wired into normal publishing workflow
+31,Editorial workflow,Do next,High,Medium,Low,Open,Create one-page essay packet template,Needed fields: claim scene opponent sources images SEO social excerpt status
+32,Editorial workflow,Do next,High,Medium,Low,Open,Create pre-publication checklist,Known checks: scene opening source layer active verbs image plan metadata no AI phrase drift
+33,Editorial,Later,Medium,Medium,Low,Open,Convert source notes from staged bibliographies into prose-integrated notes,Earlier audit notes citations sometimes perform rigor instead of supporting argument
+34,Editorial,Later,Medium,Medium,Low,Open,Build reading paths after corpus consolidation,The site promises register/path logic but content still needs merge decisions
+35,Infrastructure,Later,Medium,Medium,Medium,Open,Add image existence metadata and banned phrase checks to CI,Would catch broken asset references and AI-style drift before publish
+36,Infrastructure,Later,Medium,High,Medium,Open,Add full browser verification after build passes,Currently blocked by build failure caused by folder boundary
+37,Strategy,Do now,High,Low,Low,Open,Operate for 90 days as essays plus research desk not full magazine,Current workflow cannot yet support outside writer pipeline
+38,Strategy,Do next,Medium,Medium,Low,Open,Create weekly operating rhythm with essay archive Signal Desk and maintenance lanes,Prevents site work from becoming panic work
+39,Repo hygiene,Probably do not do,Low,High,Medium,Open,Do not mass-delete untracked archives during cleanup,Archive folders may contain real transcript bodies and book extraction work
+40,Product,Probably do not do,Low,High,Medium,Open,Do not add paid memberships before cadence and editorial queue are real,Roadmap says publication infrastructure must precede paid product

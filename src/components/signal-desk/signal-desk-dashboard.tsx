@@ -177,6 +177,8 @@ export function SignalDeskDashboard({
     }),
     [filteredClusters, unclearClusters.length],
   );
+  const sourceCondition = api.meta.source_condition;
+  const mapCoverage = api.meta.map_coverage;
 
   function toggleLayer(layer: string) {
     setActiveLayers((current) => {
@@ -312,6 +314,24 @@ export function SignalDeskDashboard({
                 <strong>{trustCounts.unclear}</strong>
               </div>
             </div>
+            {sourceCondition || mapCoverage ? (
+              <div className="signal-run-health" aria-label="Signal Desk run health">
+                {sourceCondition ? (
+                  <p>
+                    <strong>{sourceCondition.label}</strong>
+                    <span>{sourceCondition.summary}</span>
+                  </p>
+                ) : null}
+                {mapCoverage ? (
+                  <p>
+                    <strong>Map coverage</strong>
+                    <span>
+                      {mapCoverage.mapped_clusters}/{mapCoverage.total_clusters} mapped; {mapCoverage.unmapped_clusters} held back for unclear location.
+                    </span>
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
             <div className="signal-feed-tabs" role="tablist" aria-label="Signal feed modes">
               {([
                 ["now", "Now", counts.now],

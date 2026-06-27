@@ -100,6 +100,28 @@ export type GroundNeed = {
   related_clusters: string[];
 };
 
+export type SourceCondition = {
+  status: string;
+  label: string;
+  summary: string;
+  caution: string;
+  live_source_count: number;
+  snapshot_source_count: number;
+  total_source_health_count: number;
+  failed_source_health_count: number;
+  source_failure_rate: number;
+};
+
+export type MapCoverage = {
+  total_clusters: number;
+  mapped_clusters: number;
+  unmapped_clusters: number;
+  representative_area_count: number;
+  max_radius_meters: number;
+  by_marker_kind: Record<string, number>;
+  by_location_precision: Record<string, number>;
+};
+
 export type SignalDeskApi = {
   meta: {
     generated_at: string;
@@ -108,6 +130,8 @@ export type SignalDeskApi = {
     cluster_count: number;
     located_cluster_count: number;
     mode: string;
+    source_condition?: SourceCondition;
+    map_coverage?: MapCoverage;
     notes: string[];
   };
   brief_markdown: string;
@@ -194,6 +218,26 @@ export function getSignalDeskData() {
         cluster_count: 0,
         located_cluster_count: 0,
         mode: "empty",
+        source_condition: {
+          status: "empty",
+          label: "No local run",
+          summary: "No Signal Desk run has been loaded yet.",
+          caution: "Run the dry-run command before publishing public data.",
+          live_source_count: 0,
+          snapshot_source_count: 0,
+          total_source_health_count: 0,
+          failed_source_health_count: 0,
+          source_failure_rate: 0,
+        },
+        map_coverage: {
+          total_clusters: 0,
+          mapped_clusters: 0,
+          unmapped_clusters: 0,
+          representative_area_count: 0,
+          max_radius_meters: 0,
+          by_marker_kind: {},
+          by_location_precision: {},
+        },
         notes: ["Run python3 -m tools.signal_desk.run --only-rss --since 7d to generate dashboard data."],
       },
       brief_markdown:

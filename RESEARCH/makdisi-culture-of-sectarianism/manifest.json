@@ -1,0 +1,129 @@
+{
+  "source_pdf": "/Users/karimsalam/Documents/Books/Lebanon_History_Sectarianism/The Culture of Sectarianism - Ussama Makdisi (2000).pdf",
+  "pdf_pages_total": 278,
+  "extracted_ranges": [
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/01_religion_as_site_of_colonial_encounter.txt",
+      "title": "Religion as the Site of the Colonial Encounter",
+      "pdf_start": 19,
+      "pdf_end": 32,
+      "book_pages": "book 1-14",
+      "words": 5840
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/02_the_gentle_crusade.txt",
+      "title": "The Gentle Crusade",
+      "pdf_start": 33,
+      "pdf_end": 45,
+      "book_pages": "book 15-27",
+      "words": 5385
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/03_knowledge_and_ignorance.txt",
+      "title": "Knowledge and Ignorance",
+      "pdf_start": 46,
+      "pdf_end": 68,
+      "book_pages": "book 28-50",
+      "words": 9389
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/04_the_faces_of_reform.txt",
+      "title": "The Faces of Reform",
+      "pdf_start": 69,
+      "pdf_end": 84,
+      "book_pages": "book 51-66",
+      "words": 6845
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/05_reinventing_mount_lebanon.txt",
+      "title": "Reinventing Mount Lebanon",
+      "pdf_start": 85,
+      "pdf_end": 113,
+      "book_pages": "book 67-95",
+      "words": 12113
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/06_the_return_of_the_juhhal.txt",
+      "title": "The Return of the Juhhal",
+      "pdf_start": 114,
+      "pdf_end": 135,
+      "book_pages": "book 96-117",
+      "words": 10002
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/07_the_devils_work.txt",
+      "title": "The Devil's Work",
+      "pdf_start": 136,
+      "pdf_end": 163,
+      "book_pages": "book 118-145",
+      "words": 13047
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/08_a_very_old_thing.txt",
+      "title": "A Very Old Thing",
+      "pdf_start": 164,
+      "pdf_end": 183,
+      "book_pages": "book 146-165",
+      "words": 8797
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/09_epilogue.txt",
+      "title": "Epilogue",
+      "pdf_start": 184,
+      "pdf_end": 192,
+      "book_pages": "book 166-174",
+      "words": 3912
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/10_notes.txt",
+      "title": "Notes",
+      "pdf_start": 193,
+      "pdf_end": 248,
+      "book_pages": "book 175-230",
+      "words": 26282
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/11_bibliography.txt",
+      "title": "Bibliography",
+      "pdf_start": 249,
+      "pdf_end": 268,
+      "book_pages": "book 231-250",
+      "words": 6967
+    },
+    {
+      "file": "research/makdisi-culture-of-sectarianism/extracted_text/12_index.txt",
+      "title": "Index",
+      "pdf_start": 269,
+      "pdf_end": 278,
+      "book_pages": "book 251-260",
+      "words": 3982
+    }
+  ],
+  "maps_to_render": [
+    {
+      "title": "Syria",
+      "pdf_page": 22,
+      "book_page": 4
+    },
+    {
+      "title": "Une partie de la Syrie et de la Palestine",
+      "pdf_page": 36,
+      "book_page": 18
+    },
+    {
+      "title": "Old-regime Mount Lebanon",
+      "pdf_page": 50,
+      "book_page": 32
+    },
+    {
+      "title": "The Druze District of Lebanon",
+      "pdf_page": 88,
+      "book_page": 70
+    },
+    {
+      "title": "La Terre Sainte en 1849",
+      "pdf_page": 92,
+      "book_page": 74
+    }
+  ]
+}

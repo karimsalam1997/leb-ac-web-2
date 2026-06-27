@@ -108,7 +108,7 @@ export function LettersClient({ letters }: { letters: FilterableLetter[] }) {
                 </div>
                 <div className="dense-meta mt-7">{featured.readTime}</div>
               </div>
-              <Link href={`/letters#${featured.slug}`}>
+              <Link href={`/letters/${featured.slug}`}>
                 <EditorialImage
                   src={featured.imageSrc}
                   alt={featured.title}
@@ -129,7 +129,7 @@ export function LettersClient({ letters }: { letters: FilterableLetter[] }) {
           <div className="mt-6">
             {rest.map((letter) => (
               <article key={letter.slug} id={letter.slug} className="letter-list-row">
-                <Link href={`/letters#${letter.slug}`}>
+                <Link href={`/letters/${letter.slug}`}>
                   <EditorialImage
                     src={letter.imageSrc}
                     alt={letter.title}
@@ -155,7 +155,7 @@ export function LettersClient({ letters }: { letters: FilterableLetter[] }) {
                 </div>
                 <div className="dense-meta text-right">{letter.readTime}</div>
                 <Link
-                  href={`/letters#${letter.slug}`}
+                  href={`/letters/${letter.slug}`}
                   className="read-link !text-[1rem]"
                   aria-label={`Read ${letter.title}`}
                 >

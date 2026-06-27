@@ -1,0 +1,14 @@
+area,path,state,count,handling
+Long essays,longform-essays.md,live,11 essays,canonical essay source parsed by src/lib/content.ts
+Letters,launch-content.md,live,5 letters,/letters and /letters/[slug] now exist
+Notebook,launch-content.md,live,5 entries,/notebook and /notebook/[slug] now exist
+Launch shelf,launch-content.md,archive-seed,30 total entries,use as older candidate shelf not as automatic live source
+Rewrite shelf,voice-rebuild-2026-05-22/rewritten-essays-v1,draft-rewrite,11 files,compare passages before merging into live source
+Drafts,drafts,draft,mixed,keep as draft material until status and source pass
+Research archive,RESEARCH,archive,mixed,do not move without manifest and provenance
+Transcript shelves,RESEARCH/electronic-intifada-hezbollah-captions plus transcript folders,source-body-or-index,mixed,verify body files before counting as transcripts
+Signal Desk public data,public/data/signal-desk,live-generated,5 public files,refresh only after dry-run guard passes
+Signal Desk run output,store/output,generated,mixed,keep as run history unless intentionally pruning
+Generated PDFs and render checks,output tmp drafts/pdfs,generated,mixed,do not delete until source and script are known
+Public images,public,live-assets,78 images at depth 2,create separate image credit and usage manifest before renaming
+Sanity studio,studio-lebanese-academic,parked-system,mixed,decide later whether this becomes CMS or remains experiment

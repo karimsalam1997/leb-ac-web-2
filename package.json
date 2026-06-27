@@ -6,7 +6,7 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint src next.config.ts studio-lebanese-academic/sanity.config.ts studio-lebanese-academic/sanity.cli.ts studio-lebanese-academic/schemaTypes"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

@@ -6,13 +6,10 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { MobileHeader } from "@/components/mobile-header";
 
-// Letters intentionally hidden from primary nav until /letters/[slug] ships.
-// The submission funnel ("Submit") and the inline letters card on the homepage
-// keep the section alive for readers without surfacing an empty mailbag.
 const navItems = [
   { href: "/essays", label: "Essays", arabic: "المقالات" },
   { href: "/signal-desk", label: "Signal Desk", arabic: "غرفة الإشارات" },
-  { href: "/#topics", label: "Topics", arabic: "المحاور" },
+  { href: "/topics", label: "Topics", arabic: "المحاور" },
   { href: "/notebook", label: "Notebook", arabic: "الدفتر" },
   { href: "/about", label: "About", arabic: "عنّا" },
 ];

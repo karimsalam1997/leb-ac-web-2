@@ -63,7 +63,7 @@ export default function NotebookPage() {
                 id={entry.slug}
                 className={noteClasses.join(" ")}
               >
-                <Link href={`/notebook#${entry.slug}`}>
+                <Link href={`/notebook/${entry.slug}`}>
                   <EditorialImage
                     src={getNotebookImage(entry.slug, index)}
                     alt={entry.title}
@@ -86,7 +86,7 @@ export default function NotebookPage() {
                       </p>
                     ))}
                   </div>
-                  <Link href={`/notebook#${entry.slug}`} className="read-link mt-4 !text-[1rem]">
+                  <Link href={`/notebook/${entry.slug}`} className="read-link mt-4 !text-[1rem]">
                     Open page <span className="link-arrow">-&gt;</span>
                   </Link>
                 </div>

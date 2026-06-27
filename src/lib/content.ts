@@ -1292,6 +1292,14 @@ export function getEssay(slug: string) {
   return essays.find((essay) => essay.slug === slug);
 }
 
+export function getLetter(slug: string) {
+  return letters.find((letter) => letter.slug === slug);
+}
+
+export function getNotebookEntry(slug: string) {
+  return notebookEntries.find((entry) => entry.slug === slug);
+}
+
 const legacyEssaySlugRedirects: Record<string, string> = {
   "cartel-in-the-costume-of-a-country": "the-cartel-in-the-costume-of-a-country",
   "the-brilliant-nodes": "the-mehtail-republic",

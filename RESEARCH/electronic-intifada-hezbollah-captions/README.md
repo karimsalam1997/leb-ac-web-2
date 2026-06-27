@@ -1,6 +1,6 @@
 # Electronic Intifada Hezbollah/Lebanon Captions
 
-This folder contains downloaded English YouTube auto-captions for the Electronic Intifada videos I found around the Israel/Hezbollah-Lebanon war sequence from 5 March 2026 through 21 May 2026.
+This folder began as a set of downloaded English YouTube auto-captions for the Electronic Intifada videos I found around the Israel/Hezbollah-Lebanon war sequence from 5 March 2026 through 21 May 2026. It now also includes related user-supplied war transcripts from other channels.
 
 - `vtt/` has the raw caption/subtitle files with timestamps.
 - `transcripts_txt/` has cleaned plain-text transcripts for reading and searching.

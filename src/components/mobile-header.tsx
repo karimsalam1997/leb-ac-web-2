@@ -5,11 +5,10 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-// Letters intentionally hidden from mobile primary nav until /letters/[slug] ships.
 const mobileNavItems = [
   { href: "/essays", label: "Essays" },
   { href: "/signal-desk", label: "Signals" },
-  { href: "/#topics", label: "Topics" },
+  { href: "/topics", label: "Topics" },
   { href: "/notebook", label: "Notebook" },
   { href: "/submit", label: "Submit" },
 ];
@@ -38,6 +37,10 @@ function isActivePath(activePath: string, href: string) {
 
   if (href === "/signal-desk") {
     return activePath.startsWith("/signal-desk");
+  }
+
+  if (href === "/topics") {
+    return activePath.startsWith("/topics");
   }
 
   if (href === "/about") {

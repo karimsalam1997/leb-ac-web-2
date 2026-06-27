@@ -288,7 +288,7 @@ export default function Home() {
         <SectionHeading
           title="By Topic"
           arabic="حسب المحور"
-          href="/essays"
+          href="/topics"
           cta="Open the full register"
         />
         <div className="home-topic-grid" aria-label="Browse essays by topic">

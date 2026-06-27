@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 node_modules/
+node_modules.offloaded-*/
 /.pnp
 .pnp.*
 .yarn/*
@@ -27,6 +28,11 @@ node_modules/
 __pycache__/
 *.py[cod]
 .codex/
+tmp/
+output/
+store/output/
+**/render-check/
+**/render_check/
 
 # debug
 npm-debug.log*

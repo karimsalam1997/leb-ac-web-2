@@ -413,41 +413,6 @@ function QuietNotes({ notes }: { notes: Citation[] }) {
   );
 }
 
-function ArticleInlineImage({
-  asset,
-  essayTitle,
-}: {
-  asset?: ArticleImageAsset;
-  essayTitle: string;
-}) {
-  if (!asset) {
-    return null;
-  }
-
-  return (
-    <figure className={`article-inline-figure ${getImageShapeClass(asset)}`}>
-      <Link href={asset.src} className="block" aria-label={`Open image for ${essayTitle}`}>
-        <EditorialImage
-          src={asset.src}
-          alt={asset.alt}
-          className="article-inline-image"
-          imageClassName={asset.imageClassName}
-          imagePosition={asset.position}
-          imageFit={asset.fit ?? "contain"}
-          aspectRatio={asset.aspectRatio ?? "16 / 9"}
-          quality={92}
-          sizes="(min-width: 1180px) 760px, 100vw"
-        />
-      </Link>
-      {asset.caption ? (
-        <figcaption className="caption article-inline-caption">
-          {asset.caption}
-        </figcaption>
-      ) : null}
-    </figure>
-  );
-}
-
 function getBodySections(sections: EssaySection[], paragraphsToSkip: number) {
   let remainingToSkip = paragraphsToSkip;
 
@@ -471,39 +436,6 @@ function getBodySections(sections: EssaySection[], paragraphsToSkip: number) {
   }, []);
 }
 
-function getImageShapeClass(asset?: ArticleImageAsset) {
-  const ratio = getAspectRatioValue(asset?.aspectRatio);
-
-  if (!ratio) {
-    return "";
-  }
-
-  if (ratio < 0.95) {
-    return "article-figure--portrait";
-  }
-
-  if (ratio < 1.25) {
-    return "article-figure--squareish";
-  }
-
-  return "";
-}
-
-function getAspectRatioValue(aspectRatio?: string) {
-  if (!aspectRatio) {
-    return undefined;
-  }
-
-  const [width, height] = aspectRatio.split("/").map((part) => Number(part.trim()));
-
-  if (Number.isFinite(width) && Number.isFinite(height) && height > 0) {
-    return width / height;
-  }
-
-  const numericRatio = Number(aspectRatio);
-
-  return Number.isFinite(numericRatio) && numericRatio > 0 ? numericRatio : undefined;
-}
 
 function renderNoteText(text: string) {
   return text.split(/(https?:\/\/\S+)/g).map((part, index) => {
